@@ -1,5 +1,8 @@
 <?php
 class Libro extends Eloquent { 
-    protected $table = 'Libro';
+    protected $table = 'libro';
+    //protected fillable= [] ???
+    
+ 
 }
 ?>

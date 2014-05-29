@@ -55,11 +55,12 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'Cookbook',
+			'database'  => 'cookbook',
 			'username'  => 'root',
 			'password'  => '',			
 			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
+			//~ 'collation' => 'utf8_unicode_ci',
+			'collation' => 'utf8_general_ci',
 			'prefix'    => '',
 		),
 //~ 
