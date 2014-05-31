@@ -1,10 +1,10 @@
-@extends('template')
+@extends('admin')
 
 @section('contenido')
 
 <h1>Agregar un libro</h1>
 <p>Complete la totalidad de los siguientes campos:</p>
-<form action="/admin/libros/crear" method="post">
+<form action="/admin/libros/crear/" method="post">
 	ISBN: <input name="isbn" value="" placeholder="123456789"/><br/>
 	Título: <input name="titulo" value="" placeholder="Cocina Argentina"/><br/>
 	Autor/es: <select name="autor" multiple >				
@@ -39,9 +39,14 @@
 			<input id="etiqueta-otro" name="etiqueta-otro" value=""  disabled placeholder="tradicional"/><br/>
 	
 	<br/><br/>
-	<input type="submit" value="Crear" title="Agrega este libro al catalogo"/> 
-	<input type="reset" value="Limpiar" title="Borra los datos ingresados"/> 
-	<a href="/admin/libros" style="text-decoration:none;"><input type="button" value="Cancelar" title="Cancela la operacion"/></a>
+	<input type="submit" value="Crear" title="Agrega este libro al catalogo"/>
+	
+	
+	<input type="reset" value="Limpiar" title="Borra los datos ingresados"/>
+	
+	
+	<a href="/admin/libros/" style="text-decoration:none;"><input type="button" value="Cancelar" title="Cancela la operacion"/></a>
+	
 	
 </form>
 
@@ -58,4 +63,4 @@
 		}
 	}
 </script	
-@show
+@stop

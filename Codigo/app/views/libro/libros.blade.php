@@ -1,4 +1,4 @@
-@extends('template')
+@extends('admin')
 
 @section('contenido')
 <h1>Gestion de libros:</h1>
@@ -38,4 +38,4 @@
 <a href="/admin/libros/crear" title="Agregue un nuevo libro al catálogo">Agregar</a> 
 <a href="/admin/" title="Vuelve al panel de Administración">Volver</a> 
 
-@show
+@stop

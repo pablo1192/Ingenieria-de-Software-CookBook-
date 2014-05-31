@@ -1,4 +1,4 @@
-@extends('template')
+@extends('admin')
 
 @section('contenido')
 <h1>Visualización de «{{$libro->título}}»</h1>
@@ -49,5 +49,5 @@
 
 </div>
 	<br/><br/>
-	<a href="/admin/libros" title="Retornar a la Gestión de Libros">Volver</a>
-@show
+	<a href="/admin/libros/" title="Retornar a la Gestión de Libros">Volver</a>
+@stop

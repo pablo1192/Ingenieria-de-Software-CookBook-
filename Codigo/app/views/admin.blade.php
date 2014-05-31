@@ -13,7 +13,7 @@ Released   : 20140207
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Cookbook - Sistema web de venta de libros</title>
+	<title>Cookbook - Panel de Administración</title>
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<link href="http://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
@@ -32,20 +32,23 @@ Released   : 20140207
 		</div>
 		<div id="header" class="container">
 			<div id="logo">
-				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
-				<span>Sistema web de venta de libros<br/><br/></span> </div>
+				<h1><a href="#"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
+				<span>Sistema web de venta de libros<br/><br/><strong>Panel de Administración</strong></span> </div>
 			<div id="menu">
 				<ul>
-						
-					<li class="current_page_item"><a href="/" accesskey="1" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
-					<li><a href="#" accesskey="2" title="Póngase en contacto con Cookbook">Contacto</a></li>
-					<li><a href="#" accesskey="3" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
+						<li class="current_page_item"><a href="/admin/" accesskey="1" title="Panel de Administración">Administración</a></li>					
+					<li><a href="/admin/libros/" accesskey="2" title="Gestión de libros">Libros</a></li>
+					<li><a href="/admin/usuarios/" accesskey="2" title="Gestión de usuarios">Usuarios</a></li>
+					<li><a href="/admin/" accesskey="2" title="Visualización de reportes y estadústicas">Reportes</a></li>
+					<li><a href="/admin/" accesskey="2" title="Gestión de Mensajes">Mensajes</a></li>
+					<li><a href="/admin/" accesskey="2" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
 				</ul>
 			</div>
 		</div>
+
 	</div>
 	<div id="wrapper3">
-		<div id="portfolio" class="container">
+		<div id="portfolio" class="container">	
 	@section('contenido')
 	@show
 		</div>
