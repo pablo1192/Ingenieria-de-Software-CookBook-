@@ -58,4 +58,14 @@ Route::get('/admin/etiquetas/crear',['uses'=>'EtiquetasController@formularioAlta
 Route::post('/admin/etiquetas/crear',['uses'=>'EtiquetasController@altaEtiqueta']);
 
 
+//Gestión de Usuarios para admin. Nuevo/Crear: funciones de prueba
+Route::get('/admin/usuarios', array('uses' => 'UsuarioController@mostrarUsuarios'));
+Route::get('/admin/usuarios/nuevo', array('uses' => 'UsuarioController@nuevoUsuario'));
+Route::post('/admin/usuarios/crear', array('uses' => 'UsuarioController@crearUsuario'));
+Route::get('/admin/usuarios/{id}', array('uses'=>'UsuarioController@verUsuario'));
+Route::get('/admin/usuarios/{id}/bloquear',['uses'=>'UsuarioController@bloquearUsuario']);
+Route::get('/admin/usuarios/{id}/modificar',['uses'=>'UsuarioController@modificarDatos']);
+Route::post('/admin/usuarios/{id}/modificar',['uses'=>'UsuarioController@modificarUsuario']);
+
+
 ?>
