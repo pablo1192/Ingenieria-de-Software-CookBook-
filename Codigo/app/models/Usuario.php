@@ -5,19 +5,22 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'usuario';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password');
+	protected $table = 'usuario';
+	protected $fillable = array('nombre', 'apellido', 'email', 'dni');
+	protected $guarded = array('contraseña');
+
+
+	public static function reglasDeValidacion(){
+		
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['integer','min:7','required', 'unique:usuario,dni'], 'contraseña'=>['min:5','required']] ;
+	}
+
+	public static function reglasDeValidacionMod(){
+
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['integer','min:7','required'], 'contraseña'=>['min:5','required']] ;
+	}
+
 
 	/**
 	 * Get the unique identifier for the user.
