@@ -61,6 +61,17 @@
 		width: 1200px;
 	}
 	
+	/*Agregado*/
+	
+	.container h1,h2{
+		margin-top:1em;	
+	}
+	
+	.container h2{
+		border-bottom:1px solid #000;
+		margin-bottom:0.5em;
+	}
+	
 
 /*********************************************************************************/
 /* Form Style                                                                    */
@@ -262,7 +273,9 @@
 	.button
 	{
 		display: inline-block;
-		margin-top: 2em;
+		/*Mod*/
+		/*margin-top: 2em;*/
+		margin-top: 0.5em;
 		padding: 0.6em 1em;
 		/*background: #6C2A6A;*/
 		background: #76265b;

@@ -32,7 +32,7 @@ Released   : 20140207
 		</div>
 		<div id="header" class="container">
 			<div id="logo">
-				<h1><a href="#"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
+				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
 				<span>Sistema web de venta de libros<br/><br/><strong>Panel de Administración</strong></span> </div>
 			<div id="menu">
 				<ul>

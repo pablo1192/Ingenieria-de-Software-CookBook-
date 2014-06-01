@@ -5,7 +5,8 @@ class LibroController extends BaseController {
 	public function listar()
 	{
 		//Se ignoran los libros dados de baja logica
-		$libros=Libro::all();
+		//~ $libros=Libro::all();
+		$libros=Libro::disponibles()->get();
 		return View::make('libro.libros',['libros'=>$libros]);
 	}
 

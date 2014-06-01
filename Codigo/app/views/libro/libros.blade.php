@@ -35,7 +35,18 @@
 
 
 <h2>Operaciones</h2>
-<a href="/admin/libros/crear" title="Agregue un nuevo libro al catálogo">Agregar</a> 
+<a href="/admin/libros/crear" title="Agregue un nuevo libro al catálogo" class="button button-verde button-mediano">Agregar</a> 
+
+
+
+<h2>Otros</h2>
+<p>Operaciones relacionadas con la gestión de los libros:</p>
+<a href="/admin/autores/" title="Gestione las editoriales" class="button button-negro button-mediano">Autores</a> 
+<a href="/admin/etiquetas/" title="Gestione las etiquetas" class="button button-negro button-mediano">Etiquetas</a> 
+<a href="/admin/editoriales/" title="Gestione las editoriales" class="button button-negro button-mediano">Editoriales</a> 
+<a href="/admin/idiomas/" title="Gestione los idiomas" class="button button-negro button-mediano">Idiomas</a> 
+
+<br/><br/>
 <a href="/admin/" title="Vuelve al panel de Administración">Volver</a> 
 
 @stop

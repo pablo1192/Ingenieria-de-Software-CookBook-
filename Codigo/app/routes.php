@@ -34,4 +34,24 @@ Route::post('/admin/libros/{id}/modificar',['uses'=>'LibroController@modificacio
 Route::get('/admin/libros/{id}/borrar',['uses'=>'LibroController@baja']);
 Route::get('/admin/libros/{id}/agotado',['uses'=>'LibroController@marcarComoAgotado']);
 
+//Gestion de Editorial
+Route::get('/admin/editoriales',['uses'=>'EditorialController@listar']);
+Route::get('/admin/editoriales/crear',['uses'=>'EditorialController@formularioAlta']);
+Route::post('/admin/editoriales/crear',['uses'=>'EditorialController@alta']);
+Route::get('/admin/editoriales/{id}/modificar',['uses'=>'EditorialController@formularioModificacion']);
+Route::post('/admin/editoriales/{id}/modificar',['uses'=>'EditorialController@modificacion']);
+Route::get('/admin/editoriales/{id}/borrar',['uses'=>'EditorialController@baja']);
+
+//Gestion de Idioma
+Route::get('/admin/idiomas',['uses'=>'IdiomaController@listar']);
+Route::get('/admin/idiomas/crear',['uses'=>'IdiomaController@formularioAlta']);
+Route::post('/admin/idiomas/crear',['uses'=>'IdiomaController@alta']);
+Route::get('/admin/idiomas/{id}/modificar',['uses'=>'IdiomaController@formularioModificacion']);
+Route::post('/admin/idiomas/{id}/modificar',['uses'=>'IdiomaController@modificacion']);
+Route::get('/admin/idiomas/{id}/borrar',['uses'=>'IdiomaController@baja']);
+
+
+
+
+
 ?>
