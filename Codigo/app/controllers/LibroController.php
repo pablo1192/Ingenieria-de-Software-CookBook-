@@ -21,7 +21,8 @@ class LibroController extends BaseController {
 		//Recupero las entidades secundarias, ignorando los valores por 'SIN' usado en caso de no tener ref.
 		$idiomas= Idioma::where('id','<>',1)->get();
 		$editoriales= Editorial::where('id','<>',1)->get();
-		return View::make('libro.crear',['idiomas'=>$idiomas, 'editoriales'=>$editoriales]);
+		$etiquetas= Etiqueta::where('id','<>',1)->get();
+		return View::make('libro.crear',['idiomas'=>$idiomas, 'editoriales'=>$editoriales,'etiquetas'=>$etiquetas]);
 	}
 	
 
