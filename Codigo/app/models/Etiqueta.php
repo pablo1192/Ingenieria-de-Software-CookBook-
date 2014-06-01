@@ -17,7 +17,7 @@ class Etiqueta extends Eloquent
         
         // Declaramos reglas para validar que el nombre  sea obligatorio
         $reglas =  array(
-            'nombre'  => array('required', 'max:100','unique:Etiqueta','alpha'),   
+            'nombre'  => array('required', 'max:100','unique:etiqueta,nombre','alpha'),   
         );
                 
         $validator = Validator::make($input, $reglas);

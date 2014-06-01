@@ -4,7 +4,7 @@
 
 <h1>Agregar una etiqueta</h1>
 <p>Complete el siguiente campo:</p>
-<form action="/admin/etiquetas/crear/" method="post">
+<form action="/admin/etiquetas/crear" method="post">
 	Nombre: <input name="nombre" value="" placeholder="No ingrese carácteres númericos, ni especiales"/><br/>
 	<br/><br/>
 	<input type="submit" value="Crear" title="Agrega esta etiqueta a Cookbook"/>
