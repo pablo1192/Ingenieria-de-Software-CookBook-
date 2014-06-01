@@ -34,4 +34,11 @@ Route::post('/admin/libros/{id}/modificar',['uses'=>'LibroController@modificacio
 Route::get('/admin/libros/{id}/borrar',['uses'=>'LibroController@baja']);
 Route::get('/admin/libros/{id}/agotado',['uses'=>'LibroController@marcarComoAgotado']);
 
+// Agregue algo de etiquetas, chequear el post que no rompa nada
+	
+Route::get('/admin/etiquetas', array('uses' => 'EtiquetasController@mostrarEtiquetas'));
+Route::get('/admin/etiquetas/crear',['uses'=>'EtiquetasController@formularioAlta']);
+Route::post('/admin/etiquetas/crear',['uses'=>'EtiquetasController@altaEtiqueta']);
+
+
 ?>
