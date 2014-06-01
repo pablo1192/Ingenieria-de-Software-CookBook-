@@ -12,9 +12,13 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 
 
 	public static function reglasDeValidacion(){
-/**	ToDo: Mejorar reglas. Agregar unique (y que ande). Separar reglas por creación/update.
-*/
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:5','required', 'email'], 'dni'=>['integer','min:7','required'], 'contraseña'=>['min:5','required']] ;
+		
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['integer','min:7','required', 'unique:usuario,dni'], 'contraseña'=>['min:5','required']] ;
+	}
+
+	public static function reglasDeValidacionMod(){
+
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['integer','min:7','required'], 'contraseña'=>['min:5','required']] ;
 	}
 
 

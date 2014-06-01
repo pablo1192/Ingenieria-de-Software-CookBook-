@@ -14,7 +14,6 @@ We encountered the following errors:
 
     @endforeach
 </ul>
-
 @endif
 
 <form method="post" action="/admin/usuarios/crear">

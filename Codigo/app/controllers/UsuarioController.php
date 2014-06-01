@@ -64,17 +64,58 @@ class UsuarioController extends BaseController {
 
     public function modificarUsuario($id)
     {
+
+        $validador= Validator::make(Input::all(),Usuario::reglasDeValidacionMod());
+
+        if($validador->fails()){
+            return Redirect::back()->withErrors($validador);
+        }
+        else{
+
             $usuario=Usuario::find($id);
-            $usuario->nombre=Input::get('nombre');
-            $usuario->apellido=Input::get('apellido');
-            $usuario->email=Input::get('email');
-            $usuario->dni=Input::get('dni');
-            $usuario->contraseña = Hash::make(Input::get('contraseña'));
+
+            if ($usuario->nombre != Input::get('nombre')) {
+                $usuario->nombre=Input::get('nombre');
+            }
+            if ($usuario->apellido != Input::get('apellido')){
+                $usuario->apellido=Input::get('apellido');
+            }
+            /*Si el email es diferente al suyo y no existe en la base de datos, se graban los cambios.*/
+            if ($usuario->email != Input::get('email') and (sizeof(Usuario::where('email','=',Input::get('email'))->get()) <= 0 )){
+                $usuario->email=Input::get('email');
+            }
+            else {
+                /*Si el email es igual al suyo, no realiza cambios.*/
+                if ($usuario->email == Input::get('email')) {
+                }
+                /*Si el email es diferente, pero existe en la base de datos, se le informa del error.*/
+                else {
+                return Redirect::back()->withErrors(['El email ingresado ya se encuentra en la base de datos']);
+                }
+            }
+
+            /*Si el dni es diferente al suyo y no existe en la base de datos, se graban los cambios.*/
+            if ($usuario->dni != Input::get('dni') and (sizeof(Usuario::where('dni','=',Input::get('dni'))->get()) <= 0 )){
+                $usuario->dni=Input::get('dni');
+            }
+            else {
+                /*Si el dni es igual al suyo, no realiza cambios.*/
+                if ($usuario->dni == Input::get('dni')) {
+                }
+                /*Si el dni es diferente, pero existe en la base de datos, se le informa del error.*/
+                else {
+                return Redirect::back()->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
+                }
+            }
+
+            if ($usuario->contraseña != Input::get('contraseña')){
+                $usuario->contraseña = Hash::make(Input::get('contraseña'));
+            }
+
             $usuario->save();
             
             return Redirect::to('/admin/usuarios/');
+          }
     }
- 
- 
 }
 ?>

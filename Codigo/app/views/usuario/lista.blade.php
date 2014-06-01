@@ -51,10 +51,3 @@
 <a href="/admin/usuarios/nuevo" title="Agregar un nuevo usuario">Agregar usuario</a> 
 
 @stop
-
-
-{{--@foreach ($posts->slice(0, 5) as $post)
-
-  <h1>{{ $post['title'] }}</h1>
-
-@endforeach --}}
