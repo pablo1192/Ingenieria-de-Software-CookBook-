@@ -27,16 +27,19 @@
 				@endforeach
 			</select> 
 			<input value="" type="checkbox" title="Habilitar la creación de un nuevo idioma" onchange="habilitarOtro(this,'idioma-otro')"/>Otro: 
-			<input id="idioma-otro" name="idioma-otro" value=""  disabled placeholder="Chino Mandarín"/><br/>			
+			<input id="idioma-otro" name="idioma-otro" value=""  disabled placeholder="Chino Mandarín"/><br/>
+    Etiqueta/as: <select name="etiqueta" multiple >
+	            @foreach($etiquetas as $etiqueta)
+				  {{'<option value="'. $etiqueta->id .'">'. $etiqueta->nombre .'</option>'}}
+				 @endforeach				
+			</select> 
+			<input type="checkbox" title="Habilitar la creación de una nueva etiqueta" onchange="habilitarOtro(this,'etiqueta-otro')" checked=false/>Otro: 
+			<input id="etiqueta-otro"name="etiqueta-otro" value=""  disabled placeholder="Comidas italianas"/><br/>			
 	Precio: <input size="4" name="precio" value="" placeholder="10.00"/><br/>
 	Cantidad de hojas: <input size="4" name="cantidadDeHojas" value="" placeholder="100"/><br/>
 	Tapa (*.jpg): <input name="tapa" type="file"/><br/>
 	Índice (*.jpg): <input name="tapa" type="file"/><br/>
-	Etiqueta/as: <select name="etiqueta" multiple >				
-				<option value="...">...</option>
-			</select> 
-			<input type="checkbox" title="Habilitar la creación de una nueva etiqueta" onchange="habilitarOtro(this,'etiqueta-otro')" checked=false/>Otro: 
-			<input id="etiqueta-otro" name="etiqueta-otro" value=""  disabled placeholder="tradicional"/><br/>
+	
 	
 	<br/><br/>
 	<input type="submit" value="Crear" title="Agrega este libro al catalogo"/>
