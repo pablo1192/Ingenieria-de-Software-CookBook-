@@ -13,7 +13,22 @@
     <th>¿Activo?</th>
     <th>Operaciones</th>
   </tr>
-@foreach($usuarios as $usuario)
+
+{{--Datos del admin.--}}
+{{
+'<tr align="center">
+    <td>'.$usuarios[0]['nombre'].'</td>
+    <td>--</td>
+    <td>'.$usuarios[0]['email'].'</td>
+    <td>--</td>
+    <td>--</td>
+    <td>--</td>
+    <td><a href="/admin/usuarios/'. $usuarios[0]['id']. '/modificar" title="Modificar los datos del administrador">Modificar</a> </td>
+  </tr>'
+}}
+
+{{--Corta el admin de la lista para no mostrar datos u operaciones irrelevantes.--}}
+@foreach($usuarios ->slice(1) as $usuario)
 {{
   '<tr align="center">
     <td>'.$usuario->nombre.'</td>
@@ -36,3 +51,10 @@
 <a href="/admin/usuarios/nuevo" title="Agregar un nuevo usuario">Agregar usuario</a> 
 
 @stop
+
+
+{{--@foreach ($posts->slice(0, 5) as $post)
+
+  <h1>{{ $post['title'] }}</h1>
+
+@endforeach --}}
