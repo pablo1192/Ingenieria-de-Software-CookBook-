@@ -15,8 +15,7 @@ class EtiquetasController extends BaseController
         // En este caso le estamos pasando un array con todas las etiquetas
     }
 	public function formularioAlta(){
-		$etiquetas = Etiqueta::where('id','<>',1)->get();//
-		return View::make('etiqueta.crear',['etiquetas'=> $etiquetas]); //
+		return View::make('etiqueta.crear'); //
 	}
 	public function altaEtiqueta()
 	{
@@ -27,13 +26,34 @@ class EtiquetasController extends BaseController
         // retornamos los mensajes de error con los datos viejos del formulario 
         // o un mensaje de éxito de la operación 
         if ($respuesta['error'] == true){
-            return Redirect::to('/admin/etiquetas')->withErrors($respuesta['mensaje'] )->withInput();
+            return Redirect::back()->withErrors($respuesta['mensaje'] )->withInput();
         }else{
             return Redirect::to('/admin/etiquetas')->with('mensaje', $respuesta['mensaje']);
         }
     }
+	public function modificacionEtiqueta($id){
+		
+		$validador= Validator::make(Input::all(),Etiqueta::reglasDeValidacion());
+		
+		if($validador->fails()){
+			//~ return Redirect::to('/admin/idiomas/'.$id.'/modificar/')->withErrors($validador)->withInput();
+			return Redirect::back()->withErrors($validador)->withInput();
+		}
+		else{
+			//Modifico el idioma
+			$etiqueta=Etiqueta::find($id);
+			$etiqueta->nombre=Input::get('nombre');
+			$etiqueta->save();
 			
+			return Redirect::to('/admin/etiquetas/');
+		}
+	}
 			
+	public function formularioModificacionEtiqueta($id){
+		//ToDo: Proteger este metodo 
+		$etiqueta=Etiqueta::find($id);
+		return View::make('etiqueta.modificar',['etiqueta'=>$etiqueta]);
+	}		
  
 }
 ?>

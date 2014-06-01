@@ -9,6 +9,7 @@ class Etiqueta extends Eloquent
 	 * @var string
 	 */
 	protected $table = 'etiqueta';
+	protected $fillable = ['nombre'];
 	
 	public static function agregarEtiqueta($input){
         // función que recibe como parámetro la información del formulario para crear la etiqueta
@@ -40,7 +41,10 @@ class Etiqueta extends Eloquent
         }     
         
         return $respuesta; 
-  }
-	
+    }
+  public static function reglasDeValidacion(){
+		//Solo letras como minimo 5, q sea unico y no vacio..
+		return ['nombre'=>['alpha','min:5','required','unique:idioma,nombre,1']];
+	}
 }
 ?>

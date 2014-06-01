@@ -51,11 +51,11 @@ Route::post('/admin/idiomas/{id}/modificar',['uses'=>'IdiomaController@modificac
 Route::get('/admin/idiomas/{id}/borrar',['uses'=>'IdiomaController@baja']);
 
 
-// Agregue algo de etiquetas, chequear el post que no rompa nada
+// Agregue algo de etiquetas
 
 Route::get('/admin/etiquetas', array('uses' => 'EtiquetasController@mostrarEtiquetas'));
 Route::get('/admin/etiquetas/crear',['uses'=>'EtiquetasController@formularioAlta']);
 Route::post('/admin/etiquetas/crear',['uses'=>'EtiquetasController@altaEtiqueta']);
-
-
+Route::get('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@formularioModificacionEtiqueta']);
+Route::post('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@modificacionEtiqueta']);
 ?>
