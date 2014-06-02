@@ -24,7 +24,7 @@ class UsuarioController extends BaseController {
         $validador= Validator::make(Input::all(),Usuario::reglasDeValidacion());
 
         if($validador->fails()){
-            return Redirect::back()->withErrors($validador);
+            return Redirect::back()->withInput()->withErrors($validador);
         }
         else{
 
@@ -51,7 +51,7 @@ class UsuarioController extends BaseController {
         $validador= Validator::make(Input::all(),Usuario::reglasDeValidacion());
 
         if($validador->fails()){
-            return Redirect::back()->withErrors($validador);
+            return Redirect::back()->withInput()->withErrors($validador);
         }
         else{
 
@@ -100,7 +100,8 @@ class UsuarioController extends BaseController {
         $validador= Validator::make(Input::all(),Usuario::reglasDeValidacionMod());
 
         if($validador->fails()){
-            return Redirect::back()->withErrors($validador);
+            
+            return Redirect::back()->withInput()->withErrors($validador);
         }
         else{
 

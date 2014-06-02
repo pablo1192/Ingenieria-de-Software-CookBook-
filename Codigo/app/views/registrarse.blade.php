@@ -14,11 +14,11 @@ We encountered the following errors:
 </ul>
 @endif
 <form method="post" action="/registrarse">
-    Nombre: <input name="nombre" value=""/><br/>
-    Apellido: <input name="apellido" value=""/><br/>
-    Email: <input name="email" value="" placeholder="ejemplo@gmail.com"/><br/>
-    DNI: <input name="dni" value="" placeholder="123456789"/><br/>
-    Contraseña: <input type=password name="contraseña" value=""/><br/><br/>
+    Nombre: <input name="nombre" value="{{Input::old('nombre')}}"/><br/>
+    Apellido: <input name="apellido" value="{{Input::old('apellido')}}"/><br/>
+    Email: <input name="email" value="{{Input::old('email')}}" placeholder="ejemplo@gmail.com"/><br/>
+    DNI: <input name="dni" value="{{Input::old('dni')}}" placeholder="123456789"/><br/>
+    Contraseña: <input type=password name="contraseña" value=""/><br/>
     <input type="submit" value="Guardar" title="Guardar usuario" />       
     <a href="/login" style="text-decoration:none;">
         <input type="button" value="Cancelar" title="Cancelar la operacion"/>
