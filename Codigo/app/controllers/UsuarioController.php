@@ -70,7 +70,7 @@ class UsuarioController extends BaseController {
     }
  
      /**
-     * Ver detalles de usuario | No  usado por el momento
+     * Ver detalles de usuario | No usado por el momento
    *  
    * public function verUsuario($id)
    * {
@@ -100,7 +100,7 @@ class UsuarioController extends BaseController {
         $validador= Validator::make(Input::all(),Usuario::reglasDeValidacionMod());
 
         if($validador->fails()){
-            
+
             return Redirect::back()->withInput()->withErrors($validador);
         }
         else{

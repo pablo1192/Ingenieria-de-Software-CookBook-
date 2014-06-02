@@ -51,7 +51,6 @@ Route::get('/admin/idiomas/{id}/borrar',['uses'=>'IdiomaController@baja']);
 
 
 // Agregue algo de etiquetas
-
 Route::get('/admin/etiquetas', array('uses' => 'EtiquetasController@mostrarEtiquetas'));
 Route::get('/admin/etiquetas/crear',['uses'=>'EtiquetasController@formularioAlta']);
 Route::post('/admin/etiquetas/crear',['uses'=>'EtiquetasController@altaEtiqueta']);
@@ -60,7 +59,6 @@ Route::post('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@modi
 
 
 //Gestion de Autores (alta,modificacion)
-
 Route::get('/admin/autores',['uses'=>'AutorController@listar']);
 Route::get('/admin/autores/crear',['uses'=>'AutorController@formularioAlta']);
 Route::post('/admin/autores/crear',['uses'=>'AutorController@alta']);
@@ -78,8 +76,13 @@ Route::get('/admin/usuarios/{id}/bloquear',['uses'=>'UsuarioController@bloquearU
 Route::get('/admin/usuarios/{id}/modificar',['uses'=>'UsuarioController@modificarDatos']);
 Route::post('/admin/usuarios/{id}/modificar',['uses'=>'UsuarioController@modificarUsuario']);
 
+//Registro, Login y Logout
 Route::get('/registrarse', array('uses' => 'UsuarioController@nuevoUsuario'));
 Route::post('/registrarse', array('uses' => 'UsuarioController@registrarUsuario'));
 
 Route::get('/login', array('uses' => 'HomeController@showlogin'));
 Route::post('/login', array('uses' => 'HomeController@doLogin'));
+Route::get('/logout', array('uses' => 'HomeController@doLogout'));
+
+// No implementado por el momento.
+//Route::get('/perfil', array('as' => 'perfil', function () { }))->before('auth');
