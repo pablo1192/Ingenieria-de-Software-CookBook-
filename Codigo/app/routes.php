@@ -60,6 +60,15 @@ Route::get('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@formu
 Route::post('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@modificacionEtiqueta']);
 
 
+//Gestion de Autores (alta,modificacion)
+
+Route::get('/admin/autores',['uses'=>'AutorController@listar']);
+Route::get('/admin/autores/crear',['uses'=>'AutorController@formularioAlta']);
+Route::post('/admin/autores/crear',['uses'=>'AutorController@alta']);
+Route::get('/admin/autores/{id}/modificar',['uses'=>'AutorController@formularioModificacion']);
+Route::post('/admin/autores/{id}/modificar',['uses'=>'AutorController@modificacion']);
+Route::get('/admin/autores/{id}/borrar',['uses'=>'AutorController@baja']);
+
 
 //Gestión de Usuarios para admin. Nuevo/Crear: funciones de prueba
 Route::get('/admin/usuarios', array('uses' => 'UsuarioController@mostrarUsuarios'));
