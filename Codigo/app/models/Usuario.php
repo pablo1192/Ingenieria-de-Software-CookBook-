@@ -10,16 +10,21 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 	protected $fillable = array('nombre', 'apellido', 'email', 'dni');
 	protected $guarded = array('contraseña');
 
-
+    /* No existe regla nativa length para números (DNI). Luego busco la forma de implementarla. */
 	public static function reglasDeValidacion(){
 		
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['integer','min:7','required', 'unique:usuario,dni'], 'contraseña'=>['min:5','required']] ;
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['numeric','required', 'unique:usuario,dni'], 'contraseña'=>['min:5','required']] ;
 	}
 
 	public static function reglasDeValidacionMod(){
 
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['integer','min:7','required'], 'contraseña'=>['min:5','required']] ;
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['numeric','required'], 'contraseña'=>['min:5','required']] ;
 	}
+
+
+	public function localidad(){
+		return $this->belongsTo('Localidad','localidad_id');
+	}	
 
 
 	/**
@@ -39,7 +44,7 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	public function getAuthPassword()
 	{
-		return $this->password;
+		return $this->contraseña;
 	}
 
 	/**

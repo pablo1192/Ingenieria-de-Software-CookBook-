@@ -9,12 +9,16 @@ class UsuarioController extends BaseController {
     }
 
 
-    public function nuevoUsuario()
+    public function nuevoTestUsuario()
     {
+       /* $localidades= Localidad::get();
+        $provincias= Provincia::get();
+        return View::make('Usuario.crear',['localidades'=>$localidades, 'provincias'=>$provincias]); */
         return View::make('Usuario.crear');
     }
   
-    public function crearUsuario()
+   /*   Función de testing */
+        public function crearUsuario()
     {
 
         $validador= Validator::make(Input::all(),Usuario::reglasDeValidacion());
@@ -33,6 +37,34 @@ class UsuarioController extends BaseController {
          $user->save();
 
          return Redirect::to('/admin/usuarios');
+         }
+    }
+
+    public function nuevoUsuario()
+    {
+        return View::make('registrarse');
+    }
+
+    public function registrarUsuario()
+    {
+
+        $validador= Validator::make(Input::all(),Usuario::reglasDeValidacion());
+
+        if($validador->fails()){
+            return Redirect::back()->withErrors($validador);
+        }
+        else{
+
+         $user = new Usuario;
+         $user->nombre = Input::get('nombre');
+         $user->apellido = Input::get('apellido');
+         $user->email = Input::get('email');
+         $user->dni = Input::get('dni');
+         $user->contraseña = Hash::make(Input::get('contraseña'));
+         $user->save();
+
+         /*return Redirect::to('/login')->with('mensaje_registro', 'Usuario registrado con éxito.');;*/
+         return Redirect::to('/login');
          }
 
     }

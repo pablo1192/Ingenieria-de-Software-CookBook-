@@ -23,7 +23,6 @@ Route::get('/test', function()
 	return	"Existen ".Usuario::count()." usuarios en la BD ;).<br/>El 1ro  se llama «".$admin['nombre']."» y su mail es «".$admin['email']."».<br/>¿La contraseña es \"admin\"? ".(Hash::check('admin',$admin['contraseña'])? 'SI :)':'No :('.var_dump($admin));
 });
 
-
 //Gestion de Libros
 Route::get('/admin/libros',['uses'=>'LibroController@listar']);
 Route::get('/admin/libros/crear',['uses'=>'LibroController@formularioAlta']);
@@ -72,13 +71,15 @@ Route::get('/admin/autores/{id}/borrar',['uses'=>'AutorController@baja']);
 
 //Gestión de Usuarios para admin. Nuevo/Crear: funciones de prueba
 Route::get('/admin/usuarios', array('uses' => 'UsuarioController@mostrarUsuarios'));
-Route::get('/admin/usuarios/nuevo', array('uses' => 'UsuarioController@nuevoUsuario'));
+Route::get('/admin/usuarios/nuevo', array('uses' => 'UsuarioController@nuevoTestUsuario'));
 Route::post('/admin/usuarios/crear', array('uses' => 'UsuarioController@crearUsuario'));
 Route::get('/admin/usuarios/{id}', array('uses'=>'UsuarioController@verUsuario'));
 Route::get('/admin/usuarios/{id}/bloquear',['uses'=>'UsuarioController@bloquearUsuario']);
 Route::get('/admin/usuarios/{id}/modificar',['uses'=>'UsuarioController@modificarDatos']);
 Route::post('/admin/usuarios/{id}/modificar',['uses'=>'UsuarioController@modificarUsuario']);
 
+Route::get('/registrarse', array('uses' => 'UsuarioController@nuevoUsuario'));
+Route::post('/registrarse', array('uses' => 'UsuarioController@registrarUsuario'));
 
-
-?>
+Route::get('/login', array('uses' => 'HomeController@showlogin'));
+Route::post('/login', array('uses' => 'HomeController@doLogin'));

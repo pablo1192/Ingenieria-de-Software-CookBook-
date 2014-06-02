@@ -20,4 +20,42 @@ class HomeController extends BaseController {
 		return View::make('hello');
 	}
 
+	public function showLogin()
+	{
+		return View::make('login');
+	}
+
+	public function doLogin()
+	{
+		$rules = array(
+			'email'    => 'required|email',
+			'contraseña' => 'required|min:3'
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			return Redirect::to('/login')
+				->withErrors($validator)
+				->withInput(Input::except('contraseña'));
+		} else {
+
+			// No cambiar "password" por "contraseña" porque se rompe. Es algo del Laravel.
+			$userdata = array(
+				'email' 	=> Input::get('email'),
+				'password' 	=> Input::get('contraseña')
+			);
+
+			if (Auth::attempt($userdata)) {
+
+				return Redirect::to('/admin/usuarios');
+
+			} else {	 	
+
+				return Redirect::to('/login');
+			}
+
+		}
+	}
+
 }
