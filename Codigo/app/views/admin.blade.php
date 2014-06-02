@@ -31,7 +31,10 @@ Released   : 20140207
 				<a href="/login" title="Ingrese al sistema con su cuenta registrada">Iniciar Sesión</a> 
 				<a href="/registrarse" title="Obtenga una cuenta de usuario">Registrarse</a>
 			@else
-				Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}} </strong>
+				Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
+				--
+				<a href="{{ URL::to('/perfil') }}">Modificar Perfil</a>
+				--
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 			@endif
 		</div>
