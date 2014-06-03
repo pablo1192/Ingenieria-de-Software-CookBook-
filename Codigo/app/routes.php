@@ -88,3 +88,15 @@ Route::get('/logout', array('uses' => 'HomeController@doLogout'))->before('auth'
 Route::get('/perfil', array('uses' => 'UsuarioController@formularioPerfil'))->before('auth');
 Route::post('/perfil', array('uses' => 'UsuarioController@modificarPerfil'));
 Route::get('/eliminar', array('uses' => 'UsuarioController@darBaja'))->before('auth');
+
+
+//Manejo de errores de Servidor
+Route::get('/404',function(){
+	return View::make('error404');
+});
+
+Route::get('/500',function(){
+	return View::make('error500');
+});
+
+

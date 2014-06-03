@@ -79,3 +79,11 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+
+/*Agregado soporte de Error 404*/
+App::missing(function($excepcion)
+{
+    return Redirect::to('/404')->with('url',Request::url());
+    
+});
