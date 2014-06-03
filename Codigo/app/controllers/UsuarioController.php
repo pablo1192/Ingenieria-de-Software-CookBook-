@@ -110,7 +110,7 @@ class UsuarioController extends BaseController {
 
         if($validador->fails()){
 
-            return Redirect::back()->withInput()->withErrors($validador);
+            return Redirect::back()->withInput(Input::except('contraseña'))->withErrors($validador);
         }
         else{
 
@@ -132,7 +132,7 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el email es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withErrors(['El email ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El email ingresado ya se encuentra en la base de datos']);
                 }
             }
 
@@ -146,11 +146,11 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el dni es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
                 }
             }
 
-            if ($usuario->contraseña != Input::get('contraseña')){
+            if ( ($usuario->contraseña != Input::get('contraseña')) AND (Input::get('contraseña') != null) ){
                 $usuario->contraseña = Hash::make(Input::get('contraseña'));
             }
 
@@ -176,7 +176,7 @@ class UsuarioController extends BaseController {
 
         if($validador->fails()){
 
-            return Redirect::back()->withInput()->withErrors($validador);
+            return Redirect::back()->withInput(Input::except('contraseña'))->withErrors($validador);
         }
         else{
 
@@ -197,7 +197,7 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el email es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withErrors(['El email ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El email ingresado ya se encuentra en la base de datos']);
                 }
             }
 
@@ -211,11 +211,13 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el dni es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
                 }
             }
 
-            if (Auth::user()->contraseña != Input::get('contraseña')){
+
+
+            if ( (Auth::user()->contraseña != Input::get('contraseña')) AND (Input::get('contraseña') != null) ){
                 Auth::user()->contraseña = Hash::make(Input::get('contraseña'));
             }
 

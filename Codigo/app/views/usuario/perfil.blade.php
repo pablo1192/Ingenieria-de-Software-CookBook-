@@ -21,7 +21,7 @@ We encountered the following errors:
 	Apellido: <input name="apellido" value="{{Input::old('apellido',Auth::user()->apellido)}}"/><br/>
 	Email: <input name="email" value="{{Input::old('email',Auth::user()->email)}}"/><br/>
 	DNI: <input name="dni" value="{{Input::old('dni',Auth::user()->dni)}}"/><br/>
-	Contraseña: <input type=password name="contraseña" value="{{Input::old('contraseña',Auth::user()->contraseña)}}"/><br/>
+	Contraseña: <input type=password name="contraseña" value=""/><br/>
 	<br/>
 	<input type="submit" value="Modificar" title="Modificar los datos" />		
 	<a href="/admin/usuarios/" style="text-decoration:none;">
