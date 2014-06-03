@@ -9,7 +9,7 @@ class UsuarioController extends BaseController {
     {
         $Usuario = Usuario::all();
         
-        return View::make('Usuario.lista', array('usuarios' => $Usuario));
+        return View::make('usuario.lista', array('usuarios' => $Usuario));
     }
 
     
@@ -63,7 +63,7 @@ class UsuarioController extends BaseController {
        /* $localidades= Localidad::get();
         $provincias= Provincia::get();
         return View::make('Usuario.crear',['localidades'=>$localidades, 'provincias'=>$provincias]); */
-        return View::make('Usuario.crear');
+        return View::make('usuario.crear');
     }
   
    /*   Función de testing */
@@ -223,6 +223,13 @@ class UsuarioController extends BaseController {
             
             return Redirect::to('/admin/usuarios/');
           }
+    }
+
+    public function darBaja()
+    {
+        Auth::user()->dadoDeBaja = 1;
+        Auth::user()->save();
+        return Redirect::to('/logout');
     }
 
 }

@@ -15,6 +15,7 @@
   </tr>
 
 {{--Datos del admin.--}}
+{{--Función deshabilitada.
 {{
 '<tr align="center">
     <td>'.$usuarios[0]['nombre'].'</td>
@@ -26,6 +27,7 @@
     <td><a href="/admin/usuarios/'. $usuarios[0]['id']. '/modificar" title="Modificar los datos del administrador">Modificar</a> </td>
   </tr>'
 }}
+--}}
 
 {{--Corta el admin de la lista para no mostrar datos u operaciones irrelevantes.--}}
 @foreach($usuarios ->slice(1) as $usuario)
