@@ -1,7 +1,8 @@
 <?php
 class Libro extends Eloquent { 
     protected $table = 'libro';
-    //protected fillable= [] ???
+    // Son excluidos ademas de las relaciones: los No nulos con valor por defecto (agotadoy dadoDeBaja) y los archivos (tapa e índice).
+    protected $fillable= ['isbn','título','precio','hojas','añoEdición','editorial_id','idioma_id'];
     
     public function editorial(){
 		return $this->belongsTo('Editorial','editorial_id');
@@ -55,6 +56,42 @@ class Libro extends Eloquent {
 			'indice'=>['required','mimes:jpeg,png,jpg']
 		];
 	}
+	
+	
+	//	Funciones de Utilidad
+	//
+	
+	//Ubica la tapa y portada en sus respectivos directorios renombrandolos como coresponda.
+	//Actualiza al libro
+	//$libro= instancia de libro, $archivoDe.. instancia de uploadedFile (input::file(..))
+	public static function ubicarArchivos($libro,$archivoDeTapa,$archivoDeIndice){
+		$carpetaDatos=public_path().'/datos/';
+		$tapaFinal=$libro->id. '.'. $archivoDeTapa->getClientOriginalExtension();
+		$indiceFinal=$libro->id. '.'.$archivoDeIndice->getClientOriginalExtension();
+		//~ $archivoDeTapa->move($carpetaDatos. 'tapas/', $libro->id. '.'. $archivoDeTapa->getClientOriginalExtension());
+		$archivoDeTapa->move($carpetaDatos. 'tapas', $tapaFinal);
+		//~ $archivoDeIndice->move($carpetaDatos. 'indice/', $libro->id. '.'. $archivoDeIndice->getClientOriginalExtension());
+		$archivoDeIndice->move($carpetaDatos. 'indices',  $indiceFinal);
 		
+		$libro->tapa=$tapaFinal;
+		$libro->índice=$indiceFinal;
+		$libro->save();
+	}
+	
+	public static function borrarArchivos($id){
+		$libro= Libro::find($id);
+		$resultado=false;
+		$carpetaDatos=public_path().'/datos/';
+		if(File::exists($carpetaDatos.'tapas/'.$libro->tapa)){
+			$resultado&=File::delete($carpetaDatos.'tapas/'.$libro->tapa);
+		}
+
+		if(File::exists($carpetaDatos.'indice/'.$libro->índice)){
+			$resultado&=File::delete($carpetaDatos.'indice/'.$libro->índice);
+		}
+		
+		return $resultado;
+	}
+	
 }
 ?>

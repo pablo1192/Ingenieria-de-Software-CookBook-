@@ -3,7 +3,7 @@
 @section('contenido')
 <h1>Gestion de libros:</h1>
 <h2>Libros <span title="Cantidad de libros en el Sistema">({{count($libros)}})</span>:</h2>
-<table width="80%">
+<table width="90%">
 	<tr>
 		<th>ISBN</th>
 		<th>Titulo</th>
@@ -14,21 +14,19 @@
 		<th>Operaciones</th>
 	</tr>
 @foreach($libros as $libro )
-{{
-	'<tr>
-		<td>'.$libro->isbn.'</td>
-		<td><a href="/admin/libros/'. $libro->id. '" title="Ver detalles de este libro">'.$libro->título.'</a></td>
-		<td>¿?</td>
-		<td>'.$libro->editorial->nombre.'</td>
-		<td>$'.$libro->precio.'</td>
-		<td>'.($libro->agotado?'No':'Si').'</td>				
-		<td><a href="/admin/libros/'. $libro->id. '/modificar" title="Modificar este libro">Modificar</a> 
-			<a href="/admin/libros/'. $libro->id. '/agotado" title="Marcar como '.(($libro->agotado)?'disponible':'agotado').'" onclick="return confirm(\'¿Ud está seguro que desea marcar como '.(($libro->agotado)?'disponible':'agotado').' el libro \n«'. $libro->título .'» ?\')">'.(($libro->agotado)?'Disponible':'Agotado').'</a>
-			<a href="/admin/libros/'. $libro->id. '/borrar" title="Borrar este libro" onclick="return confirm(\'¿Ud está seguro que desea eliminar el libro \n«'. $libro->título .'» ?\')">Eliminar</a>
+	<tr>
+		<td>{{$libro->isbn}}</td>
+		<td><a href="/admin/libros/{{$libro->id}}" title="Ver detalles de este libro">{{$libro->título}}</a></td>
+		<td>@foreach(($libro->autores) as $autor) {{$autor->nombre}} @endforeach</td>
+		<td>{{$libro->editorial->nombre}}</td>
+		<td>{{$libro->precio}}</td>
+		<td>{{$libro->agotado?'No':'Si'}}</td>				
+		<td><a href="/admin/libros/{{$libro->id}}/modificar" title="Modificar este libro">Modificar</a> 
+			<a href="/admin/libros/{{$libro->id}}/agotado" title="Marcar como {{(($libro->agotado)?'disponible':'agotado')}}" onclick="return confirm('¿Ud está seguro que desea marcar como {{(($libro->agotado)?'disponible':'agotado')}} el libro \n«{{ $libro->título }}» ?')">{{(($libro->agotado)?'Disponible':'Agotado')}}</a>
+			<a href="/admin/libros/{{$libro->id}}/borrar" title="Borrar este libro" onclick="return confirm('¿Ud está seguro que desea eliminar el libro \n{{$libro->título}}» ?')">Eliminar</a>
 		</td>
-	</tr>'
-	
-}}
+	</tr>
+
 @endforeach
 	
 </table>	
