@@ -2,15 +2,22 @@
 
 @section('contenido')
 
-
 <html>
 <head>
 	<title>Login</title>
 </head>
+
 <body>
 
 	{{ Form::open(array('url' => 'login')) }}
-		<h1>Login</h1>
+		<h1>Login</h1> </br>
+
+		@if ($alert = Session::get('ingreso-fallido'))
+		    <div class="alert alert-warning">
+		        {{ $alert }}
+		    </div>
+		@endif
+
 		<p>
 			{{ $errors->first('email') }}<br/>
 			{{ $errors->first('contraseña') }}

@@ -2,17 +2,18 @@
 
 @section('contenido')
 
-<h1>Agregar un usuario</h1>
-<p>Complete los siguientes campos:</p>
-   
+<h1>Registrarse en el sistema</h1>
+
+</br>
 @if($errors->has())
-We encountered the following errors:
 <ul>
     @foreach($errors->all() as $message)
     <li>{{ $message }}</li>
     @endforeach
 </ul>
 @endif
+
+<p>Complete los siguientes campos:</p>
 <form method="post" action="/registrarse">
     Nombre: <input name="nombre" value="{{Input::old('nombre')}}"/><br/>
     Apellido: <input name="apellido" value="{{Input::old('apellido')}}"/><br/>

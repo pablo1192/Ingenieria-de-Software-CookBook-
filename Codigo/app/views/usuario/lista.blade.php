@@ -1,6 +1,13 @@
 @extends('admin')
 
 @section('contenido')
+
+@if ($alert = Session::get('ingreso-exitoso'))
+    <center><div class="alert alert-warning">
+        <strong>{{ $alert }}</strong>
+    </div></center>
+@endif
+
 <h1>Gestión de usuarios:</h1>
 <h2>Usuarios <span title="Usuarios en el Sistema">({{count($usuarios)}})</span>:</h2>
 <table width="80%">

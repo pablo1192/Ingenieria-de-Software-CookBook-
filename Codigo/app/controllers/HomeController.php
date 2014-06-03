@@ -57,13 +57,13 @@ class HomeController extends BaseController {
 
 				} else {
 
-					return Redirect::to('/admin/usuarios');
+					return Redirect::to('/admin/usuarios')->with('ingreso-exitoso', 'Ha ingresado con éxito al sistema.');
 
 				}
 	
 			} else {
 
-				return Redirect::to('/login');
+				return Redirect::to('/login')->with('ingreso-fallido', 'Sus credenciales son inválidas.');
 			}
 		}
 	}

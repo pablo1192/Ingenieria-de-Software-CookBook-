@@ -6,7 +6,6 @@
 <h2>«{{Auth::user()->nombre . ' ' . Auth::user()->apellido}}»</h2>
 
 @if($errors->has())
-We encountered the following errors:
 <ul>
     @foreach($errors->all() as $message)
 
