@@ -1,4 +1,4 @@
-@extends('admin')
+@extends('template')
 
 @section('contenido')
 
@@ -13,6 +13,12 @@
 		<h1>Login</h1> </br>
 
 		@if ($alert = Session::get('ingreso-fallido'))
+		    <div class="alert alert-warning">
+		        {{ $alert }}
+		    </div>
+		@endif
+
+		@if ($alert = Session::get('cuenta-invalida'))
 		    <div class="alert alert-warning">
 		        {{ $alert }}
 		    </div>

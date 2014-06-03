@@ -14,7 +14,7 @@
 </div>
 @endif
 <form method="post" action="/admin/editoriales/{{$editorial->id}}/modificar">
-	<input name="nombre" placeholder="Chino Mandarín" value="{{Input::old('nombre',$editorial->nombre)}}"/>
+	<input name="nombre" placeholder="Chino Mandarín" value="{{Input::old('nombre',$editorial->nombre)}}"/> <span class="tooltip" title="El nombre debe contener sólo letras y de longitud mayor a 5.">[?]</span>
 	<br/><br/>
 	<input type="submit" value="Modificar" title="Agrega esta editorial al sistema" />		
 	<a href="/admin/editoriales/" style="text-decoration:none;">

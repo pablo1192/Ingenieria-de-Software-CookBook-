@@ -42,7 +42,7 @@ class Libro extends Eloquent {
 			'isbn'=>['required','numeric','digits_between:10,13'],
 			'titulo'=>['required','regex:/[a-zñÑáéíóú 0-9]+/i','min:2','max:64'],
 			'autor'=>['array','exists:autor,id',],
-			'autor-otro'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5','required_without:autor'],
+			'autor-otro'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5','required_without:autor', 'unique:autor,nombre'],
 			'editorial'=>['exists:editorial,id','required_without:editorial-otro'],
 			'editorial-otro'=>['regex:/[a-zñ ]+/i','max:64','min:5','unique:editorial,nombre,1','required_without:editorial'],
 			'idioma'=>['exists:idioma,id','required_without:idioma-otro'],

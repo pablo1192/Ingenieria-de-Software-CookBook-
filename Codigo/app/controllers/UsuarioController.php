@@ -94,7 +94,7 @@ class UsuarioController extends BaseController {
         $usuario=Usuario::find($id);
         $usuario->bloqueado=!($usuario->bloqueado);
         $usuario->save();
-        return Redirect::to('/admin/usuarios');
+        return Redirect::to('/admin/usuarios#area');
     }
 
     public function modificarDatos($id)

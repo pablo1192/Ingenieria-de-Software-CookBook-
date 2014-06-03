@@ -4,7 +4,7 @@
 <h1>Visualización de «{{$libro->título}}»</h1>
 <div style="width:850px;">
 	<div style="float:left;width:250px;text-align:center;">
-		<img src="/public/datos/tapas/{{$libro->tapa}}" alt="Tapa del libro" title="Tapa del libro" width="175" style="box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
+		<img src="/datos/tapas/{{$libro->tapa}}" alt="Tapa del libro" title="Tapa del libro" width="175" style="box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
 	</div>
 	<div style="float:right;">
 	<table width="100%" style="vertical-align:left;">
@@ -25,7 +25,7 @@
 			<td>{{$libro->editorial->nombre}}</td>
 		</tr>
 		<tr>
-			<td>Cantidad de Hojas:</td>
+			<td>Cantidad de hojas:</td>
 			<td>{{$libro->hojas}}</td>
 		</tr>
 		<tr>
@@ -33,8 +33,8 @@
 			<td>{{$libro->idioma->nombre}}</td>
 		</tr>
 		<tr>
-			<td>Indice:</td>
-			<td><a href="/public/datos/indices/{{$libro->índice}}" target="_blank" title="Haga click para visualizar un escaneo del índice del libro">Visualizar índice</a></td>
+			<td>Índice:</td>
+			<td><a href="/datos/indices/{{$libro->índice}}" target="_blank" title="Haga click para visualizar un escaneo del índice del libro.">Visualizar índice</a></td>
 		</tr>
 		<tr>
 			<td>Etiquetas:</td>
@@ -45,7 +45,7 @@
 	</div>
 	<br style="clear:both;"/><br/>
 <strong>Precio: ${{$libro->precio}}</strong><br/>
-<strong>Disponibilidad: {{($libro->agotado)? '<span title="Este libro figura en el catálogo como agotado y no es posible ser comprado." >No</span>':'<span title="Este libro está disponible para compra en el catálogo.">Si</span>'}}</strong>
+<strong>Disponibilidad: {{($libro->agotado)? '<span title="Este libro figura en el catálogo como agotado y no puede ser comprado." >No</span>':'<span title="Este libro está disponible para comprarlo en el catálogo.">Sí</span>'}}</strong>
 
 </div>
 	<br/><br/>

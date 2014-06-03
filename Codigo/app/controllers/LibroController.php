@@ -187,7 +187,8 @@ class LibroController extends BaseController {
 		
 		$libro->dadoDeBaja=true;
 		$libro->save();
-		return Redirect::back();
+		//return Redirect::back();
+		return Redirect::to('/admin/libros#area');
 	}
 	
 	
@@ -198,7 +199,8 @@ class LibroController extends BaseController {
 		$libro=Libro::find($id);
 		$libro->agotado=!($libro->agotado);
 		$libro->save();
-		return Redirect::back();
+		//return Redirect::back();
+		return Redirect::to('/admin/libros#area');
 	}
 		
 	

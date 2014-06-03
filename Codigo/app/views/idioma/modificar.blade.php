@@ -14,7 +14,7 @@
 </div>
 @endif
 <form method="post" action="/admin/idiomas/{{$idioma->id}}/modificar">
-	<input name="nombre" placeholder="Chino Mandarín" value="{{Input::old('nombre',$idioma->nombre)}}"/>
+	<input name="nombre" placeholder="Chino Mandarín" value="{{Input::old('nombre',$idioma->nombre)}}"/><span class="tooltip" title="El nombre debe contener sólo letras y de longitud mayor a 5.">[?]</span>
 	<br/><br/>
 	<input type="submit" value="Modificar" title="Agrega este idioma al sistema" />		
 	<a href="/admin/idiomas/" style="text-decoration:none;">

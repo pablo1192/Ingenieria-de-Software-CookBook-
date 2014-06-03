@@ -53,7 +53,7 @@ class HomeController extends BaseController {
 
 				if ((Auth::user()->dadoDeBaja == 1) OR (Auth::user()->bloqueado == 1)) {
 
-					return Redirect::to('/logout');
+					return Redirect::to('/logout')->with('cuenta-invalida', 'Su cuenta ha sido deshabilitada.');
 
 				} else {
 

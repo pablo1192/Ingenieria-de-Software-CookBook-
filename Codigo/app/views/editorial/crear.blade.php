@@ -14,7 +14,7 @@
 </div>
 @endif
 <form method="post" action="/admin/editoriales/crear">
-	<input name="nombre" placeholder="Sudamericana" value=""/>
+	<input name="nombre" placeholder="Sudamericana" value=""/> <span class="tooltip" title="El nombre debe contener sólo letras y de longitud mayor a 5.">[?]</span>
 	<br/><br/>
 	<input type="submit" value="Crear" title="Agrega esta editorial al sistema" />
 	<a href="/admin/editoriales/" style="text-decoration:none;">

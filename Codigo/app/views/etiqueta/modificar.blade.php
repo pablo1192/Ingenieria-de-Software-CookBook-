@@ -14,7 +14,7 @@
 </div>
 @endif
 <form method="post" action="/admin/etiquetas/{{$etiqueta->id}}/modificar">
-	<input name="nombre" placeholder="salsas" value="{{Input::old('nombre',$etiqueta->nombre)}}"/>
+	<input name="nombre" placeholder="salsas" value="{{Input::old('nombre',$etiqueta->nombre)}}"/> <span class="tooltip" title="El nombre debe contener sólo letras.">[?]</span>
 	<br/><br/>
 	<input type="submit" value="Modificar" title="Modifica la etiqueta en el sistema" />		
 	<a href="/admin/etiquetas/" style="text-decoration:none;">

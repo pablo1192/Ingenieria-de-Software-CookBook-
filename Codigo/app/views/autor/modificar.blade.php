@@ -14,7 +14,7 @@
 </div>
 @endif
 <form method="post" action="/admin/autores/{{$autor->id}}/modificar">
-	<input name="nombre" placeholder="Solo ingrese letras" value="{{Input::old('nombre',$autor->nombre)}}"/>
+	<input name="nombre" placeholder="Solo ingrese letras" value="{{Input::old('nombre',$autor->nombre)}}"/> <span class="tooltip" title="El nombre debe tener una longitud mayor a 5 caracteres.">[?]</span>
 	<br/><br/>
 	<input type="submit" value="Modificar" title="Modifica este autor" />		
 	<a href="/admin/autores/" style="text-decoration:none;">

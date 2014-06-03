@@ -7,7 +7,7 @@
         <strong>{{ $alert }}</strong>
     </div></center>
 @endif
-
+<a name="area"></a>
 <h1>Gestión de usuarios:</h1>
 <h2>Usuarios <span title="Usuarios en el Sistema">({{count($usuarios)}})</span>:</h2>
 <table width="80%">
@@ -38,20 +38,19 @@
 
 {{--Corta el admin de la lista para no mostrar datos u operaciones irrelevantes.--}}
 @foreach($usuarios ->slice(1) as $usuario)
-{{
-  '<tr align="center">
-    <td>'.$usuario->nombre.'</td>
-    <td>'.$usuario->apellido.'</td>
-    <td>'.$usuario->email.'</td>
-    <td>'.$usuario->dni.'</td>
-    <td>'.($usuario->bloqueado?'Sí':'No').'</td>
-    <td>'.($usuario->dadoDeBaja?'No':'Sí').'</td>    
-    <td><a href="/admin/usuarios/'. $usuario->id. '/modificar" title="Modificar los datos del usuario">Modificar</a> 
-    <a href="/admin/usuarios/'. $usuario->id. '/bloquear" title="Bloquear al usuario" onclick="return confirm(\'¿Seguro que desea bloquear al usuario?\')">'.(($usuario->bloqueado)?'Desbloquear':'Bloquear').'</a>
+
+  <tr align="center">
+    <td>{{$usuario->nombre}}</td>
+    <td>{{$usuario->apellido}}</td>
+    <td>{{$usuario->email}}</td>
+    <td>{{$usuario->dni}}</td>
+    <td>{{($usuario->bloqueado?'Sí':'No')}}</td>
+    <td>{{($usuario->dadoDeBaja?'No':'Sí')}}</td>    
+    <td><a href="/admin/usuarios/{{ $usuario->id }}/modificar" title="Modificar los datos del usuario">Modificar</a> 
+    <a href="/admin/usuarios/{{ $usuario->id }}/bloquear" title="{{(($usuario->bloqueado)? 'Desbloquear': 'Bloquear')}} al usuario" onclick="return confirm('¿Seguro que desea {{(($usuario->bloqueado)? 'desbloquear': 'bloquear')}} al usuario?')">{{(($usuario->bloqueado)?'Desbloquear':'Bloquear')}}</a>
     </td>
-  </tr>'
+  </tr>
   
-}}
 @endforeach
   
 </table>  

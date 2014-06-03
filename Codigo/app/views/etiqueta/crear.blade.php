@@ -15,7 +15,7 @@
 </div>
 @endif
 <form action="/admin/etiquetas/crear" method="post">
-	Nombre: <input name="nombre" value="" placeholder="Ingrese solamente letras"/><br/>
+	Nombre: <input name="nombre" value="" placeholder="Ingrese sólo letras"/><span class="tooltip" title="El nombre debe contener sólo letras.">[?]</span><br/> 
 	<br/><br/>
 	<input type="submit" value="Crear" title="Agrega esta etiqueta a Cookbook"/>
 

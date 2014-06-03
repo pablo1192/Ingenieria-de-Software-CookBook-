@@ -1,29 +1,30 @@
 @extends('admin')
 
 @section('contenido')
-<h1>Gestion de libros:</h1>
+<a name="area"></a>
+<h1>Gestión de libros:</h1>
 <h2>Libros <span title="Cantidad de libros en el Sistema">({{count($libros)}})</span>:</h2>
 <table width="90%">
 	<tr>
 		<th>ISBN</th>
-		<th>Titulo</th>
+		<th>Título</th>
 		<th>Autor</th>
 		<th>Editorial</th>
 		<th>Precio</th>
 		<th>Disponible</th>
 		<th>Operaciones</th>
 	</tr>
-@foreach($libros as $libro )
-	<tr>
+@foreach($libros as $libro)
+	<tr align = "center">
 		<td>{{$libro->isbn}}</td>
 		<td><a href="/admin/libros/{{$libro->id}}" title="Ver detalles de este libro">{{$libro->título}}</a></td>
 		<td>@foreach(($libro->autores) as $autor) {{$autor->nombre}} @endforeach</td>
 		<td>{{$libro->editorial->nombre}}</td>
-		<td>{{$libro->precio}}</td>
-		<td>{{$libro->agotado?'No':'Si'}}</td>				
+		<td>${{$libro->precio}}</td>
+		<td>{{$libro->agotado?'No':'Sí'}}</td>				
 		<td><a href="/admin/libros/{{$libro->id}}/modificar" title="Modificar este libro">Modificar</a> 
 			<a href="/admin/libros/{{$libro->id}}/agotado" title="Marcar como {{(($libro->agotado)?'disponible':'agotado')}}" onclick="return confirm('¿Ud está seguro que desea marcar como {{(($libro->agotado)?'disponible':'agotado')}} el libro \n«{{ $libro->título }}» ?')">{{(($libro->agotado)?'Disponible':'Agotado')}}</a>
-			<a href="/admin/libros/{{$libro->id}}/borrar" title="Borrar este libro" onclick="return confirm('¿Ud está seguro que desea eliminar el libro \n{{$libro->título}}» ?')">Eliminar</a>
+			<a href="/admin/libros/{{$libro->id}}/borrar" title="Borrar este libro" onclick="return confirm('¿Ud está seguro que desea eliminar el libro \n«{{$libro->título}}» ?')">Eliminar</a>
 		</td>
 	</tr>
 
@@ -39,10 +40,10 @@
 
 <h2>Otros</h2>
 <p>Operaciones relacionadas con la gestión de los libros:</p>
-<a href="/admin/autores/" title="Gestione las editoriales" class="button button-negro button-mediano">Autores</a> 
-<a href="/admin/etiquetas/" title="Gestione las etiquetas" class="button button-negro button-mediano">Etiquetas</a> 
-<a href="/admin/editoriales/" title="Gestione las editoriales" class="button button-negro button-mediano">Editoriales</a> 
-<a href="/admin/idiomas/" title="Gestione los idiomas" class="button button-negro button-mediano">Idiomas</a> 
+<a href="/admin/autores/" title="Gestione los autores" class="button button-mediano">Autores</a> 
+<a href="/admin/etiquetas/" title="Gestione las etiquetas" class="button button-mediano">Etiquetas</a> 
+<a href="/admin/editoriales/" title="Gestione las editoriales" class="button button-mediano">Editoriales</a> 
+<a href="/admin/idiomas/" title="Gestione los idiomas" class="button button-mediano">Idiomas</a> 
 
 <br/><br/>
 <a href="/admin/" title="Vuelve al panel de Administración">Volver</a> 
