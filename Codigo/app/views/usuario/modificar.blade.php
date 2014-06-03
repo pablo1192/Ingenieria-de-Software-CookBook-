@@ -22,6 +22,7 @@ We encountered the following errors:
 	Email: <input name="email" value="{{Input::old('email',$usuario->email)}}"/><br/>
 	DNI: <input name="dni" value="{{Input::old('dni',$usuario->dni)}}"/><br/>
 	Contraseña: <input type=password name="contraseña" value=""/><br/>
+	Reescriba la contraseña: <input type=password name="contraseña_confirmation" value=""/><br/>
 	<br/><br/>
 	<input type="submit" value="Modificar" title="Modificar los datos" />		
 	<a href="/admin/usuarios/" style="text-decoration:none;">

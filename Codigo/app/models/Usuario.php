@@ -13,12 +13,12 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
     /* No existe regla nativa length para números (DNI). Luego busco la forma de implementarla. */
 	public static function reglasDeValidacion(){
 		
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['numeric','required', 'unique:usuario,dni'], 'contraseña'=>['min:5','required']] ;
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['numeric','required', 'unique:usuario,dni'], 'contraseña'=>['min:5','required', 'confirmed']] ;
 	}
 
 	public static function reglasDeValidacionMod(){
 
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['numeric','required'], 'contraseña'=>['min:5']] ;
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['numeric','required'], 'contraseña'=>['min:5', 'confirmed']] ;
 	}
 
 
