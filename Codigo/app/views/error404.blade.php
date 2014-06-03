@@ -1,4 +1,4 @@
-@extends('admin')
+@extends('template')
 
 @section('contenido')
 <div class="cookbook" style="text-align:center;font-size:400%;margin:50px auto;">
