@@ -9,7 +9,7 @@ class UsuarioController extends BaseController {
     {
         $Usuario = Usuario::all();
         
-        return View::make('Usuario.lista', array('usuarios' => $Usuario));
+        return View::make('usuario.lista', array('usuarios' => $Usuario));
     }
 
     
@@ -63,7 +63,7 @@ class UsuarioController extends BaseController {
        /* $localidades= Localidad::get();
         $provincias= Provincia::get();
         return View::make('Usuario.crear',['localidades'=>$localidades, 'provincias'=>$provincias]); */
-        return View::make('Usuario.crear');
+        return View::make('usuario.crear');
     }
   
    /*   Función de testing */
@@ -110,7 +110,7 @@ class UsuarioController extends BaseController {
 
         if($validador->fails()){
 
-            return Redirect::back()->withInput()->withErrors($validador);
+            return Redirect::back()->withInput(Input::except('contraseña'))->withErrors($validador);
         }
         else{
 
@@ -132,7 +132,7 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el email es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withErrors(['El email ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El email ingresado ya se encuentra en la base de datos']);
                 }
             }
 
@@ -146,11 +146,11 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el dni es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
                 }
             }
 
-            if ($usuario->contraseña != Input::get('contraseña')){
+            if ( ($usuario->contraseña != Input::get('contraseña')) AND (Input::get('contraseña') != null) ){
                 $usuario->contraseña = Hash::make(Input::get('contraseña'));
             }
 
@@ -176,7 +176,7 @@ class UsuarioController extends BaseController {
 
         if($validador->fails()){
 
-            return Redirect::back()->withInput()->withErrors($validador);
+            return Redirect::back()->withInput(Input::except('contraseña'))->withErrors($validador);
         }
         else{
 
@@ -197,7 +197,7 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el email es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withErrors(['El email ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El email ingresado ya se encuentra en la base de datos']);
                 }
             }
 
@@ -211,11 +211,13 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el dni es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
                 }
             }
 
-            if (Auth::user()->contraseña != Input::get('contraseña')){
+
+
+            if ( (Auth::user()->contraseña != Input::get('contraseña')) AND (Input::get('contraseña') != null) ){
                 Auth::user()->contraseña = Hash::make(Input::get('contraseña'));
             }
 
@@ -223,6 +225,13 @@ class UsuarioController extends BaseController {
             
             return Redirect::to('/admin/usuarios/');
           }
+    }
+
+    public function darBaja()
+    {
+        Auth::user()->dadoDeBaja = 1;
+        Auth::user()->save();
+        return Redirect::to('/logout');
     }
 
 }

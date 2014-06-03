@@ -76,13 +76,15 @@ Route::get('/admin/usuarios/{id}/bloquear',['uses'=>'UsuarioController@bloquearU
 Route::get('/admin/usuarios/{id}/modificar',['uses'=>'UsuarioController@modificarDatos']);
 Route::post('/admin/usuarios/{id}/modificar',['uses'=>'UsuarioController@modificarUsuario']);
 
-//Registro, Login y Logout
+//Registro, Login, Logout
 Route::get('/registrarse', array('uses' => 'UsuarioController@nuevoUsuario'));
 Route::post('/registrarse', array('uses' => 'UsuarioController@registrarUsuario'));
 
 Route::get('/login', array('uses' => 'HomeController@showlogin'));
 Route::post('/login', array('uses' => 'HomeController@doLogin'));
-Route::get('/logout', array('uses' => 'HomeController@doLogout'));
+Route::get('/logout', array('uses' => 'HomeController@doLogout'))->before('auth');
 
-// No implementado por el momento.
-//Route::get('/perfil', array('as' => 'perfil', function () { }))->before('auth');
+//Perfil, Darse de baja
+Route::get('/perfil', array('uses' => 'UsuarioController@formularioPerfil'))->before('auth');
+Route::post('/perfil', array('uses' => 'UsuarioController@modificarPerfil'));
+Route::get('/eliminar', array('uses' => 'UsuarioController@darBaja'))->before('auth');

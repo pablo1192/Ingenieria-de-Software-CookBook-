@@ -41,20 +41,30 @@ class HomeController extends BaseController {
 		} else {
 
 			// No cambiar "password" por "contraseña" porque se rompe. Es algo del Laravel.
+			
 			$userdata = array(
 				'email' 	=> Input::get('email'),
 				'password' 	=> Input::get('contraseña')
 			);
 
+			//Loguea al usuario para ver sus datos. Si está eliminado o bloqueado, es echado del sistema.
+
 			if (Auth::attempt($userdata)) {
 
-				return Redirect::to('/admin/usuarios');
+				if ((Auth::user()->dadoDeBaja == 1) OR (Auth::user()->bloqueado == 1)) {
 
-			} else {	 	
+					return Redirect::to('/logout');
+
+				} else {
+
+					return Redirect::to('/admin/usuarios');
+
+				}
+	
+			} else {
 
 				return Redirect::to('/login');
 			}
-
 		}
 	}
 
