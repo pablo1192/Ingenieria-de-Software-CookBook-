@@ -15,7 +15,7 @@ class Editorial extends Eloquent {
 	//Defino las reglas para usar en Alta/Mod
 	public static function reglasDeValidacion(){
 		//Solo letras como minimo 3, q sea unico y no vacio..
-		return ['nombre'=>['alpha','min:3','required','unique:editorial,nombre,1']];
+		return ['nombre'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5','required','unique:editorial,nombre,1']];
 	}
 }
 ?>

@@ -18,7 +18,7 @@
 		</tr>
 		<tr>
 			<td>Autor:</td>
-			<td>¿?</td>
+			<td>@foreach(($libro->autores) as $autor) {{$autor->nombre}} @endforeach</td>
 		</tr>
 		<tr>
 			<td>Editorial:</td>
@@ -38,7 +38,7 @@
 		</tr>
 		<tr>
 			<td>Etiquetas:</td>
-			<td>¿?</td>
+			<td>@foreach(($libro->etiquetas) as $etiqueta) {{ $etiqueta->nombre.' ' }}@endforeach</td>
 		</tr>
 	</table>
 	
