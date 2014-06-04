@@ -139,23 +139,25 @@ class LibroController extends BaseController {
 				
 				// Se asocia a las Entidad NaN:
 				//Autor:
-				if(Input::has('autor-checkbox')){					
-					$autor=Autor::create(['nombre'=>Input::get('autor-otro')]);
-					$libro->autores()->attach($autor->id);
-				}
 				if(Input::has('autor')){
 					//uso Sync para agregar los id a la tabla libroautor
 					$libro->autores()->sync(Input::get('autor'));
 				}
+				if(Input::has('autor-checkbox')){					
+					$autor=Autor::create(['nombre'=>Input::get('autor-otro')]);
+					$libro->autores()->attach($autor->id);
+				}
+
 
 				//Etiqueta:
-				if(Input::has('etiqueta-checkbox')){					
-					$etiqueta=Etiqueta::create(['nombre'=>Input::get('etiqueta-otro')]);
-					$libro->etiquetas()->attach($etiqueta->id);
-				}
 				if(Input::has('etiqueta')){
 					//uso Sync para agregar los id a la tabla libroautor
 					$libro->etiquetas()->sync(Input::get('etiqueta'));
+				}
+
+				if(Input::has('etiqueta-checkbox')){					
+					$etiqueta=Etiqueta::create(['nombre'=>Input::get('etiqueta-otro')]);
+					$libro->etiquetas()->attach($etiqueta->id);
 				}
 				
 				//Se colocan los archivos: Se deberia chequear q salio bn
