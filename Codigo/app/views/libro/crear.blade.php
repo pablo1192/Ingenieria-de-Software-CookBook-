@@ -35,7 +35,7 @@ menuActivo='libros'
 					{{'<option value="'. $editorial->id .'">'. $editorial->nombre .'</option>'}}
 				@endforeach			</select> 
 			<input name="editorial-checkbox"  type="checkbox" title="Habilitar la creación de una nueva editorial" onchange="habilitarOtro(this,'editorial-otro'); deshabilitarSeleccion(this,'editorial');"/>Otra: 
-			<input id="editorial-otro" name="editorial-otro" value="{{Input::old('editorial-otro')}}" placeholder="Sudamericana" /><span class="tooltip" title="Tilde 'Otro' para crear una editorial que no se encuentra en la lista.">[?]</span><br/><br/>
+			<input id="editorial-otro" name="editorial-otro" value="{{Input::old('editorial-otro')}}" disabled placeholder="Sudamericana" /><span class="tooltip" title="Tilde 'Otro' para crear una editorial que no se encuentra en la lista.">[?]</span><br/><br/>
 	Año de edición: <input size="4" name="anoDeEdicion" value="{{Input::old('anoDeEdicion')}}" placeholder="2014"/><span class="tooltip" title="Ingrese un número entre 1900 y 2014">[?]</span><br/><br/>
 	Idioma:<span class="tooltip" title="Seleccione un idioma de la lista.">[?]</span> <select name="idioma">				
 				@foreach($idiomas as $idioma)
@@ -51,7 +51,7 @@ menuActivo='libros'
 			</select> 
 			<input name="etiqueta-checkbox" type="checkbox"  title="Habilitar la creación de una nueva etiqueta" onchange="habilitarOtro(this,'etiqueta-otro')" />Otro: 
 			<input id="etiqueta-otro" name="etiqueta-otro" value="{{Input::old('etiqueta-otro')}}"  disabled placeholder="italiana"/><span class="tooltip" title="Tilde 'Otro' para crear una etiqueta que no se encuentra en la lista.">[?]</span><br/><br/>
-	Precio: <input size="4" name="precio" value="{{Input::old('precio')}}" placeholder="10.00"/><span class="tooltip" title="El precio debe respetar el siguiente formato: 4 dígitos enteros y 2 dígitos decimales separados por punto. Por ejemplo: 22.99">[?]</span><br/>
+	Precio: <input size="4" name="precio" value="{{Input::old('precio')}}" placeholder="10.00"/><span class="tooltip" title="El precio debe respetar el siguiente formato: como máximo 4 dígitos enteros y 2 dígitos decimales separados por punto. Por ejemplo: 22.99">[?]</span><br/>
 	Cantidad de hojas: <input size="4" name="cantidadDeHojas" value="{{Input::old('cantidadDeHojas')}}" placeholder="100"/><span class="tooltip" title="La cantidad de hojas debe ser un número entero entre 10 y 9999.">[?]</span><br/>
 	Tapa (*.jpg,*.png):<span class="tooltip" title="La imagen debe ser un archivo con extensión .jpg o .png">[?]</span> <input name="tapa" type="file" accept="image/*"/><br/>
 	Índice (*.jpg,*.png):<span class="tooltip" title="La imagen debe ser un archivo con extensión .jpg o .png">[?]</span> <input name="indice" type="file" accept="image/*"/><br/>
@@ -69,31 +69,6 @@ menuActivo='libros'
 	
 </form>
 
-<script>
-	//hab/deshab el campo «Otro»
-	function habilitarOtro(objetoOrigen,nombreDelInput){
-		document.getElementById(nombreDelInput).disabled=!(objetoOrigen.checked)
-	}
-	
-	function deshabilitarSeleccion(objetoOrigen,nombreDelInput){	
-		document.getElementsByName(nombreDelInput)[0].disabled=(objetoOrigen.checked);
-	}
-	
-	//Deja el form seteado, para evitar navegadors seteen "estados"
-	function inicializar(){
-		document.getElementsByName('editorial')[0].disabled=false;
-		document.getElementsByName('idioma')[0].disabled=false;
-		
-		document.getElementsByName('idioma-checkbox')[0].checked=false;
-		document.getElementsByName('editorial-checkbox')[0].checked=false;
-		document.getElementsByName('etiqueta-checkbox')[0].checked=false;
-		document.getElementsByName('autor-checkbox')[0].checked=false;
-		
-		
-		
-	}
-	
-	inicializar();
-</script>
+<script src="/scripts/formularioLibro.js">Requiere tener activado JavaScript para el correcto funcionamiento del formulario!</script>
 
 @stop

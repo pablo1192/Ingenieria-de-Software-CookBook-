@@ -51,7 +51,7 @@ class Libro extends Eloquent {
 			'etiqueta-otro'=>['max:100','min:5','unique:etiqueta,nombre','alpha','required_without:etiqueta'],
 			'anoDeEdicion'=>['required','numeric','between:1900,2014'],
 			'cantidadDeHojas'=>['required','numeric','between:10,9999'],
-			'precio'=>['required','regex:/[0-9]{1,4}.[0-9]{1,2}/i'],
+			'precio'=>['required','regex:/^[0-9]{1,4}([.][0-9]{1,2})?$/i'],
 			'tapa'=>['required','mimes:jpeg,png,jpg'],
 			'indice'=>['required','mimes:jpeg,png,jpg']
 		];

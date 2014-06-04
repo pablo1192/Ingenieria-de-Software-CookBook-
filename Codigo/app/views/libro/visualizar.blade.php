@@ -5,7 +5,8 @@ menuActivo='libros'
 @stop
 
 @section('contenido')
-<h1>Visualización de «{{$libro->título}}»</h1>
+<h1>Gestión de libros</h1>
+<h2>Visualización de «{{$libro->título}}»</h2>
 <div style="width:850px;">
 	<div style="float:left;width:250px;text-align:center;">
 		<img src="/datos/tapas/{{$libro->tapa}}" alt="Tapa del libro" title="Tapa del libro" width="175" style="box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />

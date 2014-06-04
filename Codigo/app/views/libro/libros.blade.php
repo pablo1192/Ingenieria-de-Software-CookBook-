@@ -49,7 +49,6 @@ menuActivo='libros'
 <a href="/admin/editoriales/" title="Gestione las editoriales" class="button button-mediano">Editoriales</a> 
 <a href="/admin/idiomas/" title="Gestione los idiomas" class="button button-mediano">Idiomas</a> 
 
-<br/><br/>
-<a href="/admin/" title="Vuelve al panel de Administración">Volver</a> 
+
 
 @stop

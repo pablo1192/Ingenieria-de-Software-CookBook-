@@ -10,14 +10,29 @@ class LibroController extends BaseController {
 		return View::make('libro.libros',['libros'=>$libros]);
 	}
 
-	
-
+	//Muestra el catalogo
+	public function mostrarCatalogo()
+	{
+		//Se ignoran los libros dados de baja logica
+		$libros=Libro::disponibles()->get();
+		return View::make('catalogo',['libros'=>$libros]);
+	}
 	//Muestra los detalles de un libro, desde la administración
 	public function visualizar($id){
 		$libro=Libro::find($id);
 		return View::make('libro.visualizar',['libro'=>$libro]);
 	}
-	
+
+
+
+
+	public function visualizarDetalles($id){
+
+		$libro=Libro::find($id);
+		return View::make('libro.visualizarDetalles',['libro'=>$libro]);
+	}
+
+
 	public function formularioAlta(){
 		//Recupero las entidades secundarias, ignorando los valores por 'SIN' usado en caso de no tener ref.
 		$idiomas= Idioma::disponibles()->get();
@@ -170,11 +185,36 @@ class LibroController extends BaseController {
 	}
 
 	public function formularioModificacion($id){
-		return "Has modificado  a ".$id;		
+		//ToDo: proteger este método
+		$libro=Libro::find($id);		
+		
+		$autoresFiltrados=$libro->with(['autores' => function($query){
+			$query->whereNotIn(array_pluck($libro->autores,'id'));
+		}]);
+		return View::make('libro.modificar',['libro'=>$libro, 'idiomas'=>Idioma::disponibles()->get(), 'editoriales'=>Editorial::disponibles()->get()]);	
 	}
 
 	public function modificacion($id){
-
+		//Se descompuso la funcionalidad en 5 secciones: info,autores,etiquetas,tapa e indice		
+		if(Input::has('modificar')){
+			switch (Input::get('modificar')) {
+				case 'info':		$this->modificarInfo($id,Input::all());
+									break;
+				case 'autores':		$this->modificarInfo($id,Input::all());
+									break;
+				case 'etiquetas':	$this->modificarInfo($id,Input::all());
+									break;
+				case 'tapa':		$this->modificarInfo($id,Input::all());
+									break;
+				case 'indice':		$this->modificarInfo($id,Input::all());
+									break;				
+				default: 			return Redirect::back()->withErrors('Lo que intentas modificar no es válido');
+			}		
+			return Redirect::to('/admin/libros/'.$id.'/modificar#'.Input::get('modificar'));
+		}
+		else{
+			return Redirect::back()->withErrors('Error en el envío del formulario o este no es válido.');
+		}
 	}
 	
 	
@@ -204,8 +244,74 @@ class LibroController extends BaseController {
 		//return Redirect::back();
 		return Redirect::to('/admin/libros#area');
 	}
-		
 	
+	
+	// Funciones de utilidad/privadas	
+	//
+	
+	protected function modificarInfo($id,$datos){
+		$reglasDeValidacion=[
+			'isbn'=>['required','numeric','digits_between:10,13'],
+			'titulo'=>['required','regex:/[a-zñÑáéíóú 0-9]+/i','min:2','max:64'],
+			'editorial'=>['exists:editorial,id','required_without:editorial-otro'],
+			'editorial-otro'=>['regex:/[a-zñ ]+/i','max:64','min:5','unique:editorial,nombre,1','required_without:editorial'],
+			'idioma'=>['exists:idioma,id','required_without:idioma-otro'],
+			'idioma-otro'=>['regex:/[a-zñÑáéíóú ]+/i','max:16','min:5','unique:idioma,nombre,1','required_without:idioma'],
+			'anoDeEdicion'=>['required','numeric','between:1900,2014'],
+			'hojas'=>['required','numeric','between:10,9999'],
+			'precio'=>['required','regex:/^[0-9]{1,4}([.][0-9]{1,2})?$/i']
+		];
+		
+		$validador= Validator::make($datos,$reglasDeValidacion);
+		if($validador->fails()){
+			return Redirect::to('/admin/libros/'.$id.'/modificar#info')->withErrors($validador);
+		}
+		else{
+			//Actualizo el libro. LLeno un array cn los Key
+			$datos=Input::only('isbn','hojas','precio');
+			$datos['título']=Input::get('titulo');
+			$datos['añoEdición']=Input::get('anoDeEdicion');
+			
+			//Resuelvo la situacion delas relaciones 1 a N:
+			//Idioma:
+			if(Input::has('idioma-checkbox')){
+				$idiomaNuevo=Idioma::create(['nombre'=>Input::get('idioma-otro')]);
+				$datos['idioma_id']=$idiomaNuevo->id;
+			}
+			else{
+				$datos['idioma_id']=Input::get('idioma');
+			}
+			
+			
+			//Editorial:
+			if(Input::has('editorial-checkbox')){
+				$editorialNueva=editorial::create(['nombre'=>Input::get('editorial-otro')]);
+				$datos['editorial_id']=$editorialNueva->id;
+			}
+			else{
+				$datos['editorial_id']=Input::get('editorial');
+			}
+			
+			//Actualizo el libro afectado:
+			Libro::find($id)->fill($datos)->save();
+		}
+	}
+
+	protected function modificarAutores($id,$datos){
+		$reglasDeValidacion=[
+			'autor'=>['array','exists:autor,id',],
+			'autor-otro'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5','required_without:autor', 'unique:autor,nombre']
+		];
+		
+		$validador= Validator::make($datos,$reglasDeValidacion);
+		if($validador->fails()){
+			return Redirect::to('/admin/libros/'.$id.'/modificar#info')->withErrors($validador);
+		}
+		else{
+			//Actualizo el libro. LLeno un array cn los Key
+			return;
+		}
+	}	
 }
 
 ?>
