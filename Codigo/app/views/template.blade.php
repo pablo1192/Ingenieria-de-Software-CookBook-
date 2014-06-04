@@ -27,8 +27,16 @@ Released   : 20140207
 <div id="wrapper1">
 	<div id="header-wrapper">
 		<div class="menu">
-			<a href="#" title="Ingrese al sistema con su cuenta registrada">Iniciar Sesión</a> 
-			<a href="#" title="Obtenga una cuenta de usuario">Registrarse</a>
+			@if ( Auth::guest() )
+				<a href="/login" title="Ingrese al sistema con su cuenta registrada">Iniciar Sesión</a> 
+				<a href="/registrarse" title="Obtenga una cuenta de usuario">Registrarse</a>
+			@else
+				Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
+				--
+				<a href="{{ URL::to('/perfil') }}">Modificar Perfil</a>
+				--
+				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
+			@endif
 		</div>
 		<div id="header" class="container">
 			<div id="logo">
