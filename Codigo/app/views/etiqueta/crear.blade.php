@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='libros'
+@stop
+
 @section('contenido')
 
 <h1>Agregar una etiqueta</h1>

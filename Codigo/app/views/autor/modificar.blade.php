@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='libros'
+@stop
+
 @section('contenido')
 <h1>Gestión de Autores</h1>
 <h2>Modificar «{{$autor->nombre}}»</h2>

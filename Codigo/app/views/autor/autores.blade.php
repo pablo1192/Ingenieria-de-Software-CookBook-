@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='libros'
+@stop
+
 @section('contenido')
 <h1>Gestión de Autores</h1>
 
@@ -25,6 +29,6 @@
 <a href="/admin/autores/crear" title="Agregar un nuevo autor al Sistema" class="button button-verde button-mediano">Agregar</a>
 
 <br/><br/>
-<a href="/admin/autores" title="Vuelve al panel de Administración">Volver</a> 
+<a href="/admin/libros" title="Vuelve al panel de Administración">Volver</a> 
 
 @stop

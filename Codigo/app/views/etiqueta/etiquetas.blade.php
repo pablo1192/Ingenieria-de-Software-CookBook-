@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='libros'
+@stop
+
 @section('contenido')
 <h1>Gestion de etiquetas:</h1>
 <h2>Etiquetas <span title="Cantidad de etiquetas en el Sistema">({{count($etiquetas)}})</span>:</h2>
@@ -25,6 +29,6 @@
 
 <h2>Operaciones</h2>
 <a href="/admin/etiquetas/crear" title="Agregue una nueva etiqueta al sistema">Agregar</a> 
-<a href="/admin/" title="Vuelve al panel de Administración">Volver</a> 
+<a href="/admin/libros" title="Vuelve al panel de Administración">Volver</a> 
 
 @stop

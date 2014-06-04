@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='libros'
+@stop
+
 @section('contenido')
 <h1>Gestión de Etiquetas</h1>
 <h2>Modificar «{{$etiqueta->nombre}}»</h2>
