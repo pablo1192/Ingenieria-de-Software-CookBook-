@@ -17,26 +17,12 @@ class LibroController extends BaseController {
 		$libros=Libro::disponibles()->get();
 		return View::make('catalogo',['libros'=>$libros]);
 	}
+	
+	//Muestra los detalles de un libro, desde la administración
 	public function visualizar($id){
 		$libro=Libro::find($id);
 		return View::make('libro.visualizar',['libro'=>$libro]);
 	}
-
-	//Muestra el catalogo
-	public function mostrarCatalogo()
-	{
-		//Se ignoran los libros dados de baja logica
-		$libros=Libro::disponibles()->get();
-		return View::make('catalogo',['libros'=>$libros]);
-	}
-	//Muestra los detalles de un libro, desde la administración
-	public function visualizarDetalles($id){
-	   
-		$libro=Libro::find($id);
-		return View::make('libro.visualizarDetalles',['libro'=>$libro]);
-	}
-
-
 
 
 	public function visualizarDetalles($id){
