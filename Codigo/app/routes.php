@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/',['uses'=>'LibroController@mostrarCatalogo']);
+Route::get('/{id}/detalles',['uses'=>'LibroController@visualizarDetalles'])->before('auth');
 
 // URL de pruebas para saber si tenemos la BD bn conectada.
 Route::get('/test', function()
