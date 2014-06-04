@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='libros'
+@stop
+
 @section('contenido')
 <h1>Gestión de Editoriales</h1>
 <h2>Agregar una nueva editorial</h2>

@@ -30,11 +30,11 @@ menuActivo='libros'
 			<input name="autor-checkbox" type="checkbox" title="Habilitar la creación de un nuevo autor" onchange="habilitarOtro(this,'autor-otro')" />Otro: 
 			<input id="autor-otro" name="autor-otro" value="{{Input::old('autor-otro')}}"  disabled placeholder="Doña Petrona"/><span class="tooltip" title="Tilde 'Otro' para crear un autor que no se encuentra en la lista.">[?]</span><br/><br/>
 
-	Editorial:<span class="tooltip" title="Seleccione una editorial de la lista.">[?]</span> <select name="editorial[]">				
+	Editorial:<span class="tooltip" title="Seleccione una editorial de la lista.">[?]</span> <select name="editorial">				
 				@foreach($editoriales as $editorial)
 					{{'<option value="'. $editorial->id .'">'. $editorial->nombre .'</option>'}}
 				@endforeach			</select> 
-			<input name="editorial-checkbox"  type="checkbox" title="Habilitar la creación de una nueva editorial" onchange="habilitarOtro(this,'editorial-otro')"/>Otra: 
+			<input name="editorial-checkbox"  type="checkbox" title="Habilitar la creación de una nueva editorial" onchange="habilitarOtro(this,'editorial-otro'); deshabilitarSeleccion(this,'editorial');"/>Otra: 
 			<input id="editorial-otro" name="editorial-otro" value="{{Input::old('editorial-otro')}}" placeholder="Sudamericana" /><span class="tooltip" title="Tilde 'Otro' para crear una editorial que no se encuentra en la lista.">[?]</span><br/><br/>
 	Año de edición: <input size="4" name="anoDeEdicion" value="{{Input::old('anoDeEdicion')}}" placeholder="2014"/><span class="tooltip" title="Ingrese un número entre 1900 y 2014">[?]</span><br/><br/>
 	Idioma:<span class="tooltip" title="Seleccione un idioma de la lista.">[?]</span> <select name="idioma">				
@@ -42,7 +42,7 @@ menuActivo='libros'
 					{{'<option value="'. $idioma->id .'">'. $idioma->nombre .'</option>'}}
 				@endforeach
 			</select> 
-			<input name="idioma-checkbox" type="checkbox" title="Habilitar la creación de un nuevo idioma" onchange="habilitarOtro(this,'idioma-otro')"/>Otro: 
+			<input name="idioma-checkbox" type="checkbox" title="Habilitar la creación de un nuevo idioma" onchange="habilitarOtro(this,'idioma-otro'); deshabilitarSeleccion(this,'idioma')"/>Otro: 
 			<input id="idioma-otro" name="idioma-otro" value="{{Input::old('idioma-otro')}}"  disabled placeholder="Chino Mandarín"/><span class="tooltip" title="Tilde 'Otro' para crear un idioma que no se encuentra en la lista.">[?]</span><br/><br/>
     Etiqueta/as:<span class="tooltip" title="Seleccione una o más etiquetas presionando Ctrl y clickeando el botón izquierdo del mouse.">[?]</span> <select name="etiqueta[]" multiple >
 	            @foreach($etiquetas as $etiqueta)
@@ -53,8 +53,8 @@ menuActivo='libros'
 			<input id="etiqueta-otro" name="etiqueta-otro" value="{{Input::old('etiqueta-otro')}}"  disabled placeholder="italiana"/><span class="tooltip" title="Tilde 'Otro' para crear una etiqueta que no se encuentra en la lista.">[?]</span><br/><br/>
 	Precio: <input size="4" name="precio" value="{{Input::old('precio')}}" placeholder="10.00"/><span class="tooltip" title="El precio debe respetar el siguiente formato: 4 dígitos enteros y 2 dígitos decimales separados por punto. Por ejemplo: 22.99">[?]</span><br/>
 	Cantidad de hojas: <input size="4" name="cantidadDeHojas" value="{{Input::old('cantidadDeHojas')}}" placeholder="100"/><span class="tooltip" title="La cantidad de hojas debe ser un número entero entre 10 y 9999.">[?]</span><br/>
-	Tapa (*.jpg,*.png):<span class="tooltip" title="La imagen debe ser un archivo con extensión .jpg o .png">[?]</span> <input name="tapa" type="file"/><br/>
-	Índice (*.jpg,*.png):<span class="tooltip" title="La imagen debe ser un archivo con extensión .jpg o .png">[?]</span> <input name="indice" type="file"/><br/>
+	Tapa (*.jpg,*.png):<span class="tooltip" title="La imagen debe ser un archivo con extensión .jpg o .png">[?]</span> <input name="tapa" type="file" accept="image/*"/><br/>
+	Índice (*.jpg,*.png):<span class="tooltip" title="La imagen debe ser un archivo con extensión .jpg o .png">[?]</span> <input name="indice" type="file" accept="image/*"/><br/>
 	
 	
 	<br/><br/>
@@ -72,15 +72,28 @@ menuActivo='libros'
 <script>
 	//hab/deshab el campo «Otro»
 	function habilitarOtro(objetoOrigen,nombreDelInput){
-		cajaDeTexto=document.getElementById(nombreDelInput)		
-		if(objetoOrigen.checked==true){
-			cajaDeTexto.disabled=false;
-			
-		}
-		else{
-			cajaDeTexto.disabled=true;
-		}
+		document.getElementById(nombreDelInput).disabled=!(objetoOrigen.checked)
 	}
+	
+	function deshabilitarSeleccion(objetoOrigen,nombreDelInput){	
+		document.getElementsByName(nombreDelInput)[0].disabled=(objetoOrigen.checked);
+	}
+	
+	//Deja el form seteado, para evitar navegadors seteen "estados"
+	function inicializar(){
+		document.getElementsByName('editorial')[0].disabled=false;
+		document.getElementsByName('idioma')[0].disabled=false;
+		
+		document.getElementsByName('idioma-checkbox')[0].checked=false;
+		document.getElementsByName('editorial-checkbox')[0].checked=false;
+		document.getElementsByName('etiqueta-checkbox')[0].checked=false;
+		document.getElementsByName('autor-checkbox')[0].checked=false;
+		
+		
+		
+	}
+	
+	inicializar();
 </script>
 
 @stop
