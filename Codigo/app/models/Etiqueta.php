@@ -3,13 +3,13 @@
 class Etiqueta extends Eloquent  
 {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'etiqueta';
 	protected $fillable = ['nombre'];
+	
+	//libros de una etiqueta
+	public function libros(){
+        return $this->belongsToMany('Libro', 'libroetiqueta', 'etiqueta_id', 'libro_id');
+    }
 	
 	public static function agregarEtiqueta($input){
         // función que recibe como parámetro la información del formulario para crear la etiqueta
@@ -18,7 +18,7 @@ class Etiqueta extends Eloquent
         
         // Declaramos reglas para validar que el nombre  sea obligatorio
         $reglas =  array(
-            'nombre'  => array('required', 'max:100','unique:etiqueta,nombre','alpha'),   
+            'nombre'  => array('required', 'max:100','unique:etiqueta,nombre,1','alpha'),   
         );
                 
         $validator = Validator::make($input, $reglas);
@@ -44,7 +44,7 @@ class Etiqueta extends Eloquent
     }
   public static function reglasDeValidacion(){
 		//Solo letras como minimo 5, q sea unico y no vacio..
-		return ['nombre'=>['alpha','min:5','required','unique:idioma,nombre,1']];
+		return ['nombre'=>['alpha','min:5','required','unique:etiqueta,nombre,1']];
 	}
 }
 ?>

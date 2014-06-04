@@ -3,7 +3,7 @@
 @section('contenido')
 <h1>Gestion de etiquetas:</h1>
 <h2>Etiquetas <span title="Cantidad de etiquetas en el Sistema">({{count($etiquetas)}})</span>:</h2>
-<table width="50%" border="1">
+<table width="50%" >
 	<tr>
 		<th>Nombre</th>
 		<th>Operaciones</th>

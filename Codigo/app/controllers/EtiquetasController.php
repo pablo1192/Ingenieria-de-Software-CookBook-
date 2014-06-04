@@ -14,6 +14,17 @@ class EtiquetasController extends BaseController
         //y también pasa como parámetro los datos que queramos pasar a la vista. 
         // En este caso le estamos pasando un array con todas las etiquetas
     }
+	
+	// Muestra las etiquetas de un libro pasado por parametro
+	public function mostrarEtiquetasDeX($id)
+	{
+	    $libro = Libro::find($id);
+	    $etiquetas = $libro->etiquetas()->get();
+		$libroX = $libro->get();//libroX se quedaria con el libro para tener los 2 id para luego quitar una etiqueta (nose como pasarla a la vista)
+		return View::make('etiqueta.etiquetasDeX',array('etiquetasDeX' => $etiquetas));//
+	}
+	
+
 	public function formularioAlta(){
 		return View::make('etiqueta.crear'); //
 	}
@@ -32,7 +43,8 @@ class EtiquetasController extends BaseController
         }
     }
 	public function modificacionEtiqueta($id){
-		
+	$etiqueta=Etiqueta::find($id);
+	if ($etiqueta->nombre != Input::get('nombre')){	
 		$validador= Validator::make(Input::all(),Etiqueta::reglasDeValidacion());
 		
 		if($validador->fails()){
@@ -40,13 +52,13 @@ class EtiquetasController extends BaseController
 			return Redirect::back()->withErrors($validador)->withInput();
 		}
 		else{
-			//Modifico el idioma
-			$etiqueta=Etiqueta::find($id);
 			$etiqueta->nombre=Input::get('nombre');
 			$etiqueta->save();
-			
-			return Redirect::to('/admin/etiquetas/');
+         	return Redirect::to('/admin/etiquetas/');
 		}
+	}
+    else
+       return Redirect::to('/admin/etiquetas'); 
 	}
 			
 	public function formularioModificacionEtiqueta($id){

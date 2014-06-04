@@ -63,7 +63,7 @@ Route::get('/admin/autores',['uses'=>'AutorController@listar']);
 Route::get('/admin/autores/crear',['uses'=>'AutorController@formularioAlta']);
 Route::post('/admin/autores/crear',['uses'=>'AutorController@alta']);
 Route::get('/admin/autores/{id}/modificar',['uses'=>'AutorController@formularioModificacion']);
-Route::post('/admin/autores/{id}/modificar',['uses'=>'AutorController@modificacion']);
+Route::post('/admin/autores/{id}/modificar',['uses'=>'AutorController@modificacionAutor']);
 Route::get('/admin/autores/{id}/borrar',['uses'=>'AutorController@baja']);
 
 

@@ -5,7 +5,7 @@
 
 <h2>Autores <span title="Cantidad de autores en el Sistema">({{count($autores)}})</span>:</h2>
 
-<table width="50%" border="1">
+<table width="50%" >
 	<tr>
 		<th width="200" align="left">Autor</th>
 		<th align="left">Operaciones</th>

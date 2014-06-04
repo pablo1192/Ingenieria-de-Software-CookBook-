@@ -28,9 +28,10 @@ class AutorController extends BaseController {
 		return View::make('autor.crear');
 	}
 	
-	public function modificacion($id){
+	public function modificacionAutor($id){
 		//ToDo: Proteger este metodo
-		
+	$autor=Autor::find($id);
+	if ($autor->nombre != Input::get('nombre')){	
 		$validador= Validator::make(Input::all(),Autor::reglasDeValidacion());
 		
 		if($validador->fails()){
@@ -38,13 +39,13 @@ class AutorController extends BaseController {
 			return Redirect::back()->withErrors($validador)->withInput();
 		}
 		else{
-			//Modifico el autor
-			$autor=Autor::find($id);
 			$autor->nombre=Input::get('nombre');
 			$autor->save();
-			
-			return Redirect::to('/admin/autores/');
+         	return Redirect::to('/admin/autores/');
 		}
+	}
+    else
+       return Redirect::to('/admin/autores'); 
 	}
 	
 	public function formularioModificacion($id){
@@ -57,13 +58,14 @@ class AutorController extends BaseController {
 		//ToDo: Proteger este metodo
 		
 		if($id != 1){
-			$cantidadDeLibros= Autor::find($id)->libroautor()->count();
+			$cantidadDeLibros= Autor::find($id)->libros()->count();
 			
 			//Si hay al menos un libro asociado..actualizo el Autor por defecto ("Sin Autor")..
 			if($cantidadDeLibros){
 				$actualizaciónIds= DB::update('update libroautor set autor_id = 1 where autor_id = ? ', [$id]);
 				
 			}
+			
 			//Elimino 
 			Autor::destroy($id);
 
