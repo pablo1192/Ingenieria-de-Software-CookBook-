@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='libros'
+@stop
+
 @section('contenido')
 <h1>Visualización de «{{$libro->título}}»</h1>
 <div style="width:850px;">
@@ -18,7 +22,7 @@
 		</tr>
 		<tr>
 			<td>Autor:</td>
-			<td>@foreach(($libro->autores) as $autor) {{$autor->nombre}} @endforeach</td>
+			<td>{{implode(', ',array_pluck($libro->autores,'nombre'))}}</td>
 		</tr>
 		<tr>
 			<td>Editorial:</td>
@@ -38,7 +42,7 @@
 		</tr>
 		<tr>
 			<td>Etiquetas:</td>
-			<td>@foreach(($libro->etiquetas) as $etiqueta) {{ $etiqueta->nombre.' ' }}@endforeach</td>
+			<td>{{implode(', ',array_pluck($libro->etiquetas,'nombre'))}}</td>
 		</tr>
 	</table>
 	

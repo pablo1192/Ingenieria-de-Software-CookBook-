@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='libros'
+@stop
+
 @section('contenido')
 <a name="area"></a>
 <h1>Gestión de libros:</h1>
@@ -18,7 +22,7 @@
 	<tr align = "center">
 		<td>{{$libro->isbn}}</td>
 		<td><a href="/admin/libros/{{$libro->id}}" title="Ver detalles de este libro">{{$libro->título}}</a></td>
-		<td>@foreach(($libro->autores) as $autor) {{$autor->nombre}} @endforeach</td>
+		<td>{{implode(', ',array_pluck($libro->autores,'nombre'))}}</td>
 		<td>{{$libro->editorial->nombre}}</td>
 		<td>${{$libro->precio}}</td>
 		<td>{{$libro->agotado?'No':'Sí'}}</td>				

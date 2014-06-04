@@ -390,13 +390,14 @@
 	{
 		/*Mod*/
 		/*padding: 5em 0em;*/
-		padding:1em 0;
+		padding:0 0 1em 0;
 		text-align: center;
 	}
 	
 	#logo h1
 	{
 		font-size: 3.5em;
+		margin-top: 0.75em;
 	}
 	
 	
@@ -473,7 +474,7 @@
 	{
 	}
 	
-	#menu .current_page_item a
+	#menu .activo a
 	{
 		border: 1px solid #3C3C3C;
 		border-radius: 4px;
@@ -801,11 +802,15 @@
 
 .menu{
 	text-align:right;
-	margin:2px;
+	margin:2px;	
+	float:right;
+	border: 1px solid #3C3C3C;
+	border-radius: 4px;
+	padding:3px 4px;
 }
 
 .menu a,.menu a:active,.menu a:link{
-	margin-left:5px;
+	margin-left:7px;
 	color:black;
 }
 

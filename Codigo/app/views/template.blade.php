@@ -37,9 +37,9 @@ Released   : 20140207
 			<div id="menu">
 				<ul>
 						
-					<li class="current_page_item"><a href="/" accesskey="1" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
-					<li><a href="#" accesskey="2" title="Póngase en contacto con Cookbook">Contacto</a></li>
-					<li><a href="#" accesskey="3" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
+					<li id="catalogo"><a href="/" accesskey="1" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
+					<li id="contacto"><a href="#" accesskey="2" title="Póngase en contacto con Cookbook">Contacto</a></li>
+					<li id="ayuda"><a href="#" accesskey="3" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
 				</ul>
 			</div>
 		</div>
@@ -56,6 +56,10 @@ Released   : 20140207
 	<p><span><strong>Cookbook</strong> - Sistema web de venta de libros</span><br/>
 	Diseño <a href="http://templated.co" rel="nofollow">Templated</a> | Implementación <a href="#">Soluciones Informáticas</a>.</p>
 </div>
+<script>
+	@yield('menuActivo')
+	document.getElementById(menuActivo).className = "activo";
+</script>
 </body>
 </html>
 
