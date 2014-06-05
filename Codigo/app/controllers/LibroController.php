@@ -187,10 +187,32 @@ class LibroController extends BaseController {
 		//ToDo: proteger este método
 		$libro=Libro::find($id);		
 		
-		$autoresFiltrados=$libro->with(['autores' => function($query){
-			$query->whereNotIn(array_pluck($libro->autores,'id'));
-		}]);
-		return View::make('libro.modificar',['libro'=>$libro, 'idiomas'=>Idioma::disponibles()->get(), 'editoriales'=>Editorial::disponibles()->get()]);	
+		//Selecciono los autors que no estan relacionados con libro para ofrecer vincularlos
+		$autoresFiltrados=DB::select('	select a.id,a.nombre, la.libro_id
+										from autor a inner join libroautor la on (a.id = la.autor_id)
+										where a.id not in (
+											select distinct(la.autor_id)
+											from libroautor la
+											where la.libro_id = '.$id.'
+											UNION
+											select 1
+										)
+										group by a.id, a.nombre'
+		);
+		
+		$etiquetasFiltradas=DB::select('select e.id,e.nombre, le.libro_id
+										from etiqueta e inner join libroetiqueta le on (e.id = le.etiqueta_id)
+										where e.id not in (
+											select distinct(le.etiqueta_id)
+											from libroetiqueta le
+											where le.libro_id = '.$id.'
+											UNION
+											select 1
+										)
+										group by e.id, e.nombre'
+		);
+		
+		return View::make('libro.modificar',['libro'=>$libro, 'idiomas'=>Idioma::disponibles()->get(), 'editoriales'=>Editorial::disponibles()->get(),'autores'=>$autoresFiltrados,'etiquetas'=>$etiquetasFiltradas]);	
 	}
 
 	public function modificacion($id){
@@ -199,14 +221,12 @@ class LibroController extends BaseController {
 			switch (Input::get('modificar')) {
 				case 'info':		$this->modificarInfo($id,Input::all());
 									break;
-				case 'autores':		$this->modificarInfo($id,Input::all());
+				case 'autores':		$this->modificarAutores($id,Input::all());
 									break;
-				case 'etiquetas':	$this->modificarInfo($id,Input::all());
+				case 'etiquetas':	$this->modificarEtiquetas($id,Input::all());
 									break;
-				case 'tapa':		$this->modificarInfo($id,Input::all());
+				case 'archivos':	$this->modificarArchivo($id,Input::all());
 									break;
-				case 'indice':		$this->modificarInfo($id,Input::all());
-									break;				
 				default: 			return Redirect::back()->withErrors('Lo que intentas modificar no es válido');
 			}		
 			return Redirect::to('/admin/libros/'.$id.'/modificar#'.Input::get('modificar'));
@@ -298,19 +318,105 @@ class LibroController extends BaseController {
 
 	protected function modificarAutores($id,$datos){
 		$reglasDeValidacion=[
-			'autor'=>['array','exists:autor,id',],
-			'autor-otro'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5','required_without:autor', 'unique:autor,nombre']
+			'quitar-autor'=>['array','exists:autor,id',],
+			'agregar-autor'=>['array','exists:autor,id',],
+			'autor-otro'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5', 'unique:autor,nombre']
 		];
 		
 		$validador= Validator::make($datos,$reglasDeValidacion);
 		if($validador->fails()){
-			return Redirect::to('/admin/libros/'.$id.'/modificar#info')->withErrors($validador);
+			return Redirect::to('/admin/libros/'.$id.'/modificar#autores')->withErrors($validador);
 		}
 		else{
-			//Actualizo el libro. LLeno un array cn los Key
-			return;
+			$libro=Libro::find($id);
+			//Actualizo las relaciones de autores con libro..
+			//Agregar:
+			if(Input::has('agregar-autor')){				
+				foreach(Input::get('agregar-autor') as $idAutor){
+					$libro->autores()->attach($idAutor);
+				}
+			}
+			
+			//Crear
+			if(Input::has('autor-checkbox')){					
+				$autor=Autor::create(['nombre'=>Input::get('autor-otro')]);
+				$libro->autores()->attach($autor->id);
+			}
+
+			//Quitar
+			if(Input::has('quitar-autor')){				
+				foreach(Input::get('quitar-autor') as $idAutor){
+					$libro->autores()->detach($idAutor);
+				}
+				
+			}
 		}
 	}	
+
+	protected function modificarEtiquetas($id,$datos){
+		$reglasDeValidacion=[
+			'quitar-etiqueta'=>['array','exists:etiqueta,id',],
+			'agregar-etiqueta'=>['array','exists:etiqueta,id',],
+			'etiqueta-otro'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5', 'unique:etiqueta,nombre']
+		];
+		
+		$validador= Validator::make($datos,$reglasDeValidacion);
+		if($validador->fails()){
+			return Redirect::to('/admin/libros/'.$id.'/modificar#etiquetas')->withErrors($validador);
+		}
+		else{
+			$libro=Libro::find($id);
+			//Actualizo las relaciones de etiquetas con libro..
+			//Agregar:
+			if(Input::has('agregar-etiqueta')){				
+				foreach(Input::get('agregar-etiqueta') as $idetiqueta){
+					$libro->etiquetas()->attach($idetiqueta);
+				}
+			}
+			
+			//Crear
+			if(Input::has('etiqueta-checkbox')){					
+				$etiqueta=etiqueta::create(['nombre'=>Input::get('etiqueta-otro')]);
+				$libro->etiquetas()->attach($etiqueta->id);
+			}
+
+			//Quitar
+			if(Input::has('quitar-etiqueta')){				
+				foreach(Input::get('quitar-etiqueta') as $idEtiqueta){
+					$libro->etiquetas()->detach($idEtiqueta);
+				}
+			}
+		}
+	}
+	
+	protected function modificarArchivo($id,$datos){
+		$reglasDeValidacion=[
+			'archivo'=>['required','mimes:jpeg,png,jpg']
+		];
+		
+		$validador= Validator::make($datos,$reglasDeValidacion);
+		if($validador->fails()){
+			return Redirect::to('/admin/libros/'.$id.'/modificar#archivos')->withErrors($validador);
+		}
+		else{
+			
+			$carpetaDatos=public_path().'/datos/';
+			$nombreDeArchivo=$id. '.'. $datos['archivo']->getClientOriginalExtension();			
+		
+			$datos['archivo']->move($carpetaDatos. $datos['tipo'] .'s', $nombreDeArchivo);
+		
+			$libro=Libro::find($id);
+		
+			if($datos['tipo']=='tapa'){
+				$libro->tapa=$nombreDeArchivo;
+			}
+			else{
+				$libro->índice=$nombreDeArchivo;
+			}
+			
+			$libro->save();
+		}
+	}
 }
 
 ?>

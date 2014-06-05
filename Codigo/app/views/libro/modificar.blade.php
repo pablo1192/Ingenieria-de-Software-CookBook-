@@ -83,40 +83,102 @@ menuActivo='libros'
 <a name="autores"></a>
 <h3>Autores</h3>
 <form method="post" action="/admin/libros/{{$libro->id}}/modificar">
-	<ul>
-	@foreach($libro->autores as $autor)
-		<li>{{$autor->nombre}}</li>
-	@endforeach
-	</ul>
-	<input type="hidden" name="modificar" value="autores">
-	<input type="submit" value="Modificar" title="Realiza los cambios solicitados"/>			
+<table width="95%" cellspacing="0" cellpadding="15">	
+	<tr align="left">
+		<th>Quitar como autor <span class="tooltip" title="Tilde las cajas para quitar uno o mas autores.">[?]</span></th>
+		<th>Agregar como autor <span class="tooltip" title="Seleccione uno ó más autores de la lista para agregarlos como autores de este libro.">[?]</span></th>
+		<th>Crear uno nuevo <span class="tooltip" title="Tilde 'Otro' para crear un autor que no se encuentra en la lista.">[?]</span></th>
+	</tr>
+	<tr valign="top">	
+		<td>
+			@foreach($libro->autores as $autor)
+				<input type="checkbox" name="quitar-autor[]" value="{{$autor->id}}"> {{$autor->nombre}}<br/>
+			@endforeach
+		</td>
+		<td>
+			<p></p>
+			<select name="agregar-autor[]" multiple>
+			@foreach($autores as $autor)
+				<option value="{{$autor->id}}">{{$autor->nombre}}</option>
+			@endforeach
+			</select>
+			
+		</td>
+		<td>
+			<input name="autor-checkbox" type="checkbox" title="Habilitar la creación de un nuevo autor" onchange="habilitarOtro(this,'autor-otro')" />Otro: 
+			<input id="autor-otro" name="autor-otro" value="{{Input::old('autor-otro')}}"  disabled placeholder="Doña Petrona"/>
+		</td>
+	</tr>
+</table>
+	<input type="hidden" name="modificar" value="autores">	
+	<input type="submit" value="Modificar" title="Realiza los cambios solicitados"/>
+	<input type="reset" value="Limpiar" title="Borra los datos ingresados"/>
 	<a href="/admin/libros/" style="text-decoration:none;"><input type="button" value="Cancelar" title="Cancela la operación"/></a>
 </form>
 <br/><br/>
 <a name="etiquetas"></a>
 <h3>Etiquetas</h3>
 <form method="post" action="/admin/libros/{{$libro->id}}/modificar">
-
+<table width="95%" cellspacing="0" cellpadding="15">	
+	<tr align="left">
+		<th>Quitar como etiqueta <span class="tooltip" title="Tilde las cajas para quitar una o más etiquetas.">[?]</span></th>
+		<th>Agregar como etiqueta <span class="tooltip" title="Seleccione una ó más etiquetas de la lista para agregarlas como etiquetas de este libro.">[?]</span></th>
+		<th>Crear uno nuevo <span class="tooltip" title="Tilde 'Otro' para crear una etiqueta que no se encuentra en la lista.">[?]</span></th>
+	</tr>
+	<tr valign="top">	
+		<td>
+			@foreach($libro->etiquetas as $etiqueta)
+				<input type="checkbox" name="quitar-etiqueta[]" value="{{$etiqueta->id}}"> {{$etiqueta->nombre}}<br/>
+			@endforeach
+		</td>
+		<td>
+			<p></p>
+			<select name="agregar-etiqueta[]" multiple>
+			@foreach($etiquetas as $etiqueta)
+				<option value="{{$etiqueta->id}}">{{$etiqueta->nombre}}</option>
+			@endforeach
+			</select>
+			
+		</td>
+		<td>
+			<input name="etiqueta-checkbox" type="checkbox" title="Habilitar la creación de un nuevo etiqueta" onchange="habilitarOtro(this,'etiqueta-otro')" />Otro: 
+			<input id="etiqueta-otro" name="etiqueta-otro" value="{{Input::old('etiqueta-otro')}}"  disabled placeholder="tradicional"/>
+		</td>
+	</tr>
+</table>
 		<input type="hidden" name="modificar" value="etiquetas">
-		<input type="submit" value="Modificar" title="Realiza los cambios solicitados"/>			
+		
+		<input type="submit" value="Modificar" title="Realiza los cambios solicitados"/>
+		<input type="reset" value="Limpiar" title="Borra los datos ingresados"/>
 		<a href="/admin/libros/" style="text-decoration:none;"><input type="button" value="Cancelar" title="Cancela la operación"/></a>
 </form>
 <br/><br/>
 <a name="archivos"></a>
-<h3>Tapa e índice del libro</h3>
-
+<h3>Tapa e índice</h3>
+<p>Suba un archivo de imagen *.jpg ó *.png</p>
 	<div style="float:left;width:250px;text-align:center;">
 		<img src="/datos/tapas/{{$libro->tapa}}" alt="Tapa del libro" title="Tapa del libro" width="175" style="box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
 		<br/>
 		<form action="/admin/libros/{{$libro->id}}/modificar" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
-			<input type="hidden" value="modTapa"/>
-			<input type="submit" value="modTapa"/>
-			<input type="file" value="Cambiar"  accept="image/*"/>
+			<input type="hidden" name="modificar" value="archivos">
+			<input type="hidden" name="tipo" value="tapa">
+			<br/><br/>
+			<input type="file"  name="archivo" accept="image/*"/><br/>
+			<input type="submit" value="Cambiar"/>
+			
 		</form>
 	</div>
-	<div style="float:right;">
-
-	
+	<div style="float:right;width:800px;text-align:center;">
+		<img src="/datos/indices/{{$libro->índice}}" alt="Tapa del libro" title="Tapa del libro" width="175" style="box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
+		<br/>
+		<form action="/admin/libros/{{$libro->id}}/modificar" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+			<input type="hidden" name="modificar" value="archivos">
+			<input type="hidden" name="tipo" value="indice">
+			<br/><br/>
+			<input type="file"  name="archivo" accept="image/*"/><br/>
+			<input type="submit" value="Cambiar"/>
+			
+		</form>
 	</div>
 	<br style="clear:both;"/><br/>
 </div>
