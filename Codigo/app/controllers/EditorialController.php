@@ -37,7 +37,7 @@ class EditorialController extends BaseController {
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
 		
-		if(!Cookbook::accedeSoloDesdeRuta('/admin/editoriales')){
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/editoriales','/admin/editoriales/'.$id.'/modificar'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
 		
@@ -63,7 +63,7 @@ class EditorialController extends BaseController {
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
 		
-		if(!Cookbook::accedeSoloDesdeRuta('/admin/editoriales')){
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/editoriales','/admin/editoriales/'.$id.'/modificar'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
 
@@ -79,7 +79,7 @@ class EditorialController extends BaseController {
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
 		
-		if(!Cookbook::accedeSoloDesdeRuta('/admin/editoriales')){
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/editoriales'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
 		

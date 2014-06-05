@@ -350,6 +350,17 @@ class LibroController extends BaseController {
 				}
 				
 			}
+			
+			//Controlo que tenga al menos 1 autor:
+			//Y ademas q no quede el "Sin editorial"
+			if($libro->autores()->count() == 0){
+				$libro->autores()->attach(1);
+			}
+			else{
+				if($libro->autores()->where('id','=','1')->count() == 1){
+					$libro->autores()->detach(1);
+				}
+			}
 		}
 	}	
 
@@ -384,6 +395,18 @@ class LibroController extends BaseController {
 			if(Input::has('quitar-etiqueta')){				
 				foreach(Input::get('quitar-etiqueta') as $idEtiqueta){
 					$libro->etiquetas()->detach($idEtiqueta);
+				}
+			}
+			
+			
+			//Controlo que tenga al menos 1 etiqueta:
+			//Y ademas q no quede el "Sin Etiqueta"
+			if($libro->etiquetas()->count() == 0){
+				$libro->etiquetas()->attach(1);
+			}
+			else{
+				if($libro->etiquetas()->where('id','=','1')->count() == 1){
+					$libro->etiquetas()->detach(1);
 				}
 			}
 		}

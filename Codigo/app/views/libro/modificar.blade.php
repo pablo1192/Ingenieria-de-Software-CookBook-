@@ -91,7 +91,7 @@ menuActivo='libros'
 	</tr>
 	<tr valign="top">	
 		<td>
-			@foreach($libro->autores as $autor)
+			@foreach($libro->autores()->where('id','<>',1)->get() as $autor)
 				<input type="checkbox" name="quitar-autor[]" value="{{$autor->id}}"> {{$autor->nombre}}<br/>
 			@endforeach
 		</td>
@@ -127,7 +127,7 @@ menuActivo='libros'
 	</tr>
 	<tr valign="top">	
 		<td>
-			@foreach($libro->etiquetas as $etiqueta)
+			@foreach($libro->etiquetas()->where('id','<>',1)->get() as $etiqueta)
 				<input type="checkbox" name="quitar-etiqueta[]" value="{{$etiqueta->id}}"> {{$etiqueta->nombre}}<br/>
 			@endforeach
 		</td>
