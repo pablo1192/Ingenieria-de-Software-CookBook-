@@ -41,8 +41,16 @@ class UsuarioController extends BaseController {
          $user->contraseña = Hash::make(Input::get('contraseña'));
          $user->save();
 
-         /*return Redirect::to('/login')->with('mensaje_registro', 'Usuario registrado con éxito.');;*/
-         return Redirect::to('/login');
+
+         $userdata = array(
+              'email'      => Input::get('email'),
+              'password'      => Input::get('contraseña')
+               );
+
+        if (Auth::attempt($userdata)) {
+                return Redirect::to('/')->with('mensaje-registro', 'Se ha registrado con éxito en el sistema.');
+            }
+        // return Redirect::to('/login')->with('mensaje-registro', 'Se ha registrado con éxito en el sistema.');
          }
 
     }
@@ -245,7 +253,7 @@ class UsuarioController extends BaseController {
 
             Auth::user()->save();
             
-            return Redirect::to('/admin/usuarios/');
+            return Redirect::to('/');
           }
     }
 

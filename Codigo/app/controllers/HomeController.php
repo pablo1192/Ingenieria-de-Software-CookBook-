@@ -15,10 +15,10 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function showWelcome()
+	/*public function showWelcome()
 	{
 		return View::make('hello');
-	}
+	}*/
 
 	public function showLogin()
 	{
@@ -53,17 +53,18 @@ class HomeController extends BaseController {
 
 				if ((Auth::user()->dadoDeBaja == 1) OR (Auth::user()->bloqueado == 1)) {
 
-					return Redirect::to('/logout')->with('cuenta-invalida', 'Su cuenta ha sido deshabilitada.');
+					Auth::logout();
+					return Redirect::to('/login')->with('cuenta-invalida', '-> Su cuenta ha sido deshabilitada.');
 
 				} else {
 
-					return Redirect::to('/admin/usuarios')->with('ingreso-exitoso', 'Ha ingresado con éxito al sistema.');
+					return Redirect::to('/')->with('ingreso-exitoso', 'Ha ingresado con éxito al sistema.');
 
 				}
 	
 			} else {
 
-				return Redirect::to('/login')->with('ingreso-fallido', 'Sus credenciales son inválidas.');
+				return Redirect::to('/login')->with('ingreso-fallido', '-> Sus credenciales son inválidas.');
 			}
 		}
 	}

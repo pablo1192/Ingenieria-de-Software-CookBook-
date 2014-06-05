@@ -5,6 +5,19 @@ menuActivo='catalogo'
 @stop
 
 @section('contenido')
+
+@if ($alert = Session::get('ingreso-exitoso'))
+    <center><div class="alert alert-warning">
+        <strong>{{ $alert }}</strong>
+    </div></center>
+@endif
+
+@if ($alert = Session::get('mensaje-registro'))
+    <center><div class="alert alert-warning">
+        <strong>{{ $alert }}</strong>
+    </div></center>
+@endif
+
 <a name="area"></a>
 <h1>Bienvenido a nuestro catálogo </h1>
 <h2>En nuestro catálogo tenemos <span title="Cantidad de libros en el Sistema">({{count($libros)}})</span> libros  para ofrecerle</h2>
