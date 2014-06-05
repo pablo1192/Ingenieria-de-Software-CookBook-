@@ -15,7 +15,8 @@ class UsuarioController extends BaseController {
     
     public function nuevoUsuario()
     {
-        return View::make('registrarse');
+        $provincias= Provincia::all();
+        return View::make('registrarse',['provincias'=>$provincias]);
     }
 
     public function registrarUsuario()
@@ -33,6 +34,10 @@ class UsuarioController extends BaseController {
          $user->apellido = Input::get('apellido');
          $user->email = Input::get('email');
          $user->dni = Input::get('dni');
+         $user->provincia_id = Input::get('provincia');
+         $user->localidad = Input::get('localidad');
+         $user->dirección = Input::get('dirección');
+         $user->teléfono = Input::get('teléfono');
          $user->contraseña = Hash::make(Input::get('contraseña'));
          $user->save();
 
@@ -63,7 +68,8 @@ class UsuarioController extends BaseController {
        /* $localidades= Localidad::get();
         $provincias= Provincia::get();
         return View::make('Usuario.crear',['localidades'=>$localidades, 'provincias'=>$provincias]); */
-        return View::make('usuario.crear');
+        $provincias= Provincia::all();
+        return View::make('usuario.crear',['provincias'=>$provincias]);
     }
   
    /*   Función de testing */
@@ -83,6 +89,10 @@ class UsuarioController extends BaseController {
          $user->email = Input::get('email');
          $user->dni = Input::get('dni');
          $user->contraseña = Hash::make(Input::get('contraseña'));
+         $user->provincia_id = Input::get('provincia');
+         $user->dirección = Input::get('dirección');
+         $user->localidad = Input::get('localidad');
+         $user->teléfono = Input::get('teléfono');
          $user->save();
 
          return Redirect::to('/admin/usuarios');
@@ -99,8 +109,9 @@ class UsuarioController extends BaseController {
 
     public function modificarDatos($id)
     {
+        $provincias= Provincia::all();
         $usuario=Usuario::find($id);
-        return View::make('usuario.modificar',['usuario'=>$usuario]);
+        return View::make('usuario.modificar',['usuario'=>$usuario, 'provincias'=>$provincias]);
     }
 
     public function modificarUsuario($id)
@@ -132,7 +143,7 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el email es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El email ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['-> El email ingresado ya se encuentra en la base de datos']);
                 }
             }
 
@@ -146,9 +157,14 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el dni es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['-> El DNI ingresado ya se encuentra en la base de datos']);
                 }
             }
+
+            $usuario->provincia_id = Input::get('provincia');
+            $usuario->localidad = Input::get('localidad');
+            $usuario->dirección = Input::get('dirección');
+            $usuario->teléfono = Input::get('teléfono');
 
             if ( ($usuario->contraseña != Input::get('contraseña')) AND (Input::get('contraseña') != null) ){
                 $usuario->contraseña = Hash::make(Input::get('contraseña'));
@@ -166,7 +182,8 @@ class UsuarioController extends BaseController {
 
     public function formularioPerfil()
     {
-        return View::make('usuario.perfil');
+        $provincias= Provincia::all();
+        return View::make('usuario.perfil',['provincias'=>$provincias]);
     }
 
     public function modificarPerfil()
@@ -197,7 +214,7 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el email es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El email ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['-> El email ingresado ya se encuentra en la base de datos']);
                 }
             }
 
@@ -211,7 +228,7 @@ class UsuarioController extends BaseController {
                 }
                 /*Si el dni es diferente, pero existe en la base de datos, se le informa del error.*/
                 else {
-                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['El DNI ingresado ya se encuentra en la base de datos']);
+                return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['-> El DNI ingresado ya se encuentra en la base de datos']);
                 }
             }
 
@@ -220,6 +237,11 @@ class UsuarioController extends BaseController {
             if ( (Auth::user()->contraseña != Input::get('contraseña')) AND (Input::get('contraseña') != null) ){
                 Auth::user()->contraseña = Hash::make(Input::get('contraseña'));
             }
+
+            Auth::user()->provincia_id = Input::get('provincia');
+            Auth::user()->localidad=Input::get('localidad');
+            Auth::user()->dirección=Input::get('dirección');
+            Auth::user()->teléfono=Input::get('teléfono');
 
             Auth::user()->save();
             

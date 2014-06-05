@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('menuActivo')
+menuActivo='usuarios'
+@stop
+
 @section('contenido')
 
 @if ($alert = Session::get('ingreso-exitoso'))
@@ -10,12 +14,16 @@
 <a name="area"></a>
 <h1>Gestión de usuarios:</h1>
 <h2>Usuarios <span title="Usuarios en el Sistema">({{count($usuarios)}})</span>:</h2>
-<table width="80%">
+<table width="100%">
   <tr>
     <th>Nombre</th>
     <th>Apellido</th>
     <th>Email</th>
     <th>DNI</th>
+    <th>Teléfono</th>
+    <th>Provincia</th>
+    <th>Localidad</th>
+    <th>Domicilio</th>
     <th>Bloqueado</th>
     <th>¿Activo?</th>
     <th>Operaciones</th>
@@ -44,6 +52,10 @@
     <td>{{$usuario->apellido}}</td>
     <td>{{$usuario->email}}</td>
     <td>{{$usuario->dni}}</td>
+    <td>{{$usuario->teléfono}}</td>
+    <td>{{$usuario->provincia->nombre}}</td>
+    <td>{{$usuario->localidad}}</td>
+    <td>{{$usuario->dirección}}</td>
     <td>{{($usuario->bloqueado?'Sí':'No')}}</td>
     <td>{{($usuario->dadoDeBaja?'No':'Sí')}}</td>    
     <td><a href="/admin/usuarios/{{ $usuario->id }}/modificar" title="Modificar los datos del usuario">Modificar</a> 

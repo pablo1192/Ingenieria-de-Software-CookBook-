@@ -7,23 +7,27 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 
 
 	protected $table = 'usuario';
-	protected $fillable = array('nombre', 'apellido', 'email', 'dni');
+	protected $fillable = array('nombre', 'apellido', 'email', 'dni', 'provincia_id', 'dirección', 'localidad', 'teléfono');
 	protected $guarded = array('contraseña');
 
     /* No existe regla nativa length para números (DNI). Luego busco la forma de implementarla. */
 	public static function reglasDeValidacion(){
 		
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['numeric','required', 'unique:usuario,dni', 'digits_between:7,8'], 'contraseña'=>['min:5','required', 'confirmed']] ;
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i', 'unique:usuario,dni'], 'dirección'=>['min:7', 'required'], 'localidad'=>['min:5', 'required'], 'teléfono'=>['min:7', 'required'], 'contraseña'=>['min:5','required', 'confirmed']];
 	}
+
+	/*  'precio'=>['required','regex:/^[0-9]{1,4}([.][0-9]{1,2})?$/i'] */
+	/*  'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))', 'unique:usuario,dni'] */
+	/*  'dni'=>['numeric','required', 'unique:usuario,dni'  */
 
 	public static function reglasDeValidacionMod(){
 
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['numeric','required','digits_between:7,8'], 'contraseña'=>['min:5', 'confirmed']] ;
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dirección'=>['min:7', 'required'], 'localidad'=>['min:5', 'required'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i'], 'teléfono'=>['min:7', 'required'], 'contraseña'=>['min:5', 'confirmed']] ;
 	}
 
 
-	public function localidad(){
-		return $this->belongsTo('Localidad','localidad_id');
+	public function provincia(){
+		return $this->belongsTo('Provincia','provincia_id');
 	}	
 
 
