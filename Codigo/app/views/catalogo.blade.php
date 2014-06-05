@@ -19,37 +19,55 @@ menuActivo='catalogo'
 @endif
 
 <a name="area"></a>
-<h1>Bienvenido a nuestro catálogo </h1>
-<h2>En nuestro catálogo tenemos <span title="Cantidad de libros en el Sistema">({{count($libros)}})</span> libros para ofrecerle</h2>
+<h1><font color="purple">Bienvenido a nuestro catálogo </font> </h1>
+<h2>En nuestro catálogo tenemos los siguientes libros para ofrecerle</h2>
 @if (! Auth::check())
 
   </br><b><center><a href="/login" title="Iniciar sesión">Inicie sesión</a> para poder acceder a los detalles de cada libro</b></center>
 @endif
 <br></br>
-@foreach($libros as $libro)
-		
-		<div style="float:left;width:250px;eight:100px;text-align:center;">
-		  <img src="/datos/tapas/{{$libro->tapa}}" alt="Tapa del libro" title="Tapa del libro" width="100" style="float:left ;box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
-	    
-		&nbsp;&nbsp;Título:&nbsp; {{$libro->título}}<br><br/>
-		&nbsp;&nbsp;Autor/es:&nbsp;{{implode(', ',array_pluck($libro->autores,'nombre'))}}<br><br/>
-		&nbsp;&nbsp;Editorial:&nbsp;{{$libro->editorial->nombre}}<br><br/>
-		&nbsp;&nbsp;Precio: $ {{$libro->precio}}<br><br/>
-		@if ($libro->agotado != 0)
-		   <b><u><font color="red"> Agotado en este momento </font></u></b>  <br></br>
-		@endif
-		@if (! Auth::guest())
-		<a href="/{{$libro->id}}/detalles" title="Vea los detalles, sólo si inicio sesión" class="button button-mediano" style="float:center" >Ver más</a><br><br/> 
-		@endif
-		</div>
-@endforeach<!--
-
-$i=1 
-@for ($i = 1; $i < count($libros)/4; $i++)
-  
-  @for
-  <li>{{ $i }} ... </li>
+@for($i = 0; $i<(count($libros)/4)-1; $i++)
+       @for($j = 0; $j<4; $j++)  
+          <div class="column{{$j+1}}">
+               <div class="box"> 	
+                   			   
+                    <h3>{{$libros[($i*4)+$j]->título}} <!--({{$i}} : {{$j}} )--></h3>
+                    <img src="/datos/tapas/{{$libros[($i*4)+$j]->tapa}}" alt="Tapa del libro" title="Tapa del libro" width="100" style="float:left ;box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
+                    &nbsp;&nbsp;Autor/es:&nbsp;{{implode(', ',array_pluck($libros[($i*4)+$j]->autores,'nombre'))}}<br><br/>
+                    &nbsp;&nbsp;Editorial:&nbsp;{{$libros[($i*4)+$j]->editorial->nombre}}<br><br/>
+                    &nbsp;&nbsp;Precio: $ {{$libros[($i*4)+$j]->precio}}<br><br/>
+                    @if ($libros[($i*4)+$j]->agotado != 0)
+                       <b><u><font color="purple"> Agotado en este momento </font></u></b>  <br></br>
+                    @endif
+                    @if (! Auth::guest())
+                    <a href="/{{$libros[($i*4)+$j]->id}}/detalles" title="Vea los detalles, solo si inicio sesión" class="button button-mediano" style="float:center" >Ver mas</a><br><br/> 
+                    @endif
+                </div>
+            </div>
+      @endfor
+      <br class="separador" /><br></br>
 @endfor
--->
+@if(count($libros)%4 != 0)<!--Quedan libros -->
+  @for($i=0;$i<count($libros)%4;$i++)  
+           <div class="column{{$i+1}}">
+               <div class="box"> 	
+               		<!--<b><u><font color="red"> Agotado en este momento </font></u></b>	 -->  
+                    <h3>{{$libros[$i+(floor(count($libros)/4)*4)]->título}} </h3>
+                    <img src="/datos/tapas/{{$libros[$i+(floor(count($libros)/4)*4)]->tapa}}" alt="Tapa del libro" title="Tapa del libro" width="100" style="float:left ;box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
+                    &nbsp;&nbsp;Autor/es:&nbsp;{{implode(', ',array_pluck($libros[$i+(floor(count($libros)/4)*4)]->autores,'nombre'))}}<br><br/>
+                    &nbsp;&nbsp;Editorial:&nbsp;{{$libros[$i+(floor(count($libros)/4)*4)]->editorial->nombre}}<br><br/>
+                    &nbsp;&nbsp;Precio: $ {{$libros[$i+(floor(count($libros)/4)*4)]->precio}}<br><br/>
+                    @if ($libros[$i+(floor(count($libros)/4)*4)]->agotado != 0)
+                       <b><u><font color="cookbook"> Agotado en este momento </font></u></b>  <br></br>
+                    @endif
+                    @if (! Auth::guest())
+                    <a href="/{{$libros[$i+(floor(count($libros)/4)*4)]->id}}/detalles" title="Vea los detalles, solo si inicio sesión" class="button button-mediano" style="float:center" >Ver mas</a><br><br/> 
+                    @endif
+                </div>
+            </div>
+            
+  @endfor
+  <br class="separador" /><br></br>
+@endif  
 
 @stop
