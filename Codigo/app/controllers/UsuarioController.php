@@ -110,8 +110,10 @@ class UsuarioController extends BaseController {
     public function bloquearUsuario($id)
     {
         $usuario=Usuario::find($id);
+        if($usuario->id != 1) {
         $usuario->bloqueado=!($usuario->bloqueado);
         $usuario->save();
+        }
         return Redirect::to('/admin/usuarios#area');
     }
 

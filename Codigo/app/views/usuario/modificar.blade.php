@@ -6,6 +6,7 @@ menuActivo='usuarios'
 
 @section('contenido')
 
+@if($usuario->id != 1)
 <h1>Gestión de Usuarios</h1>
 <h2>Modificar «{{$usuario->nombre . ' ' . $usuario->apellido}}»</h2>
 
@@ -18,6 +19,7 @@ menuActivo='usuarios'
     @endforeach
 </ul>
 @endif
+
 
 <form method="post" action="/admin/usuarios/{{$usuario->id}}/modificar">
 	Nombre: <input name="nombre" value="{{Input::old('nombre',$usuario->nombre)}}"/><br/>
@@ -39,4 +41,8 @@ menuActivo='usuarios'
 		<input type="button" value="Cancelar" title="Cancelar la operacion"/>
 	</a>
 </form>
+@else
+<br/>
+<center><strong>Operación prohibida. Regrese usando los enlaces del panel de administración.</strong></center>
+@endif
 @stop
