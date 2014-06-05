@@ -7,7 +7,7 @@ menuActivo='usuarios'
 @section('contenido')
 
 @if($usuario->id != 1)
-<h1>Gestión de Usuarios</h1>
+<h1>Gestión de usuarios:</h1>
 <h2>Modificar «{{$usuario->nombre . ' ' . $usuario->apellido}}»</h2>
 
 @if($errors->has())
@@ -27,10 +27,10 @@ menuActivo='usuarios'
 	Email: <input name="email" value="{{Input::old('email',$usuario->email)}}"/><br/>
 	DNI: <input name="dni" value="{{Input::old('dni',$usuario->dni)}}"/><br/>
 	Teléfono: <input name="teléfono" value="{{Input::old('teléfono',$usuario->teléfono)}}"/><br/>
-	Provincia:<span class="tooltip" title="Seleccione una provincia de la lista.">[?]</span> <select name="provincia">              
+	Provincia:<select name="provincia">              
                 @foreach($provincias as $provincia)
                     {{'<option value="'. $provincia->id .'">'. $provincia->nombre .'</option>'}}
-                @endforeach         </select> 
+                @endforeach</select> 
     Localidad: <input name="localidad" value="{{Input::old('localidad', $usuario->localidad)}}"/><br/>
     Domicilio: <input name="dirección" value="{{Input::old('dirección', $usuario->dirección)}}"/><br/>
 	Contraseña: <input type=password name="contraseña" value=""/><br/>

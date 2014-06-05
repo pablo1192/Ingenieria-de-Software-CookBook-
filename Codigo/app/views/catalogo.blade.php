@@ -20,10 +20,10 @@ menuActivo='catalogo'
 
 <a name="area"></a>
 <h1>Bienvenido a nuestro catálogo </h1>
-<h2>En nuestro catálogo tenemos <span title="Cantidad de libros en el Sistema">({{count($libros)}})</span> libros  para ofrecerle</h2>
+<h2>En nuestro catálogo tenemos <span title="Cantidad de libros en el Sistema">({{count($libros)}})</span> libros para ofrecerle</h2>
 @if (! Auth::check())
 
-  <b> Inicie Sesión para poder acceder a los detalles de cada libro </b> <br></br>
+  </br><b><center><a href="/login" title="Iniciar sesión">Inicie sesión</a> para poder acceder a los detalles de cada libro</b></center>
 @endif
 <br></br>
 @foreach($libros as $libro)
@@ -39,7 +39,7 @@ menuActivo='catalogo'
 		   <b><u><font color="red"> Agotado en este momento </font></u></b>  <br></br>
 		@endif
 		@if (! Auth::guest())
-		<a href="/{{$libro->id}}/detalles" title="Vea los detalles, solo si inicio sesión" class="button button-mediano" style="float:center" >Ver mas</a><br><br/> 
+		<a href="/{{$libro->id}}/detalles" title="Vea los detalles, sólo si inicio sesión" class="button button-mediano" style="float:center" >Ver más</a><br><br/> 
 		@endif
 		</div>
 @endforeach<!--

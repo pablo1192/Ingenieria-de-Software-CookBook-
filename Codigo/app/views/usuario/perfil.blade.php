@@ -28,14 +28,13 @@
     Localidad: <input name="localidad" value="{{Input::old('localidad',Auth::user()->localidad)}}"/> <span class="tooltip" title="Escriba su localidad en 5 o más caracteres.">[?]</span> <br/>
     Domicilio: <input name="dirección" value="{{Input::old('dirección',Auth::user()->dirección)}}"/> <span class="tooltip" title="Escriba su domicilio en 7 o más caracteres.">[?]</span> <br/>
 	Contraseña: <input type=password name="contraseña" value=""/><span class="tooltip" title="La contraseña debe tener una longitud mayor a 5 caracteres.">[?]</span><br/>
-	Reescriba la contraseña: <input type=password name="contraseña_confirmation" value=""/><span class="tooltip" title="Repita la contraseña para confirmar su registro.">[?]</span> <br/>
+	Reescriba la contraseña: <input type=password name="contraseña_confirmation" value=""/><span class="tooltip" title="Repita la contraseña para confirmar su modificación.">[?]</span> <br/>
 	<br/>
 	<input type="submit" value="Modificar" title="Modificar los datos" />		
 	<a href="/admin/usuarios/" style="text-decoration:none;">
 		<input type="button" value="Cancelar" title="Cancelar la operacion"/>
 	</a>
 </form>
-<br/>
- <br/>
-<a href="/eliminar" class="button button-rojo button-mediano" title="Darse de baja" onclick="return confirm('¿Realmente desea darse de baja en el sistema?')">Darse de baja</a> | <strong>Advertencia: Esta operación no puede deshacerse.</strong><br/>
+<h2></h2>
+<a href="/eliminar" class="button button-rojo button-mediano" title="Darse de baja" onclick="return confirm('¿Realmente desea darse de baja en el sistema?')">Darse de baja</a> | <strong>Advertencia: Esta operación no puede deshacerse.</strong>
 @stop
