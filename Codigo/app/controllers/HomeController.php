@@ -22,7 +22,12 @@ class HomeController extends BaseController {
 
 	public function showLogin()
 	{
-		return View::make('login');
+		if (! Auth::check()){
+		  return View::make('login');
+		}
+		else {
+			return Redirect::to('/');
+		}
 	}
 
 	public function doLogin()

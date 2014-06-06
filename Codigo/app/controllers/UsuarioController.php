@@ -15,8 +15,13 @@ class UsuarioController extends BaseController {
     
     public function nuevoUsuario()
     {
-        $provincias= Provincia::all();
-        return View::make('registrarse',['provincias'=>$provincias]);
+        if (! Auth::check()){
+          $provincias= Provincia::all();
+          return View::make('registrarse',['provincias'=>$provincias]);
+      }
+      else {
+          return Redirect::to('/');
+      }
     }
 
     public function registrarUsuario()
@@ -68,19 +73,17 @@ class UsuarioController extends BaseController {
 
 
     /*  ***************************************************************************************************************************************************  */
-    /*  *************************************************** FUNCIONES DE ADMIN ****************************************************************************  */
+    /*  *************************************************** FUNCIONES DE TESTING - DESACTIVADAS ***********************************************************  */
     /*  ***************************************************************************************************************************************************  */
-
+/*
     public function nuevoTestUsuario()
     {
-       /* $localidades= Localidad::get();
-        $provincias= Provincia::get();
-        return View::make('Usuario.crear',['localidades'=>$localidades, 'provincias'=>$provincias]); */
+
         $provincias= Provincia::all();
         return View::make('usuario.crear',['provincias'=>$provincias]);
     }
   
-   /*   Función de testing */
+   
         public function crearUsuario()
     {
 
@@ -106,6 +109,7 @@ class UsuarioController extends BaseController {
          return Redirect::to('/admin/usuarios');
          }
     }
+    */
 
     public function bloquearUsuario($id)
     {
@@ -116,7 +120,7 @@ class UsuarioController extends BaseController {
         }
         return Redirect::to('/admin/usuarios#area');
     }
-
+/*
     public function modificarDatos($id)
     {
         $provincias= Provincia::all();
@@ -143,29 +147,29 @@ class UsuarioController extends BaseController {
             if ($usuario->apellido != Input::get('apellido')){
                 $usuario->apellido=Input::get('apellido');
             }
-            /*Si el email es diferente al suyo y no existe en la base de datos, se graban los cambios.*/
+            
             if ($usuario->email != Input::get('email') and (sizeof(Usuario::where('email','=',Input::get('email'))->get()) <= 0 )){
                 $usuario->email=Input::get('email');
             }
             else {
-                /*Si el email es igual al suyo, no realiza cambios.*/
+                
                 if ($usuario->email == Input::get('email')) {
                 }
-                /*Si el email es diferente, pero existe en la base de datos, se le informa del error.*/
+              
                 else {
                 return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['-> El email ingresado ya se encuentra en la base de datos']);
                 }
             }
 
-            /*Si el dni es diferente al suyo y no existe en la base de datos, se graban los cambios.*/
+           
             if ($usuario->dni != Input::get('dni') and (sizeof(Usuario::where('dni','=',Input::get('dni'))->get()) <= 0 )){
                 $usuario->dni=Input::get('dni');
             }
             else {
-                /*Si el dni es igual al suyo, no realiza cambios.*/
+               
                 if ($usuario->dni == Input::get('dni')) {
                 }
-                /*Si el dni es diferente, pero existe en la base de datos, se le informa del error.*/
+                
                 else {
                 return Redirect::back()->withInput(Input::except('contraseña'))->withErrors(['-> El DNI ingresado ya se encuentra en la base de datos']);
                 }
@@ -185,7 +189,7 @@ class UsuarioController extends BaseController {
             return Redirect::to('/admin/usuarios/');
           }
     }
-
+*/
     /*  ***************************************************************************************************************************************************  */
     /*  ************************************************************* PERFIL ******************************************************************************  */
     /*  ***************************************************************************************************************************************************  */
