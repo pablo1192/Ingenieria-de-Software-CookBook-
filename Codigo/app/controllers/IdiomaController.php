@@ -30,7 +30,13 @@ class IdiomaController extends BaseController {
 	
 	public function modificacion($id){
 		//ToDo: Proteger este metodo
+		if(!Cookbook::existeIdDistintoDe1($id,'idioma')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
 		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/idiomas','/admin/idiomas/'.$id.'/modificar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
 		$validador= Validator::make(Input::all(),Idioma::reglasDeValidacion());
 		
 		if($validador->fails()){
@@ -49,13 +55,26 @@ class IdiomaController extends BaseController {
 	
 	public function formularioModificacion($id){
 		//ToDo: Proteger este metodo 
+		if(!Cookbook::existeIdDistintoDe1($id,'idioma')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
+		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/idiomas','/admin/idiomas/'.$id.'/modificar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
 		$idioma=Idioma::find($id);
 		return View::make('idioma.modificar',['idioma'=>$idioma]);
 	}
 	
 	public function baja($id){
 		//ToDo: Proteger este metodo
+		if(!Cookbook::existeIdDistintoDe1($id,'idioma')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
 		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/idiomas'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
 		if($id != 1){
 			$cantidadDeLibros= Idioma::find($id)->libros()->count();
 			
