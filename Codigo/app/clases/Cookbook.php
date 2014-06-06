@@ -38,7 +38,7 @@ class Cookbook {
 				$urlOrigen=str_replace('http://cookbookl','',(strtolower(Request::header('Referer'))));
 				}
 				else {
-				$urlOrigen=str_replace('http://cookbookl','',(strtolower(Request::header('Referer'))));
+				$urlOrigen=str_replace('http://cookbook','',(strtolower(Request::header('Referer'))));
 				}
 				return (in_array($urlOrigen,$rutas));
 			}
