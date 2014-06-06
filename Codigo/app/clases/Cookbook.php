@@ -33,13 +33,9 @@ class Cookbook {
     //$rutas es un arreglo!.
     public static function accedeSoloDesdeRuta($rutas){
 		if(Cookbook::ACCESO_ACTIVADO){
-			if(Request::header('Referer') !== ''){		
-				if(Request::header('Referer') == 'http://cookbookl*'){
-				$urlOrigen=str_replace('http://cookbookl','',(strtolower(Request::header('Referer'))));
-				}
-				else {
-				$urlOrigen=str_replace('http://cookbook','',(strtolower(Request::header('Referer'))));
-				}
+			if(Request::header('Referer') !== ''){						
+				//Elimina el nombre del host, dejando desde la / en adelante
+				$urlOrigen=preg_replace('/^http:[\/][\/][^\/]+/i','',Request::header('Referer'));
 				return (in_array($urlOrigen,$rutas));
 			}
 			else{

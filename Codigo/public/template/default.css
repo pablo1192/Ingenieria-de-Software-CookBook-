@@ -829,3 +829,12 @@
 .cookbook{
 	color:#76265b;
 }
+
+
+.imagenMiniatura{
+	float:left ;
+	box-shadow:10px 8px 10px #ccc;
+	border:1px solid #ccc;
+	max-width:100px;
+	max-height:151px;
+}
