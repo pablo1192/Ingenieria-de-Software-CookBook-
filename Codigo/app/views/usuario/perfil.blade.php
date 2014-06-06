@@ -23,7 +23,13 @@
 	Teléfono: <input name="teléfono" value="{{Input::old('teléfono',Auth::user()->teléfono)}}"/> <span class="tooltip" title="El teléfono tener un mínimo de 7 caracteres. Se admiten caracteres especiales.">[?]</span> <br/>
 	Provincia:<span class="tooltip" title="Seleccione una provincia de la lista.">[?]</span> <select name="provincia">              
                 @foreach($provincias as $provincia)
-                    {{'<option value="'. $provincia->id .'">'. $provincia->nombre .'</option>'}}
+                	@if($provincia->id == Auth::user()->provincia->id) {
+                    {{'<option value="'. $provincia->id .'" selected="Auth::user()->provincia" >'. $provincia->nombre .'</option>'}};
+                    }
+                    @else{
+                    {{'<option value="'. $provincia->id .'">'. $provincia->nombre .'</option>'}};
+                    }
+                    @endif
                 @endforeach</select> 
     Localidad: <input name="localidad" value="{{Input::old('localidad',Auth::user()->localidad)}}"/> <span class="tooltip" title="Escriba su localidad en 5 o más caracteres.">[?]</span> <br/>
     Domicilio: <input name="dirección" value="{{Input::old('dirección',Auth::user()->dirección)}}"/> <span class="tooltip" title="Escriba su domicilio en 7 o más caracteres.">[?]</span> <br/>

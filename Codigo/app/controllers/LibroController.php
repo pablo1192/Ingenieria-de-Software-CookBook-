@@ -26,9 +26,13 @@ class LibroController extends BaseController {
 
 
 	public function visualizarDetalles($id){
-
 		$libro=Libro::find($id);
+		if ($libro) {
 		return View::make('libro.visualizarDetalles',['libro'=>$libro]);
+		}
+		else {
+			return Redirect::to('/');
+		}
 	}
 
 

@@ -127,7 +127,7 @@ class UsuarioController extends BaseController {
     public function modificarUsuario($id)
     {
 
-        $validador= Validator::make(Input::all(),Usuario::reglasDeValidacionMod());
+        $validador= Validator::make(Input::all(),Usuario::reglasDeValidacionModAdmin());
 
         if($validador->fails()){
 

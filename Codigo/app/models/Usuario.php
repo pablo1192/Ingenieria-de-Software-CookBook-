@@ -26,6 +26,13 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 
+	/* Reglas especiales para la función Modificar del Admin. Para que no salte error al modificar los datos precargados. Esta función no estará en el sistema final */
+	public static function reglasDeValidacionModAdmin(){
+
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i'], 'contraseña'=>['min:5', 'confirmed']] ;
+	}
+
+
 	public function provincia(){
 		return $this->belongsTo('Provincia','provincia_id');
 	}	

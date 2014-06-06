@@ -64,7 +64,7 @@ class HomeController extends BaseController {
 	
 			} else {
 
-				return Redirect::to('/login')->with('ingreso-fallido', '-> Sus credenciales son inválidas.');
+				return Redirect::to('/login')->with('ingreso-fallido', '-> Sus credenciales son inválidas. Ingrese sus datos nuevamente.');
 			}
 		}
 	}

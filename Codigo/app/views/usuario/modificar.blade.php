@@ -29,7 +29,13 @@ menuActivo='usuarios'
 	Teléfono: <input name="teléfono" value="{{Input::old('teléfono',$usuario->teléfono)}}"/><br/>
 	Provincia:<select name="provincia">              
                 @foreach($provincias as $provincia)
-                    {{'<option value="'. $provincia->id .'">'. $provincia->nombre .'</option>'}}
+                	@if($provincia->id == $usuario->provincia->id) {
+                    {{'<option value="'. $provincia->id .'" selected="$usuario->provincia" >'. $provincia->nombre .'</option>'}};
+                    }
+                    @else{
+                    {{'<option value="'. $provincia->id .'">'. $provincia->nombre .'</option>'}};
+                    }
+                    @endif
                 @endforeach</select> 
     Localidad: <input name="localidad" value="{{Input::old('localidad', $usuario->localidad)}}"/><br/>
     Domicilio: <input name="dirección" value="{{Input::old('dirección', $usuario->dirección)}}"/><br/>
