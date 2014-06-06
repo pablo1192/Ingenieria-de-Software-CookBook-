@@ -36,13 +36,11 @@ Released   : 20140207
 				@else
 				¡Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
 				@endif
-				--
 				@if (Auth::user()->esAdmin == 1)
 				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 				@else
 				<a href="{{ URL::to('/perfil') }}">Modificar Perfil</a>
 				@endif
-				--
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 			@endif
 		</div>

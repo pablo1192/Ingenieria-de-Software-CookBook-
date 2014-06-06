@@ -28,9 +28,7 @@ Released   : 20140207
 	<div id="header-wrapper">
 		<div class="menu">
 			¡Bienvenido, <strong>Administrador</strong>!
-			--
 			<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
-			--
 			<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 		</div>
 		<div id="header" class="container">
