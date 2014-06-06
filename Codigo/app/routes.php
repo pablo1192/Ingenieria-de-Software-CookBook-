@@ -86,6 +86,8 @@ Route::get('/logout', array('uses' => 'HomeController@doLogout'))->before('auth'
 Route::get('/perfil', array('uses' => 'UsuarioController@formularioPerfil'))->before('auth');
 Route::post('/perfil', array('uses' => 'UsuarioController@modificarPerfil'));
 Route::get('/eliminar', array('uses' => 'UsuarioController@darBaja'))->before('auth');
+Route::get('/admin/perfil', array('uses' => 'UsuarioController@formularioAdminPerfil'))->before('auth');
+Route::post('/admin/perfil', array('uses' => 'UsuarioController@modificarAdminPerfil'));
 
 
 //Manejo de errores de Servidor

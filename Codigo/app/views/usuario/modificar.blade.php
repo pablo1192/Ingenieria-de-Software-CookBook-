@@ -38,7 +38,7 @@ menuActivo='usuarios'
                     @endif
                 @endforeach</select> 
     Localidad: <input name="localidad" value="{{Input::old('localidad', $usuario->localidad)}}"/><br/>
-    Domicilio: <input name="dirección" value="{{Input::old('dirección', $usuario->dirección)}}"/><br/>
+    Dirección: <input name="dirección" value="{{Input::old('dirección', $usuario->dirección)}}"/><br/>
 	Contraseña: <input type=password name="contraseña" value=""/><br/>
 	Reescriba la contraseña: <input type=password name="contraseña_confirmation" value=""/><br/>
 	<br/><br/>

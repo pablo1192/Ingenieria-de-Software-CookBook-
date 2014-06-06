@@ -266,5 +266,31 @@ class UsuarioController extends BaseController {
         return Redirect::to('/logout');
     }
 
+
+    public function formularioAdminPerfil()
+    {
+        return View::make('usuario.adminPerfil');
+    }
+
+    public function modificarAdminPerfil()
+    {
+
+        $validador= Validator::make(Input::all(),Usuario::reglasDeValidacionAdmin());
+
+        if($validador->fails()){
+
+            return Redirect::back()->withErrors($validador);
+        }
+        else{
+            if ( (Auth::user()->contraseña != Input::get('contraseña')) AND (Input::get('contraseña') != null) ){
+                Auth::user()->contraseña = Hash::make(Input::get('contraseña'));
+            }
+
+            Auth::user()->save();
+            
+            return Redirect::to('/');
+          }
+    }
+
 }
 ?>

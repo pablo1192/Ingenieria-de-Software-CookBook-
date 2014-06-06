@@ -27,13 +27,21 @@ Released   : 20140207
 <div id="wrapper1">
 	<div id="header-wrapper">
 		<div class="menu">
-			@if ( Auth::guest() )
+			@if (Auth::guest() )
 				<a href="/login" title="Ingrese al sistema con su cuenta registrada">Iniciar Sesión</a> 
 				<a href="/registrarse" title="Obtenga una cuenta de usuario">Registrarse</a>
 			@else
+				@if (Auth::user()->esAdmin == 1)
+					¡Bienvenido, <strong>Administrador</strong>!
+				@else
 				¡Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
+				@endif
 				--
+				@if (Auth::user()->esAdmin == 1)
+				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
+				@else
 				<a href="{{ URL::to('/perfil') }}">Modificar Perfil</a>
+				@endif
 				--
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 			@endif
@@ -50,6 +58,11 @@ Released   : 20140207
 					<li id="ayuda"><a href="#" accesskey="3" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
 				</ul>
 			</div>
+			@if (Auth::check())
+				@if (Auth::user()->esAdmin == 1)
+				<center><a href="/admin/libros" accesskey="4" title="Ingrese a la gestión del sistema" class="button button-mediano">ADMINISTRACIÓN</a></center>
+				@endif
+			@endif
 		</div>
 	</div>
 	<div id="wrapper3">

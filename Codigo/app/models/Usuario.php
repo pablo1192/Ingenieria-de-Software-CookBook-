@@ -13,7 +13,7 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
     /* No existe regla nativa length para números (DNI). Luego busco la forma de implementarla. */
 	public static function reglasDeValidacion(){
 		
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email', 'unique:usuario,email'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i', 'unique:usuario,dni'], 'dirección'=>['min:7', 'required'], 'localidad'=>['min:5', 'required'], 'teléfono'=>['min:7', 'required'], 'contraseña'=>['min:5','required', 'confirmed']];
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:3','required', 'email', 'unique:usuario,email'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i', 'unique:usuario,dni'], 'dirección'=>['min:7', 'required'], 'localidad'=>['min:5', 'required'], 'teléfono'=>['min:7', 'required'], 'contraseña'=>['min:5','required', 'confirmed']];
 	}
 
 	/*  'precio'=>['required','regex:/^[0-9]{1,4}([.][0-9]{1,2})?$/i'] */
@@ -22,14 +22,19 @@ class Usuario extends Eloquent implements UserInterface, RemindableInterface {
 
 	public static function reglasDeValidacionMod(){
 
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dirección'=>['min:7', 'required'], 'localidad'=>['min:5', 'required'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i'], 'teléfono'=>['min:7', 'required'], 'contraseña'=>['min:5', 'confirmed']] ;
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:3','required', 'email'], 'dirección'=>['min:7', 'required'], 'localidad'=>['min:5', 'required'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i'], 'teléfono'=>['min:7', 'required'], 'contraseña'=>['min:5', 'confirmed']] ;
 	}
 
 
 	/* Reglas especiales para la función Modificar del Admin. Para que no salte error al modificar los datos precargados. Esta función no estará en el sistema final */
 	public static function reglasDeValidacionModAdmin(){
 
-        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:4','required', 'email'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i'], 'contraseña'=>['min:5', 'confirmed']] ;
+        return ['nombre'=>['min:2','required'], 'apellido'=>['min:2','required'], 'email'=>['min:3','required', 'email'], 'dni'=>['required', 'regex:/^[0-9]{1,2}([.][0-9]{3}([.][0-9]{3}))$/i'], 'contraseña'=>['min:5', 'confirmed']] ;
+	}
+
+	public static function reglasDeValidacionAdmin(){
+
+        return ['contraseña'=>['min:5', 'confirmed']] ;
 	}
 
 
