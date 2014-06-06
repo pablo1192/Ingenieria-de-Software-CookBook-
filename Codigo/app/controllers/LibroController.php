@@ -314,7 +314,7 @@ class LibroController extends BaseController {
 			
 			//Editorial:
 			if(Input::has('editorial-checkbox')){
-				$editorialNueva=editorial::create(['nombre'=>Input::get('editorial-otro')]);
+				$editorialNueva=Editorial::create(['nombre'=>Input::get('editorial-otro')]);
 				$datos['editorial_id']=$editorialNueva->id;
 			}
 			else{

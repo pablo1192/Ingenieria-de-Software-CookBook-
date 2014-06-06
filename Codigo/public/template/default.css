@@ -831,10 +831,34 @@
 }
 
 
-.imagenMiniatura{
-	float:left ;
+/*Elementos del cat*/
+.imagenMiniatura{	
 	box-shadow:10px 8px 10px #ccc;
 	border:1px solid #ccc;
 	max-width:100px;
 	max-height:151px;
+	margin-right:5px;
 }
+/*tabla donde se nuestra el libro*/
+.libro{
+	width:100%
+	
+}
+
+.libro tr{
+	vertical-align:top;
+	text-align:left;
+}
+
+.dato{
+}
+.precio{
+	color:#009900;
+}
+
+.precio strong{
+	color: rgba(0,0,0,0.7);
+}
+
+
+

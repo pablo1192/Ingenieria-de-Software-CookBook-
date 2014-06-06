@@ -34,15 +34,23 @@ menuActivo='catalogo'
 			   @for($j = 0; $j<4; $j++)
 				  <div class="column{{$j+1}}">
 					   <div class="box">
-							<h3>{{$libros[($i*4)+$j]->título}} <!--({{$i}} : {{$j}} )--></h3>
-							<img src="/datos/tapas/{{$libros[($i*4)+$j]->tapa}}" alt="Tapa del libro" title="Tapa del libro" class="imagenMiniatura" />
-							&nbsp;&nbsp;@if(count($libros[($i*4)+$j]->autores)>1)
-                                  Autores:
-                                  @else
-                                  Autor:
-                                  @endif:&nbsp;{{implode(', ',array_pluck($libros[($i*4)+$j]->autores,'nombre'))}}<br><br/>
-							&nbsp;&nbsp;Editorial:&nbsp;{{$libros[($i*4)+$j]->editorial->nombre}}<br><br/>
-							&nbsp;&nbsp;Precio: $ {{$libros[($i*4)+$j]->precio}}<br><br/>
+							<h3>{{$libros[($i*4)+$j]->título}}</h3>
+							<table class="libro">
+							<tr>
+								<td rowspan="1">
+									<img src="/datos/tapas/{{$libros[($i*4)+$j]->tapa}}" alt="Tapa del libro" title="Tapa del libro" class="imagenMiniatura" />
+								</td>
+								<td>
+									<span class="dato"><strong>{{((count($libros[($i*4)+$j]->autores)>1)? 'Autores':'Autor')}}:</strong> {{implode(', ',array_pluck($libros[($i*4)+$j]->autores,'nombre'))}}</span><br/><br/>
+									<span class="dato"><strong>Editorial:</strong> {{$libros[($i*4)+$j]->editorial->nombre}}</span>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">					
+									<span class="precio"><strong>Precio:</strong> $ {{$libros[($i*4)+$j]->precio}}</span>
+								</td>
+							</tr>
+							</table>
 							@if ($libros[($i*4)+$j]->agotado != 0)
 								<strong><font size=4px color="red">Agotado</font></strong>  <br></br>
 							@endif
@@ -59,21 +67,29 @@ menuActivo='catalogo'
 	  @for($i=0;$i<count($libros)%4;$i++)
 			   <div class="column{{$i+1}}">
 				   <div class="box">
-						<h3>{{$libros[$i+(floor(count($libros)/4)*4)]->título}} </h3>
-						<img src="/datos/tapas/{{$libros[$i+(floor(count($libros)/4)*4)]->tapa}}" alt="Tapa del libro" title="Tapa del libro" class="imagenMiniatura" />
-						&nbsp;&nbsp;@if(count($libros[$i+(floor(count($libros)/4)*4)]->autores)>1)
-                                  Autores:
-                                  @else
-                                  Autor:
-                                  @endif:&nbsp;{{implode(', ',array_pluck($libros[$i+(floor(count($libros)/4)*4)]->autores,'nombre'))}}<br><br/>
-						&nbsp;&nbsp;Editorial:&nbsp;{{$libros[$i+(floor(count($libros)/4)*4)]->editorial->nombre}}<br><br/>
-						&nbsp;&nbsp;Precio: $ {{$libros[$i+(floor(count($libros)/4)*4)]->precio}}<br><br/>
-						@if ($libros[$i+(floor(count($libros)/4)*4)]->agotado != 0)
-						   <strong><font size=4px color="red">Agotado</font></strong>  <br></br>
-						@endif
-						@if (! Auth::guest())
-						<a href="/{{$libros[$i+(floor(count($libros)/4)*4)]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano"  >Ver mas</a><br><br/>
-						@endif
+							<h3>{{$libros[$i+(floor(count($libros)/4)*4)]->título}}</h3>
+							<table class="libro">
+							<tr>
+								<td rowspan="1">
+									<img src="/datos/tapas/{{$libros[$i+(floor(count($libros)/4)*4)]->tapa}}" alt="Tapa del libro" title="Tapa del libro" class="imagenMiniatura" />
+								</td>
+								<td>
+									<span class="dato"><strong>{{((count($libros[$i+(floor(count($libros)/4)*4)]->autores)>1)? 'Autores':'Autor')}}:</strong> {{implode(', ',array_pluck($libros[$i+(floor(count($libros)/4)*4)]->autores,'nombre'))}}</span><br/><br/>
+									<span class="dato"><strong>Editorial:</strong> {{$libros[$i+(floor(count($libros)/4)*4)]->editorial->nombre}}</span>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">					
+									<span class="precio"><strong>Precio:</strong> $ {{$libros[$i+(floor(count($libros)/4)*4)]->precio}}</span>
+								</td>
+							</tr>
+							</table>
+							@if ($libros[$i+(floor(count($libros)/4)*4)]->agotado != 0)
+								<strong><font size=4px color="red">Agotado</font></strong>  <br></br>
+							@endif
+							@if (! Auth::guest())
+								<a href="/{{$libros[$i+(floor(count($libros)/4)*4)]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano"  >Ver mas</a><br><br/>
+							@endif
 					</div>
 				</div>
 				
