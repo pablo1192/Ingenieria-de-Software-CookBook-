@@ -29,8 +29,8 @@ menuActivo='catalogo'
 @endif
 <br></br>
 	
-	@if((count($libros)/4) > 1)
-		@for($i = 0; $i<(count($libros)/4)-1; $i++)
+	@if((count($libros)/4) >= 1)
+		@for($i = 0; $i<=(count($libros)/4)-1; $i++)
 			   @for($j = 0; $j<4; $j++)
 				  <div class="column{{$j+1}}">
 					   <div class="box">
@@ -42,7 +42,10 @@ menuActivo='catalogo'
 								</td>
 								<td>
 									<span class="dato"><strong>{{((count($libros[($i*4)+$j]->autores)>1)? 'Autores':'Autor')}}:</strong> {{implode(', ',array_pluck($libros[($i*4)+$j]->autores,'nombre'))}}</span><br/><br/>
-									<span class="dato"><strong>Editorial:</strong> {{$libros[($i*4)+$j]->editorial->nombre}}</span>
+									<span class="dato"><strong>Editorial:</strong> {{$libros[($i*4)+$j]->editorial->nombre}}</span><br/><br/>
+									@if ($libros[($i*4)+$j]->agotado != 0)
+										<span class="agotado"><strong>Agotado</strong></span>
+									@endif
 								</td>
 							</tr>
 							<tr>
@@ -50,10 +53,7 @@ menuActivo='catalogo'
 									<span class="precio"><strong>Precio:</strong> $ {{$libros[($i*4)+$j]->precio}}</span>
 								</td>
 							</tr>
-							</table>
-							@if ($libros[($i*4)+$j]->agotado != 0)
-								<strong><font size=4px color="red">Agotado</font></strong>  <br></br>
-							@endif
+							</table>							
 							@if (! Auth::guest())
 								<a href="/{{$libros[($i*4)+$j]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano"  >Ver mas</a><br><br/>
 							@endif
@@ -75,7 +75,10 @@ menuActivo='catalogo'
 								</td>
 								<td>
 									<span class="dato"><strong>{{((count($libros[$i+(floor(count($libros)/4)*4)]->autores)>1)? 'Autores':'Autor')}}:</strong> {{implode(', ',array_pluck($libros[$i+(floor(count($libros)/4)*4)]->autores,'nombre'))}}</span><br/><br/>
-									<span class="dato"><strong>Editorial:</strong> {{$libros[$i+(floor(count($libros)/4)*4)]->editorial->nombre}}</span>
+									<span class="dato"><strong>Editorial:</strong> {{$libros[$i+(floor(count($libros)/4)*4)]->editorial->nombre}}</span><br/><br/>
+									@if ($libros[$i+(floor(count($libros)/4)*4)]->agotado != 0)
+										<span class="agotado"><strong>Agotado</strong></span>
+									@endif
 								</td>
 							</tr>
 							<tr>
@@ -83,10 +86,7 @@ menuActivo='catalogo'
 									<span class="precio"><strong>Precio:</strong> $ {{$libros[$i+(floor(count($libros)/4)*4)]->precio}}</span>
 								</td>
 							</tr>
-							</table>
-							@if ($libros[$i+(floor(count($libros)/4)*4)]->agotado != 0)
-								<strong><font size=4px color="red">Agotado</font></strong>  <br></br>
-							@endif
+							</table>							
 							@if (! Auth::guest())
 								<a href="/{{$libros[$i+(floor(count($libros)/4)*4)]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano"  >Ver mas</a><br><br/>
 							@endif
