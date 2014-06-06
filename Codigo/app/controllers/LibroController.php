@@ -188,29 +188,23 @@ class LibroController extends BaseController {
 		$libro=Libro::find($id);		
 		
 		//Selecciono los autors que no estan relacionados con libro para ofrecer vincularlos
-		$autoresFiltrados=DB::select('	select a.id,a.nombre, la.libro_id
-										from autor a inner join libroautor la on (a.id = la.autor_id)
-										where a.id not in (
-											select distinct(la.autor_id)
-											from libroautor la
-											where la.libro_id = '.$id.'
-											UNION
-											select 1
+		$autoresFiltrados=DB::select('	select a.id,a.nombre
+										from autor a
+										where (a.id <> 1) and not exists (
+												select *
+												from libroautor la
+												where la.libro_id = '.$id.' and (a.id = la.autor_id)
 										)
-										group by a.id, a.nombre'
-		);
+		');
 		
-		$etiquetasFiltradas=DB::select('select e.id,e.nombre, le.libro_id
-										from etiqueta e inner join libroetiqueta le on (e.id = le.etiqueta_id)
-										where e.id not in (
-											select distinct(le.etiqueta_id)
-											from libroetiqueta le
-											where le.libro_id = '.$id.'
-											UNION
-											select 1
+		$etiquetasFiltradas=DB::select('select e.id,e.nombre
+										from etiqueta e
+										where (e.id <> 1) and not exists (
+												select *
+												from libroetiqueta le
+												where le.libro_id = '.$id.' and (e.id = le.etiqueta_id)
 										)
-										group by e.id, e.nombre'
-		);
+		');
 		
 		return View::make('libro.modificar',['libro'=>$libro, 'idiomas'=>Idioma::disponibles()->get(), 'editoriales'=>Editorial::disponibles()->get(),'autores'=>$autoresFiltrados,'etiquetas'=>$etiquetasFiltradas]);	
 	}
@@ -387,7 +381,7 @@ class LibroController extends BaseController {
 			
 			//Crear
 			if(Input::has('etiqueta-checkbox')){					
-				$etiqueta=etiqueta::create(['nombre'=>Input::get('etiqueta-otro')]);
+				$etiqueta=Etiqueta::create(['nombre'=>Input::get('etiqueta-otro')]);
 				$libro->etiquetas()->attach($etiqueta->id);
 			}
 
