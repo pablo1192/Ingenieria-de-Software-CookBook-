@@ -193,28 +193,33 @@ class LibroController extends BaseController {
 
 	public function formularioModificacion($id){
 		//ToDo: proteger este método
-		$libro=Libro::find($id);		
-		
+		$libro=Libro::find($id);
+
+		if($libro)	{
 		//Selecciono los autors que no estan relacionados con libro para ofrecer vincularlos
-		$autoresFiltrados=DB::select('	select a.id,a.nombre
-										from autor a
-										where (a.id <> 1) and not exists (
-												select *
-												from libroautor la
-												where la.libro_id = '.$id.' and (a.id = la.autor_id)
-										)
-		');
-		
-		$etiquetasFiltradas=DB::select('select e.id,e.nombre
-										from etiqueta e
-										where (e.id <> 1) and not exists (
-												select *
-												from libroetiqueta le
-												where le.libro_id = '.$id.' and (e.id = le.etiqueta_id)
-										)
-		');
-		
-		return View::make('libro.modificar',['libro'=>$libro, 'idiomas'=>Idioma::disponibles()->get(), 'editoriales'=>Editorial::disponibles()->get(),'autores'=>$autoresFiltrados,'etiquetas'=>$etiquetasFiltradas]);	
+			$autoresFiltrados=DB::select('	select a.id,a.nombre
+											from autor a
+											where (a.id <> 1) and not exists (
+													select *
+													from libroautor la
+													where la.libro_id = '.$id.' and (a.id = la.autor_id)
+											)
+			');
+			
+			$etiquetasFiltradas=DB::select('select e.id,e.nombre
+											from etiqueta e
+											where (e.id <> 1) and not exists (
+													select *
+													from libroetiqueta le
+													where le.libro_id = '.$id.' and (e.id = le.etiqueta_id)
+											)
+			');
+			
+			return View::make('libro.modificar',['libro'=>$libro, 'idiomas'=>Idioma::disponibles()->get(), 'editoriales'=>Editorial::disponibles()->get(),'autores'=>$autoresFiltrados,'etiquetas'=>$etiquetasFiltradas]);
+		}
+		else {
+   		   return Redirect::to('/admin/libros');	
+		}
 	}
 
 	public function modificacion($id){
@@ -247,9 +252,10 @@ class LibroController extends BaseController {
 		//To-Do: Ex
 		
 		$libro= Libro::find($id);
-		
-		$libro->dadoDeBaja=true;
-		$libro->save();
+		if($libro)	{
+			$libro->dadoDeBaja=true;
+			$libro->save();
+		}
 		//return Redirect::back();
 		return Redirect::to('/admin/libros#area');
 	}
@@ -260,8 +266,10 @@ class LibroController extends BaseController {
 	public function marcarComoAgotado($id){
 		//ToDo: Proteger este metodo
 		$libro=Libro::find($id);
+		if($libro)	{
 		$libro->agotado=!($libro->agotado);
 		$libro->save();
+		}
 		//return Redirect::back();
 		return Redirect::to('/admin/libros#area');
 	}
