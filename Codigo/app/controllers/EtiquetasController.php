@@ -43,6 +43,12 @@ class EtiquetasController extends BaseController
         }
     }
 	public function modificacionEtiqueta($id){
+	if(!Cookbook::existeIdDistintoDe1($id,'etiqueta')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+	}	
+	if(!Cookbook::accedeSoloDesdeRuta(['/admin/etiquetas','/admin/etiquetas/'.$id.'/modificar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+	}
 	$etiqueta=Etiqueta::find($id);
 	if ($etiqueta->nombre != Input::get('nombre')){	
 		$validador= Validator::make(Input::all(),Etiqueta::reglasDeValidacion());
@@ -63,9 +69,48 @@ class EtiquetasController extends BaseController
 			
 	public function formularioModificacionEtiqueta($id){
 		//ToDo: Proteger este metodo 
+		if(!Cookbook::existeIdDistintoDe1($id,'etiqueta')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
+		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/etiquetas','/admin/etiquetas/'.$id.'/modificar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+
 		$etiqueta=Etiqueta::find($id);
 		return View::make('etiqueta.modificar',['etiqueta'=>$etiqueta]);
-	}		
+	}
+	
+    public function baja($id){
+		//ToDo: Proteger este metodo
+		if(!Cookbook::existeIdDistintoDe1($id,'etiqueta')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
+		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/etiquetas'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+		$cantidadDeLibros= Etiqueta::find($id)->libros()->count();
+		//Si hay al menos un libro asociado..actualizo el Autor por defecto ("Sin Autor")..
+		if($cantidadDeLibros){
+			$actualizaciónIds= DB::update('update libroetiqueta set etiqueta_id = 1 where etiqueta_id = ? ', [$id]);
+		}
+		$libros = Libro::disponibles()->get();
+		foreach($libros as $libro) 
+		{
+		    if($libro->etiquetas()->count() >= 1 && $libro->etiquetas()->where('etiqueta_id','=','1')->count() >= 1){
+				$libro->etiquetas()->detach(1);
+			}
+			if($libro->etiquetas()->count() == 0)
+			{   
+			   $libro->etiquetas()->attach(1);
+			}
+		}	
+		//Elimino 
+		Etiqueta::destroy($id);		
+		return Redirect::to('/admin/etiquetas');
+		
+	}	
  
 }
 ?>

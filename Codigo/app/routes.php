@@ -54,7 +54,7 @@ Route::get('/admin/etiquetas/crear',['uses'=>'EtiquetasController@formularioAlta
 Route::post('/admin/etiquetas/crear',['uses'=>'EtiquetasController@altaEtiqueta']);
 Route::get('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@formularioModificacionEtiqueta']);
 Route::post('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@modificacionEtiqueta']);
-
+Route::get('/admin/etiquetas/{id}/borrar',['uses'=>'EtiquetasController@baja']);
 
 //Gestion de Autores (alta,modificacion)
 Route::get('/admin/autores',['uses'=>'AutorController@listar']);

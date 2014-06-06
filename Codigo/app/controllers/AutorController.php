@@ -30,6 +30,13 @@ class AutorController extends BaseController {
 	
 	public function modificacionAutor($id){
 		//ToDo: Proteger este metodo
+			//Si no existe el id o es el id=1
+	if(!Cookbook::existeIdDistintoDe1($id,'autor')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+	}	
+	if(!Cookbook::accedeSoloDesdeRuta(['/admin/autores','/admin/autores/'.$id.'/modificar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+	}	
 	$autor=Autor::find($id);
 	if ($autor->nombre != Input::get('nombre')){	
 		$validador= Validator::make(Input::all(),Autor::reglasDeValidacion());
@@ -50,27 +57,48 @@ class AutorController extends BaseController {
 	
 	public function formularioModificacion($id){
 		//ToDo: Proteger este metodo 
+		if(!Cookbook::existeIdDistintoDe1($id,'autor')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
+		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/autores','/admin/autores/'.$id.'/modificar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+
 		$autor=Autor::find($id);
 		return View::make('autor.modificar',['autor'=>$autor]);
 	}
 	
 	public function baja($id){
 		//ToDo: Proteger este metodo
-		
-		if($id != 1){
-			$cantidadDeLibros= Autor::find($id)->libros()->count();
-			
-			//Si hay al menos un libro asociado..actualizo el Autor por defecto ("Sin Autor")..
-			if($cantidadDeLibros){
-				$actualizaciónIds= DB::update('update libroautor set autor_id = 1 where autor_id = ? ', [$id]);
-				
-			}
-			
-			//Elimino 
-			Autor::destroy($id);
-
+        if(!Cookbook::existeIdDistintoDe1($id,'autor')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
-		return Redirect::back();
+		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/autores'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+		
+		$cantidadDeLibros= Autor::find($id)->libros()->count();
+		//Si hay al menos un libro asociado..actualizo el Autor por defecto ("Sin Autor")..
+		if($cantidadDeLibros){
+			$actualizaciónIds= DB::update('update libroautor set autor_id = 1 where autor_id = ? ', [$id]);
+		}
+		$libros = Libro::disponibles()->get();
+		foreach($libros as $libro) 
+		{
+		    if($libro->autores()->count() >= 1 && $libro->autores()->where('autor_id','=','1')->count() >= 1){
+				$libro->autores()->detach(1);
+			}
+			if($libro->autores()->count() == 0)
+			{   
+			   $libro->autores()->attach(1);
+			}
+		}	
+		//Elimino 
+		Autor::destroy($id);		
+		return Redirect::to('/admin/autores');                    //Redirect::back();
+		
 	}
 	
 
