@@ -54,8 +54,8 @@ Released   : 20140207
 				<ul>
 						
 					<li id="catalogo"><a href="/" accesskey="1" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
-					<li id="contacto"><a href="#" accesskey="2" title="Póngase en contacto con Cookbook">Contacto</a></li>
-					<li id="ayuda"><a href="#" accesskey="3" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
+					<li id="contacto"><a href="/404" accesskey="2" title="Póngase en contacto con Cookbook">Contacto</a></li>
+					<li id="ayuda"><a href="/404" accesskey="3" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
 				</ul>
 			</div>
 			@if (Auth::check())
