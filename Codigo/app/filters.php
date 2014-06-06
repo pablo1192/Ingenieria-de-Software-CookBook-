@@ -44,6 +44,15 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+/* Si es visitante o si es registrado, no es admin. */
+
+Route::filter('admin_auth', function()
+{
+  if(Auth::guest() || !Auth::user()->esAdmin == 1) {
+        return Redirect::to('/');
+    }
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
