@@ -20,8 +20,12 @@ class LibroController extends BaseController {
 	
 	//Muestra los detalles de un libro, desde la administración
 	public function visualizar($id){
+	  
 		$libro=Libro::find($id);
-		return View::make('libro.visualizar',['libro'=>$libro]);
+		if($libro)
+		   return View::make('libro.visualizar',['libro'=>$libro]);
+		else
+   		   return Redirect::to('/admin/libros');
 	}
 
 
