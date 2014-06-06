@@ -21,7 +21,7 @@ menuActivo='catalogo'
 			<td>{{$libro->título}}</td>
 		</tr>
 		<tr>
-			<td>Autor:</td>
+			<td>{{(($libro->autores->count() > 1)? 'Autores': 'Autor')}}:</td>
 			<td>{{implode(', ',array_pluck($libro->autores,'nombre'))}}</td>
 		</tr>
 		<tr>
@@ -41,7 +41,7 @@ menuActivo='catalogo'
 			<td><a href="/datos/indices/{{$libro->índice}}" target="_blank" title="Haga click para visualizar un escaneo del índice del libro.">Visualizar índice</a></td>
 		</tr>
 		<tr>
-			<td>Etiquetas:</td>
+			<td>{{(($libro->etiquetas->count() > 1)? 'Etiquetas': 'Etiqueta')}}:</td>
 			<td>{{implode(', ',array_pluck($libro->etiquetas,'nombre'))}}</td>
 		</tr>
 	</table>

@@ -20,12 +20,18 @@ class LibroController extends BaseController {
 	
 	//Muestra los detalles de un libro, desde la administración
 	public function visualizar($id){
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}	  
+	  
 	  
 		$libro=Libro::find($id);
-		if($libro)
+		if($libro){
 		   return View::make('libro.visualizar',['libro'=>$libro]);
-		else
-   		   return Redirect::to('/admin/libros');
+	   }
+		else{
+   		   return View::make('error',['título'=> '¡Libro no disponible o inexistente!', 'motivo'=> 'El libro que desea visualizar no existe o no se encuentra disponible.']);
+	   }
 	}
 
 
@@ -35,7 +41,7 @@ class LibroController extends BaseController {
 		return View::make('libro.visualizarDetalles',['libro'=>$libro]);
 		}
 		else {
-			return Redirect::to('/');
+			return View::make('error',['título'=> '¡Libro no disponible o inexistente!', 'motivo'=> 'El libro que desea visualizar no existe o no se encuentra disponible.']);
 		}
 	}
 
@@ -193,6 +199,11 @@ class LibroController extends BaseController {
 
 	public function formularioModificacion($id){
 		//ToDo: proteger este método
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros','/admin/libros/'.$id.'/modificar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+
+
 		$libro=Libro::find($id);
 
 		if($libro)	{
@@ -218,11 +229,15 @@ class LibroController extends BaseController {
 			return View::make('libro.modificar',['libro'=>$libro, 'idiomas'=>Idioma::disponibles()->get(), 'editoriales'=>Editorial::disponibles()->get(),'autores'=>$autoresFiltrados,'etiquetas'=>$etiquetasFiltradas]);
 		}
 		else {
-   		   return Redirect::to('/admin/libros');	
+   		   return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
 	}
 
 	public function modificacion($id){
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros','/admin/libros/'.$id.'/modificar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+
 		//Se descompuso la funcionalidad en 5 secciones: info,autores,etiquetas,tapa e indice		
 		if(Input::has('modificar')){
 			switch (Input::get('modificar')) {
@@ -251,13 +266,21 @@ class LibroController extends BaseController {
 		// Sino se da de baja lógica, puiendose conservar o no sus archivos.
 		//To-Do: Ex
 		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}		
+		
 		$libro= Libro::find($id);
 		if($libro)	{
 			$libro->dadoDeBaja=true;
 			$libro->save();
+			return Redirect::to('/admin/libros#area');
 		}
-		//return Redirect::back();
-		return Redirect::to('/admin/libros#area');
+		else{
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+			
+		}	
+		
 	}
 	
 	
@@ -267,11 +290,13 @@ class LibroController extends BaseController {
 		//ToDo: Proteger este metodo
 		$libro=Libro::find($id);
 		if($libro)	{
-		$libro->agotado=!($libro->agotado);
-		$libro->save();
+			$libro->agotado=!($libro->agotado);
+			$libro->save();
+			return Redirect::to('/admin/libros#area');
 		}
-		//return Redirect::back();
-		return Redirect::to('/admin/libros#area');
+		else{
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
 	}
 	
 	
