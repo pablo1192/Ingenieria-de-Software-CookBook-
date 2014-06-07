@@ -29,6 +29,10 @@ menuActivo='catalogo'
 			<td>{{$libro->editorial->nombre}}</td>
 		</tr>
 		<tr>
+			<td>Año de Edición:</td>
+			<td>{{$libro->añoEdición}}</td>
+		</tr>
+		<tr>
 			<td>Cantidad de hojas:</td>
 			<td>{{$libro->hojas}}</td>
 		</tr>

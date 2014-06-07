@@ -169,7 +169,7 @@ menuActivo='libros'
 		</form>
 	</div>
 	<div style="float:right;width:800px;text-align:center;">
-		<img src="/datos/indices/{{$libro->índice}}" alt="Tapa del libro" title="Tapa del libro" width="175" style="box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
+		<img src="/datos/indices/{{$libro->índice}}" alt="Índice del libro" title="Índice del libro" width="175" style="box-shadow:10px 8px 10px #ccc; border:1px solid #ccc" />
 		<br/>
 		<form action="/admin/libros/{{$libro->id}}/modificar" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
 			<input type="hidden" name="modificar" value="archivos">

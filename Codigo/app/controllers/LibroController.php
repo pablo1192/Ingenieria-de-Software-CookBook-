@@ -305,7 +305,7 @@ class LibroController extends BaseController {
 	
 	protected function modificarInfo($id,$datos){
 		$reglasDeValidacion=[
-			'isbn'=>['required','numeric','digits_between:10,13'],
+			'isbn'=>['required','numeric','digits_between:10,13', 'unique:libro,isbn'],
 			'titulo'=>['required','regex:/[a-zñÑáéíóú 0-9]+/i','min:2','max:64'],
 			'editorial'=>['exists:editorial,id','required_without:editorial-otro'],
 			'editorial-otro'=>['regex:/[a-zñ ]+/i','max:64','min:5','unique:editorial,nombre,1','required_without:editorial'],
@@ -392,7 +392,7 @@ class LibroController extends BaseController {
 				$libro->autores()->attach(1);
 			}
 			else{
-				if($libro->autores()->where('id','=','1')->count() == 1){
+				if(($libro->autores()->where('id','=','1')->count() == 1) && !($libro->autores()->count() == 1)){
 					$libro->autores()->detach(1);
 				}
 			}
@@ -440,7 +440,7 @@ class LibroController extends BaseController {
 				$libro->etiquetas()->attach(1);
 			}
 			else{
-				if($libro->etiquetas()->where('id','=','1')->count() == 1){
+				if(($libro->etiquetas()->where('id','=','1')->count() == 1) && !($libro->etiquetas()->count() == 1)){
 					$libro->etiquetas()->detach(1);
 				}
 			}

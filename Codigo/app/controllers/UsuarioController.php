@@ -65,7 +65,7 @@ class UsuarioController extends BaseController {
     public function verUsuario($id)
     {
          $usuario = Usuario::find($id);
-         if ($usuario) {
+         if (($usuario) && (! $usuario->esAdmin)){
             return View::make('Usuario.ver', array('usuario' => $usuario));
          }
          else {

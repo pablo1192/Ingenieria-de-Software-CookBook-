@@ -39,7 +39,7 @@ class Libro extends Eloquent {
 	//Es el conj completo, incluyendo la posibilidad de validar "otros"
 	public static function reglasDeValidacion(){
 		return [
-			'isbn'=>['required','numeric','digits_between:10,13'],
+			'isbn'=>['required','numeric','digits_between:10,13','unique:libro,isbn'],
 			'titulo'=>['required','regex:/[a-zñÑáéíóú 0-9]+/i','min:2','max:64'],
 			'autor'=>['array','exists:autor,id',],
 			'autor-otro'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5','required_without:autor', 'unique:autor,nombre'],
