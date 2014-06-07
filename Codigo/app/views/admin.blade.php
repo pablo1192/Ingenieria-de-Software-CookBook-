@@ -37,12 +37,11 @@ Released   : 20140207
 				<span>Sistema web de venta de libros<br/><br/><strong>Panel de Administración</strong></span> </div>
 			<div id="menu">
 				<ul>
-					
-					<li id="libros"><a href="/admin/libros/" accesskey="2" title="Gestión de libros">Libros</a></li>
-					<li id="usuarios"><a href="/admin/usuarios/" accesskey="2" title="Gestión de usuarios">Usuarios</a></li>
-					<li id="reportes"><a href="/admin/" accesskey="2" title="Visualización de reportes y estadústicas">Reportes</a></li>
-					<li id="mensajes"><a href="/admin/" accesskey="2" title="Gestión de Mensajes">Mensajes</a></li>
-					<li id="ayuda"><a href="/admin/" accesskey="2" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
+					<li id="libros"><a href="/admin/libros/" title="Gestión de libros">Libros</a></li>
+					<li id="usuarios"><a href="/admin/usuarios/" title="Gestión de usuarios">Usuarios</a></li>
+					<li id="reportes"><a href="/admin/" title="Visualización de reportes y estadústicas">Reportes</a></li>
+					<li id="mensajes"><a href="/admin/" title="Gestión de Mensajes">Mensajes</a></li>
+					<li id="ayuda"><a href="/admin/" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
 				</ul>
 			</div>
 		</div>

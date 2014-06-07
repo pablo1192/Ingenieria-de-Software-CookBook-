@@ -55,7 +55,7 @@ menuActivo='catalogo'
 							</tr>
 							</table>							
 							@if (! Auth::guest())
-								<a href="/{{$libros[($i*4)+$j]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano"  >Ver mas</a><br><br/>
+								<a href="/{{$libros[($i*4)+$j]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano">Ver detalles</a><br><br/>
 							@endif
 						</div>
 					</div>
@@ -88,14 +88,12 @@ menuActivo='catalogo'
 							</tr>
 							</table>							
 							@if (! Auth::guest())
-								<a href="/{{$libros[$i+(floor(count($libros)/4)*4)]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano"  >Ver mas</a><br><br/>
+								<a href="/{{$libros[$i+(floor(count($libros)/4)*4)]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano">Ver detalles</a><br><br/>
 							@endif
 					</div>
-				</div>
-				
+				</div>	
 	  @endfor
-	  <br class="separador" /><br></br>
-
+	  <br class="separador" />
 
 @else
      <h1><font color="purple">En este momento, no disponemos de libros para ofrecerle. Disculpe las molestias.</font></h1>

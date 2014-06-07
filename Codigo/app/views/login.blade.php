@@ -10,7 +10,7 @@
 <body>
 
 	{{ Form::open(array('url' => 'login')) }}
-		<h1>Login</h1> </br>
+		<h1>Login</h1>
 
 		@if ($alert = Session::get('ingreso-fallido'))
 		    <div class="alert alert-warning">
@@ -30,8 +30,8 @@
 		</p>
 
 		<p>
-			{{ Form::label('email', 'Email Address') }}
-			{{ Form::text('email', Input::old('email'), array('placeholder' => 'ejemplo@hotmail.com')) }}
+			{{ Form::label('email', 'Email') }}
+			{{ Form::text('email', Input::old('email'), array('placeholder' => 'ejemplo@gmail.com')) }}
 		</p>
 
 		<p>
@@ -39,7 +39,7 @@
 			{{ Form::password('contraseña') }}
 		</p>
 
-		<p>{{ Form::submit('Submit!') }}</p>
+		<p>{{ Form::submit('Ingresar') }}</p>
 	{{ Form::close() }}
 
 </body>

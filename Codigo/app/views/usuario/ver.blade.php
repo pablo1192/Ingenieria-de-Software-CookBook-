@@ -1,24 +1,71 @@
-{{-- Vieja view para testing. No utilizada por el momento --}}
-
 @extends('admin')
- 
-@section('content')
-        {{ HTML::link('usuarios', 'Volver'); }}
-        <h1>
-  Usuario {{$usuario->id}}
-      
-</h1>
-        
-        {{ $usuario->nombre .' '.$usuario->apellido }}
 
-<br />
+@section('menuActivo')
+menuActivo='usuarios'
+@stop
 
-        {{ $usuario->dni .' '.$usuario->email }}
-        
-<br />
+@section('contenido')
+<h2>Información de «{{$usuario->nombre}} {{$usuario->apellido}}»</h2>
 
-        {{ $usuario->contraseña}}
+<div style="width:650px">
+	<div>
+	<table width="40%" align="left">
+		<tr>		
+			<td>Nombre:</td>
+			<td>{{$usuario->nombre}}</td>
+		</tr>
+		<tr>
+			<td>Apellido:</td>
+			<td>{{$usuario->apellido}}</td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td>{{HTML::mailto($usuario->email)}}</td>
+		</tr>
+		<tr>
+			<td>DNI:</td>
+			<td>{{$usuario->dni}}</td>
+		</tr>
+	</table>
+	</div>
+	<div>
+	<table width="40%" align="center">
+		<tr>		
+			<td>Teléfono:</td>
+			<td>{{$usuario->teléfono}}</td>
+		</tr>
+		<tr>
+			<td>Provincia:</td>
+			<td>{{$usuario->provincia->nombre}}</td>
+		</tr>
+		<tr>
+			<td>Localidad:</td>
+			<td>{{$usuario->localidad}}</td>
+		</tr>
+		<tr>
+			<td>Dirección:</td>
+			<td>{{$usuario->dirección}}</td>
+		</tr>
+	</table>
+	</div>
+	
+</div>
 
-<br />
-        {{ $usuario->created_at}}
+</br>
+
+
+<table width="40%">
+	<tr>	
+		<td>Fecha de alta: {{(date('d/m/Y',strtotime($usuario->created_at)))}}</td>
+	</tr>
+	<tr>
+		<td><a href="/admin/usuarios/{{ $usuario->id }}/bloquear" title="{{(($usuario->bloqueado)? 'Desbloquear': 'Bloquear')}} al usuario" onclick="return confirm('¿Seguro que desea {{(($usuario->bloqueado)? 'desbloquear': 'bloquear')}} al usuario?')">Bloqueado: {{($usuario->bloqueado?'Sí':'No')}}</a></td>
+	</tr>
+	<tr>
+		<td>Cuenta activa: {{($usuario->dadoDeBaja?'No':'Sí')}}</td>
+	</tr>
+</table>
+
+<h2></h2>
+<a href="/admin/usuarios" title="Retornar a Usuarios">Volver a la lista de usuarios.</a>
 @stop

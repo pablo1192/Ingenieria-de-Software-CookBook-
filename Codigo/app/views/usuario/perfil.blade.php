@@ -20,7 +20,7 @@
 	Apellido: <input name="apellido" value="{{Input::old('apellido',Auth::user()->apellido)}}"/><span class="tooltip" title="El apellido debe tener una longitud mayor a 2 caracteres.">[?]</span><br/>
 	Email: <input name="email" value="{{Input::old('email',Auth::user()->email)}}"/><span class="tooltip" title="El email debe ser una dirección de correo válida.">[?]</span><br/>
 	DNI: <input name="dni" value="{{Input::old('dni',Auth::user()->dni)}}"/><span class="tooltip" title="El DNI tener 7 u 8 dígitos y debe estar separado por puntos.">[?]</span><br/>
-	Teléfono: <input name="teléfono" value="{{Input::old('teléfono',Auth::user()->teléfono)}}"/> <span class="tooltip" title="El teléfono tener un mínimo de 7 caracteres. Se admiten caracteres especiales.">[?]</span> <br/>
+	Teléfono: <input name="teléfono" value="{{Input::old('teléfono',Auth::user()->teléfono)}}"/> <span class="tooltip" title="El teléfono tener un mínimo de 7 caracteres. Se admiten caracteres especiales (paréntesis, -, #, +, etc).">[?]</span> <br/>
 	Provincia:<span class="tooltip" title="Seleccione una provincia de la lista.">[?]</span> <select name="provincia">              
                 @foreach($provincias as $provincia)
                 	@if($provincia->id == Auth::user()->provincia->id) {

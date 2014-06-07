@@ -55,21 +55,24 @@ class UsuarioController extends BaseController {
         if (Auth::attempt($userdata)) {
                 return Redirect::to('/')->with('mensaje-registro', 'Se ha registrado con éxito en el sistema.');
             }
-        // return Redirect::to('/login')->with('mensaje-registro', 'Se ha registrado con éxito en el sistema.');
          }
 
     }
  
-     /**
-     * Ver detalles de usuario | No usado por el momento
-   *  
-   * public function verUsuario($id)
-   * {
-   *      $usuario = Usuario::find($id);
-   *
-   *     return View::make('Usuario.ver', array('usuario' => $usuario));
-   * }
-    */
+     
+  
+     
+    public function verUsuario($id)
+    {
+         $usuario = Usuario::find($id);
+         if ($usuario) {
+            return View::make('Usuario.ver', array('usuario' => $usuario));
+         }
+         else {
+            return Redirect::to('/admin/usuarios');
+         }
+    }
+    
 
 
     /*  ***************************************************************************************************************************************************  */
@@ -114,9 +117,11 @@ class UsuarioController extends BaseController {
     public function bloquearUsuario($id)
     {
         $usuario=Usuario::find($id);
-        if($usuario->id != 1) {
-        $usuario->bloqueado=!($usuario->bloqueado);
-        $usuario->save();
+        if($usuario) {
+            if($usuario->id != 1) {
+             $usuario->bloqueado=!($usuario->bloqueado);
+             $usuario->save();
+            }
         }
         return Redirect::to('/admin/usuarios#area');
     }
@@ -196,8 +201,13 @@ class UsuarioController extends BaseController {
 
     public function formularioPerfil()
     {
-        $provincias= Provincia::all();
-        return View::make('usuario.perfil',['provincias'=>$provincias]);
+        if (Auth::user()->esAdmin != 1) {
+            $provincias= Provincia::all();
+            return View::make('usuario.perfil',['provincias'=>$provincias]);
+        }
+        else {
+            return View::make('usuario.adminPerfil');
+        }
     }
 
     public function modificarPerfil()
@@ -265,9 +275,14 @@ class UsuarioController extends BaseController {
 
     public function darBaja()
     {
-        Auth::user()->dadoDeBaja = 1;
-        Auth::user()->save();
-        return Redirect::to('/logout');
+        if (Auth::user()->esAdmin != 1) {
+            Auth::user()->dadoDeBaja = 1;
+            Auth::user()->save();
+            return Redirect::to('/logout');
+        }
+        else {
+            return Redirect::to('/');
+        }
     }
 
 

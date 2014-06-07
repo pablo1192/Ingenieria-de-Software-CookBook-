@@ -51,14 +51,14 @@ Released   : 20140207
 			<div id="menu">
 				<ul>
 						
-					<li id="catalogo"><a href="/" accesskey="1" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
-					<li id="contacto"><a href="/404" accesskey="2" title="Póngase en contacto con Cookbook">Contacto</a></li>
-					<li id="ayuda"><a href="/404" accesskey="3" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
+					<li id="catalogo"><a href="/" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
+					<li id="contacto"><a href="/404" title="Póngase en contacto con Cookbook">Contacto</a></li>
+					<li id="ayuda"><a href="/404" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
 				</ul>
 			</div>
 			@if (Auth::check())
 				@if (Auth::user()->esAdmin == 1)
-				<center><a href="/admin/libros" accesskey="4" title="Ingrese a la gestión del sistema" class="button button-mediano">ADMINISTRACIÓN</a></center>
+				<center><a href="/admin/libros" title="Ingrese a la gestión del sistema" class="button button-mediano">ADMINISTRACIÓN</a></center>
 				@endif
 			@endif
 		</div>
