@@ -25,11 +25,13 @@ Route::get('/test', function()
 Route::get('/admin/libros',['uses'=>'LibroController@listar']);
 Route::get('/admin/libros/crear',['uses'=>'LibroController@formularioAlta']);
 Route::post('/admin/libros/crear',['uses'=>'LibroController@alta']);
+Route::get('/admin/libros/sinInformacion',['uses'=>'LibroController@librosSinInformación']);
 Route::get('/admin/libros/{id}',['uses'=>'LibroController@visualizar']);
 Route::get('/admin/libros/{id}/modificar',['uses'=>'LibroController@formularioModificacion']);
 Route::post('/admin/libros/{id}/modificar',['uses'=>'LibroController@modificacion']);
 Route::get('/admin/libros/{id}/borrar',['uses'=>'LibroController@baja']);
 Route::get('/admin/libros/{id}/agotado',['uses'=>'LibroController@marcarComoAgotado']);
+
 
 //Gestion de Editorial
 Route::get('/admin/editoriales',['uses'=>'EditorialController@listar']);

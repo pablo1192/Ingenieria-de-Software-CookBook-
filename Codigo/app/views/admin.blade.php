@@ -34,7 +34,7 @@ Released   : 20140207
 		<div id="header" class="container">
 			<div id="logo">
 				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
-				<span>Sistema web de venta de libros<br/><br/><strong>Panel de Administración</strong></span> </div>
+				<span>Sistema web de venta de libros</span> </div>
 			<div id="menu">
 				<ul>
 					<li id="libros"><a href="/admin/libros/" title="Gestión de libros">Libros</a></li>
@@ -43,6 +43,7 @@ Released   : 20140207
 					<li id="mensajes"><a href="/admin/" title="Gestión de Mensajes">Mensajes</a></li>
 					<li id="ayuda"><a href="/admin/" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
 				</ul>
+				<strong class="cookbook" style="font-size:115%;">Panel de Administración</strong>
 			</div>
 		</div>
 

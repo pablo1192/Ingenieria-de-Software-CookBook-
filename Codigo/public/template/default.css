@@ -375,7 +375,7 @@
 		overflow: hidden;
 		/*Mod*/
 		/*padding: 5em 0em;*/
-		padding: 0.2em 0em;
+		padding-top: 0.2em;
 	}
 
 	#header
@@ -390,14 +390,17 @@
 	{
 		/*Mod*/
 		/*padding: 5em 0em;*/
-		padding:0 0 1em 0;
+		//padding:0 0 1em 0;
 		text-align: center;
+		/*Correccion de la interfaz*/
+		//float:left;
+		width:275px;
 	}
 	
 	#logo h1
 	{
-		font-size: 3.5em;
-		margin-top: 0.75em;
+		/*font-size: 3.5em;*/
+		margin-top: 0;
 	}
 	
 	
@@ -410,6 +413,7 @@
 	#logo a
 	{
 		text-decoration: none;
+		
 	}
 	
 	#logo span
@@ -438,13 +442,26 @@
 	}
 	
 
+	/**Agregado*/
+	  #logo h1 a img{
+		width:220px;
+		margin: 0 auto;
+	 }
+
 /*********************************************************************************/
 /* Menu                                                                          */
 /*********************************************************************************/
 
 	#menu
 	{
+		position:absolute;
+		/*float:left;*/
+		/*width:925px;*/
+		top:2.8em;
+		width:100%;
+		text-align:center;
 	}
+		
 	
 	#menu ul
 	{
@@ -661,7 +678,7 @@
 	{
 		/*Mod*/
 		/*padding-top: 8em;*/
-		padding-top: 1.2em;
+		/*padding-top: 1.2em;*/
 	}
 	
 	#portfolio .box
@@ -865,4 +882,51 @@
 	font-size: 120%;
 	color:red;
 	margin-left: 25px;
+}
+
+
+
+/*	Mensajes de Error	*/
+
+.mensaje{
+	border: 1px solid silver;
+	margin: 10px auto;
+	width: auto;
+	padding:1px 8px;
+	color:white;
+	display:inline-block;
+}
+.mensaje a,.mensaje a:hover,.mensaje a:link,.mensaje a:visited{
+	color:#f0f0f0;
+	font-weight:bold;
+}
+.mensaje p{
+	line-height:100%;
+	margin:1em 0;
+}
+
+.mensaje-error{
+	background-color: #B01E31;
+}
+
+.mensaje-info{
+	background-color: #43B01E;
+}
+
+.mensaje-atencion{
+	background-color:#D8D53E;
+}
+
+.verde{
+	color:#B01E31;
+}
+
+.amarillo{
+	color:#D8D53E;
+}
+.rojo{
+	color: #B01E31;
+}
+.azul{
+	color: #1E79B0;
 }

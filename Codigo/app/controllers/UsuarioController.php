@@ -66,7 +66,7 @@ class UsuarioController extends BaseController {
     {
          $usuario = Usuario::find($id);
          if (($usuario) && (! $usuario->esAdmin)){
-            return View::make('Usuario.ver', array('usuario' => $usuario));
+            return View::make('usuario.ver', array('usuario' => $usuario));
          }
          else {
             return Redirect::to('/admin/usuarios');

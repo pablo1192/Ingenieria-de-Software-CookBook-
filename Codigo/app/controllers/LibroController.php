@@ -7,7 +7,7 @@ class LibroController extends BaseController {
 		//Se ignoran los libros dados de baja logica
 		//~ $libros=Libro::all();
 		$libros=Libro::disponibles()->get();
-		return View::make('libro.libros',['libros'=>$libros]);
+		return View::make('libro.libros',['libros'=>$libros,'librosSinInformación'=>Libro::sinInformación()]);
 	}
 	
 	//Muestra el catalogo
@@ -199,7 +199,7 @@ class LibroController extends BaseController {
 
 	public function formularioModificacion($id){
 		//ToDo: proteger este método
-		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros','/admin/libros/'.$id.'/modificar'])){
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros','/admin/libros/'.$id.'/modificar','/admin/libros/sinInformacion'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
 
@@ -299,6 +299,17 @@ class LibroController extends BaseController {
 		}
 	}
 	
+	
+	public function librosSinInformación(){
+	
+		$librosSinAutor= Autor::find(1)->libros()->get();
+		$librosSinEditorial= Editorial::find(1)->libros()->get();
+		$librosSinIdioma= Idioma::find(1)->libros();
+		$librosSinEtiqueta= Etiqueta::find(1)->libros();
+	
+		return View::make('libro.sinInformacion',['librosSinAutor'=>$librosSinAutor,'librosSinEditorial'=>$librosSinEditorial,'librosSinIdioma'=>$librosSinIdioma,'librosSinEtiquetas'=>$librosSinEtiqueta]);
+		
+	}
 	
 	// Funciones de utilidad/privadas	
 	//
