@@ -458,8 +458,9 @@
 		/*float:left;*/
 		/*width:925px;*/
 		top:2.8em;
-		width:100%;
+		width:70%;
 		text-align:center;
+		left:20%;
 	}
 		
 	
@@ -889,22 +890,24 @@
 /*	Mensajes de Error	*/
 
 .mensaje{
-	border: 1px solid silver;
-	margin: 10px auto;
+	border: 1px solid #555;
+	margin: 20px auto;
 	width: auto;
-	padding:1px 8px;
+	padding:8px 8px;
 	color:white;
 	display:inline-block;
+	border-radius: 10px;
 }
 .mensaje a,.mensaje a:hover,.mensaje a:link,.mensaje a:visited{
 	color:#f0f0f0;
 	font-weight:bold;
 }
-.mensaje p{
-	line-height:100%;
-	margin:1em 0;
-}
 
+.mensaje h3{
+	color:white;
+	padding-bottom:0.2em;
+	border-bottom: 1px solid white;
+}
 .mensaje-error{
 	background-color: #B01E31;
 }
@@ -914,7 +917,7 @@
 }
 
 .mensaje-atencion{
-	background-color:#D8D53E;
+	background-color:#D4DB4F;
 }
 
 .verde{
@@ -922,7 +925,7 @@
 }
 
 .amarillo{
-	color:#D8D53E;
+	color:#D4DB4F;
 }
 .rojo{
 	color: #B01E31;

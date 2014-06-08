@@ -96,7 +96,7 @@ class Libro extends Eloquent {
 	//Compureba si hay libros con faltante de informacion (uso de los "SIN")
 	public static function sinInformación(){
 		return (
-			(Editorial::find(1)->libros()) && (1==1)
+			(Editorial::find(1)->libros()->count()) || (Autor::find(1)->libros()->count()) || (Etiquetas::find(1)->libros()->count()) || (Idioma::find(1)->libros()->count())
 		);
 	}
 	

@@ -300,15 +300,14 @@ class LibroController extends BaseController {
 	}
 	
 	
-	public function librosSinInformación(){
-	
-		$librosSinAutor= Autor::find(1)->libros()->get();
-		$librosSinEditorial= Editorial::find(1)->libros()->get();
-		$librosSinIdioma= Idioma::find(1)->libros();
-		$librosSinEtiqueta= Etiqueta::find(1)->libros();
+	public function librosSinInformación(){	
+		//Para cada posibilidad retorno los libros disponibles
+		$librosSinAutor= Autor::find(1)->libros()->disponibles()->get();
+		$librosSinEditorial= Editorial::find(1)->libros()->disponibles()->get();
+		$librosSinIdioma= Idioma::find(1)->libros()->disponibles()->get();
+		$librosSinEtiqueta= Etiqueta::find(1)->libros()->disponibles()->get();
 	
 		return View::make('libro.sinInformacion',['librosSinAutor'=>$librosSinAutor,'librosSinEditorial'=>$librosSinEditorial,'librosSinIdioma'=>$librosSinIdioma,'librosSinEtiquetas'=>$librosSinEtiqueta]);
-		
 	}
 	
 	// Funciones de utilidad/privadas	

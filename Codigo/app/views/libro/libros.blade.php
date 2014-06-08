@@ -7,7 +7,7 @@ menuActivo='libros'
 @section('contenido')
 @if($librosSinInformación)
 	<div class="mensaje mensaje-error">
-		<p>Ud posee libros que cuentan con información sin definir. Haga <a href="/admin/libros/sinInformacion" title="Libros sin información">click aquí</a> para concercer más.</p>
+		Ud posee libros que cuentan con información sin definir. Haga <a href="/admin/libros/sinInformacion" title="Libros sin información">click aquí</a> para conocer más detalles.
 	</div>
 @endif
 <a name="area"></a>

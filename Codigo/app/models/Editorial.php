@@ -17,5 +17,8 @@ class Editorial extends Eloquent {
 		//Solo letras como minimo 3, q sea unico y no vacio..
 		return ['nombre'=>['regex:/[a-zñÑáéíóú ]+/i','max:64','min:5','required','unique:editorial,nombre,1']];
 	}
+	
+
+	
 }
 ?>
