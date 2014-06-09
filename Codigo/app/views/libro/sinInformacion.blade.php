@@ -42,7 +42,7 @@ menuActivo='libros'
 	@endif
 
 	@if($librosSinIdioma->count())
-		<h3>Editorial</h3>
+		<h3>Idioma</h3>
 
 		@foreach($librosSinIdioma as $libro) <!-- cambio "$librosSinEditorial" por "$librosSinIdioma" -->
 			<ol>
