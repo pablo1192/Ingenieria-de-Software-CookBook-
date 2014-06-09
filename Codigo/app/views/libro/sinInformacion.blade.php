@@ -33,7 +33,7 @@ menuActivo='libros'
 	@if($librosSinEtiquetas->count())
 		<h3>Etiqueta</h3>
 		
-		@foreach($librosSinEtiqueta as $libro)
+		@foreach($librosSinEtiquetas as $libro) <!-- cambio "$librosSinEtiqueta" por "$librosSinEtiquetas" -->
 			<ol>
 				<li><a href="/admin/libros/{{$libro->id}}/modificar#etiquetas" title="Modificar etiquetas">{{$libro->título}}</li>
 			</ol>
@@ -44,7 +44,7 @@ menuActivo='libros'
 	@if($librosSinIdioma->count())
 		<h3>Editorial</h3>
 
-		@foreach($librosSinEditorial as $libro)
+		@foreach($librosSinIdioma as $libro) <!-- cambio "$librosSinEditorial" por "$librosSinIdioma" -->
 			<ol>
 				<li><a href="/admin/libros/{{$libro->id}}/modificar#info" title="Modificar información básica">{{$libro->título}}</li>
 			</ol>
