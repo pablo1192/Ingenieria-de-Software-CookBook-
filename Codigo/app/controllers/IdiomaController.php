@@ -37,18 +37,25 @@ class IdiomaController extends BaseController {
 		if(!Cookbook::accedeSoloDesdeRuta(['/admin/idiomas','/admin/idiomas/'.$id.'/modificar'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
-		$validador= Validator::make(Input::all(),Idioma::reglasDeValidacion());
 		
-		if($validador->fails()){
-			//~ return Redirect::to('/admin/idiomas/'.$id.'/modificar/')->withErrors($validador)->withInput();
-			return Redirect::back()->withErrors($validador)->withInput();
+		$idioma=Idioma::find($id);
+	
+		if(($idioma) && ($idioma->nombre != Input::get('nombre'))){
+			$validador= Validator::make(Input::all(),Idioma::reglasDeValidacion());
+			
+			if($validador->fails()){
+				//~ return Redirect::to('/admin/idiomas/'.$id.'/modificar/')->withErrors($validador)->withInput();
+				return Redirect::back()->withErrors($validador)->withInput();
+			}
+			else{
+				//Modifico el idioma			
+				$idioma->nombre=Input::get('nombre');
+				$idioma->save();
+				
+				return Redirect::to('/admin/idiomas/');
+			}
 		}
 		else{
-			//Modifico el idioma
-			$idioma=Idioma::find($id);
-			$idioma->nombre=Input::get('nombre');
-			$idioma->save();
-			
 			return Redirect::to('/admin/idiomas/');
 		}
 	}

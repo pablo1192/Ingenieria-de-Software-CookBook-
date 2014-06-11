@@ -40,18 +40,23 @@ class EditorialController extends BaseController {
 		if(!Cookbook::accedeSoloDesdeRuta(['/admin/editoriales','/admin/editoriales/'.$id.'/modificar'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
-		
-		$validador= Validator::make(Input::all(),Editorial::reglasDeValidacion());
-		
-		if($validador->fails()){			
-			return Redirect::back()->withErrors($validador)->withInput();
+
+		$editorial=Editorial::find($id);
+		if(($editorial) && ($editorial->nombre != Input::get('nombre'))){
+			$validador= Validator::make(Input::all(),Editorial::reglasDeValidacion());
+			
+			if($validador->fails()){			
+				return Redirect::back()->withErrors($validador)->withInput();
+			}
+			else{
+				//Modifico el idioma
+				$editorial->nombre=Input::get('nombre');
+				$editorial->save();
+				
+				return Redirect::to('/admin/editoriales/');
+			}
 		}
 		else{
-			//Modifico el idioma
-			$editorial=Editorial::find($id);
-			$editorial->nombre=Input::get('nombre');
-			$editorial->save();
-			
 			return Redirect::to('/admin/editoriales/');
 		}
 	}
