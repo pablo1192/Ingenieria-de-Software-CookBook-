@@ -23,26 +23,25 @@ class LibroController extends BaseController {
 		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}	  
-	  
+		if(!Cookbook::existeId($id,'libro')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
 	  
 		$libro=Libro::find($id);
-		if($libro){
-		   return View::make('libro.visualizar',['libro'=>$libro]);
-	   }
-		else{
-   		   return View::make('error',['título'=> '¡Libro no disponible o inexistente!', 'motivo'=> 'El libro que desea visualizar no existe o no se encuentra disponible.']);
-	   }
+		return View::make('libro.visualizar',['libro'=>$libro]);
 	}
 
 
 	public function visualizarDetalles($id){
-		$libro=Libro::find($id);
-		if ($libro) {
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}	  
+		if(!Cookbook::existeId($id,'libro')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
+
+		$libro=Libro::find($id);		
 		return View::make('libro.visualizarDetalles',['libro'=>$libro]);
-		}
-		else {
-			return View::make('error',['título'=> '¡Libro no disponible o inexistente!', 'motivo'=> 'El libro que desea visualizar no existe o no se encuentra disponible.']);
-		}
 	}
 
 
@@ -50,8 +49,8 @@ class LibroController extends BaseController {
 		//Recupero las entidades secundarias, ignorando los valores por 'SIN' usado en caso de no tener ref.
 		$idiomas= Idioma::disponibles()->get();
 		$editoriales= Editorial::disponibles()->get();
-		$etiquetas= Etiqueta::where('id','<>',1)->get();
-		$autores= Autor::where('id','<>',1)->get();
+		$etiquetas= Etiqueta::disponibles()->get();
+		$autores= Autor::disponibles()->get();
 		return View::make('libro.crear',['idiomas'=>$idiomas, 'editoriales'=>$editoriales,'etiquetas'=>$etiquetas,'autores'=>$autores]);
 	}
 	
@@ -210,7 +209,7 @@ class LibroController extends BaseController {
 		//Selecciono los autors que no estan relacionados con libro para ofrecer vincularlos
 			$autoresFiltrados=DB::select('	select a.id,a.nombre
 											from autor a
-											where (a.id <> 1) and not exists (
+											where (a.id <> 1) and (a.dadoDeBaja = 0) and not exists (
 													select *
 													from libroautor la
 													where la.libro_id = '.$id.' and (a.id = la.autor_id)
@@ -219,7 +218,7 @@ class LibroController extends BaseController {
 			
 			$etiquetasFiltradas=DB::select('select e.id,e.nombre
 											from etiqueta e
-											where (e.id <> 1) and not exists (
+											where (e.id <> 1) and (e.dadoDeBaja = 0) and not exists (
 													select *
 													from libroetiqueta le
 													where le.libro_id = '.$id.' and (e.id = le.etiqueta_id)
@@ -237,7 +236,9 @@ class LibroController extends BaseController {
 		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros','/admin/libros/'.$id.'/modificar'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
-
+		if(!Cookbook::existeId($id,'libro')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}
 		//Se descompuso la funcionalidad en 5 secciones: info,autores,etiquetas,tapa e indice		
 		if(Input::has('modificar')){
 			switch (Input::get('modificar')) {
@@ -269,18 +270,15 @@ class LibroController extends BaseController {
 		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}		
-		
-		$libro= Libro::find($id);
-		if($libro)	{
-			$libro->dadoDeBaja=true;
-			$libro->save();
-			return Redirect::to('/admin/libros#area');
-		}
-		else{
+
+		if(!Cookbook::existeId($id,'libro')){
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
-			
-		}	
+		}
 		
+		$libro= Libro::find($id);		
+		$libro->dadoDeBaja=true;
+		$libro->save();
+		return Redirect::to('/admin/libros#area');
 	}
 	
 	
@@ -288,15 +286,18 @@ class LibroController extends BaseController {
 	
 	public function marcarComoAgotado($id){
 		//ToDo: Proteger este metodo
-		$libro=Libro::find($id);
-		if($libro)	{
-			$libro->agotado=!($libro->agotado);
-			$libro->save();
-			return Redirect::to('/admin/libros#area');
-		}
-		else{
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}		
+
+		if(!Cookbook::existeId($id,'libro')){
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
+
+		$libro=Libro::find($id);
+		$libro->agotado=!($libro->agotado);
+		$libro->save();
+		return Redirect::to('/admin/libros#area');
 	}
 	
 	
@@ -374,37 +375,34 @@ class LibroController extends BaseController {
 		}
 		else{
 			$libro=Libro::find($id);
-			//Actualizo las relaciones de autores con libro..
-			//Agregar:
-			if(Input::has('agregar-autor')){				
-				foreach(Input::get('agregar-autor') as $idAutor){
-					$libro->autores()->attach($idAutor);
-				}
-			}
+			//Compruebo que al menos 1 autor quede para el libro
+			$totalAgregados=((Input::has('agregar-autor'))? count(Input::get('agregar-autor')): 0) + ((Input::has('autor-checkbox'))? 1: 0);
+			$totalEliminados=((Input::has('quitar-autor'))? count(Input::get('quitar-autor')): 0);
 			
-			//Crear
-			if(Input::has('autor-checkbox')){					
-				$autor=Autor::create(['nombre'=>Input::get('autor-otro')]);
-				$libro->autores()->attach($autor->id);
-			}
-
-			//Quitar
-			if(Input::has('quitar-autor')){				
-				foreach(Input::get('quitar-autor') as $idAutor){
-					$libro->autores()->detach($idAutor);
+			if(($libro->autores()->count() + $totalAgregados - $totalEliminados) >= 1 ){
+				//Actualizo las relaciones de autores con libro..
+				//Agregar:
+				if(Input::has('agregar-autor')){				
+					foreach(Input::get('agregar-autor') as $idAutor){
+						$libro->autores()->attach($idAutor);
+					}
 				}
 				
-			}
-			
-			//Controlo que tenga al menos 1 autor:
-			//Y ademas q no quede el "Sin editorial"
-			if($libro->autores()->count() == 0){
-				$libro->autores()->attach(1);
+				//Crear
+				if(Input::has('autor-checkbox')){					
+					$autor=Autor::create(['nombre'=>Input::get('autor-otro')]);
+					$libro->autores()->attach($autor->id);
+				}
+
+				//Quitar
+				if(Input::has('quitar-autor')){				
+					foreach(Input::get('quitar-autor') as $idAutor){
+						$libro->autores()->detach($idAutor);
+					}
+				}
 			}
 			else{
-				if(($libro->autores()->where('id','=','1')->count() == 1) && !($libro->autores()->count() == 1)){
-					$libro->autores()->detach(1);
-				}
+				return Redirect::to('/admin/libros/'.$id.'/modificar#autores')->withErrors(['Debe quedar al menos un autor asignado al libro.']);
 			}
 		}
 	}	
@@ -422,37 +420,35 @@ class LibroController extends BaseController {
 		}
 		else{
 			$libro=Libro::find($id);
-			//Actualizo las relaciones de etiquetas con libro..
-			//Agregar:
-			if(Input::has('agregar-etiqueta')){				
-				foreach(Input::get('agregar-etiqueta') as $idetiqueta){
-					$libro->etiquetas()->attach($idetiqueta);
-				}
-			}
 			
-			//Crear
-			if(Input::has('etiqueta-checkbox')){					
-				$etiqueta=Etiqueta::create(['nombre'=>Input::get('etiqueta-otro')]);
-				$libro->etiquetas()->attach($etiqueta->id);
-			}
+			//Compruebo que al menos 1 etiqueta quede para el libro
+			$totalAgregados=((Input::has('agregar-etiqueta'))? count(Input::get('agregar-etiqueta')): 0) + ((Input::has('etiqueta-checkbox'))? 1: 0);
+			$totalEliminados=((Input::has('quitar-etiqueta'))? count(Input::get('quitar-etiqueta')): 0);
+			
+			if(($libro->etiquetas()->count() + $totalAgregados - $totalEliminados) >= 1 ){
+				//Actualizo las relaciones de etiquetas con libro..
+				//Agregar:
+				if(Input::has('agregar-etiqueta')){				
+					foreach(Input::get('agregar-etiqueta') as $idetiqueta){
+						$libro->etiquetas()->attach($idetiqueta);
+					}
+				}
+				
+				//Crear
+				if(Input::has('etiqueta-checkbox')){					
+					$etiqueta=Etiqueta::create(['nombre'=>Input::get('etiqueta-otro')]);
+					$libro->etiquetas()->attach($etiqueta->id);
+				}
 
-			//Quitar
-			if(Input::has('quitar-etiqueta')){				
-				foreach(Input::get('quitar-etiqueta') as $idEtiqueta){
-					$libro->etiquetas()->detach($idEtiqueta);
+				//Quitar
+				if(Input::has('quitar-etiqueta')){				
+					foreach(Input::get('quitar-etiqueta') as $idEtiqueta){
+						$libro->etiquetas()->detach($idEtiqueta);
+					}
 				}
-			}
-			
-			
-			//Controlo que tenga al menos 1 etiqueta:
-			//Y ademas q no quede el "Sin Etiqueta"
-			if($libro->etiquetas()->count() == 0){
-				$libro->etiquetas()->attach(1);
 			}
 			else{
-				if(($libro->etiquetas()->where('id','=','1')->count() == 1) && !($libro->etiquetas()->count() == 1)){
-					$libro->etiquetas()->detach(1);
-				}
+				return Redirect::to('/admin/libros/'.$id.'/modificar#autores')->withErrors(['Debe quedar al menos una etiqueta asignada al libro.']);
 			}
 		}
 	}

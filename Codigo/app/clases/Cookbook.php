@@ -12,9 +12,14 @@ class Cookbook {
 	const ACCESO_MOTIVO		= 'Ud intenta acceder desde una ruta no prevista o está forzando las URLs.';
 	
  
-    //Chequea q exista el Id en la tabla especificada    
+    //Chequea q exista el Id en la tabla especificada, y que no esté dado de baja logica (cuando corresponda)  
     public static function existeId($id,$tabla) {        
-        return (boolean) (DB::select('select * from '.$tabla.' where id ='.$id));
+        if(Cookbook::tieneBajaLogica($tabla)){
+			return (boolean) (DB::select('select * from '.$tabla.' where ((id ='.$id.') and ( dadoDeBaja = 0 ))'));
+		}
+		else{
+			return (boolean) (DB::select('select * from '.$tabla.' where id ='.$id));
+		}
     }
     
     //idem al anterior, pero ademas el id no debe ser 1
@@ -48,5 +53,18 @@ class Cookbook {
 		}
 	}
     
+    
+    //	Funciones Internas
+    //
+    
+    //Determina si la tabla tiene BL. Util para tener en cuenta en los "existe"..
+    protected static function tieneBajaLogica($nombreDeTabla){
+		if(preg_match('/\s*\b(libro|editorial|autor|etiqueta|idioma|usuario)\b\s*/i',$nombreDeTabla)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
     
 }
