@@ -79,25 +79,12 @@ class AutorController extends BaseController {
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
 		
-		$cantidadDeLibros= Autor::find($id)->libros()->count();
-		//Si hay al menos un libro asociado..actualizo el Autor por defecto ("Sin Autor")..
-		if($cantidadDeLibros){
-			$actualizaciónIds= DB::update('update libroautor set autor_id = 1 where autor_id = ? ', [$id]);
-		}
-		$libros = Libro::disponibles()->get();
-		foreach($libros as $libro) 
-		{
-		    if($libro->autores()->count() >= 1 && $libro->autores()->where('autor_id','=','1')->count() >= 1){
-				$libro->autores()->detach(1);
-			}
-			if($libro->autores()->count() == 0)
-			{   
-			   $libro->autores()->attach(1);
-			}
-		}	
-		//Elimino 
-		Autor::destroy($id);		
-		return Redirect::to('/admin/autores');                    //Redirect::back();
+		//Se le da baja lógica...
+		$autor= Autor::find($id);
+		$autor->dadoDeBaja=true;
+		$autor->save();
+		
+		return Redirect::back();
 		
 	}
 	

@@ -78,8 +78,7 @@ class EditorialController extends BaseController {
 	
 	public function baja($id){
 		//ToDo: Proteger este metodo
-		
-	
+
 		if(!Cookbook::existeIdDistintoDe1($id,'editorial')){
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
@@ -88,19 +87,10 @@ class EditorialController extends BaseController {
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
 		
-		
-		$cantidadDeLibros= Editorial::find($id)->libros()->count();
-		
-		//Si hay al menos una libro asociado..actualizo a la editorial  por defecto ("Sin Editorial")..
-		if($cantidadDeLibros){
-			$actualizaciónIds= DB::update('update libro set editorial_id = 1 where editorial_id = ? ', [$id]);
-			//Se deberia chequear q salio todo ok
-		}
-		
-		//Elimino sin problemas
-		Editorial::destroy($id);
-		
-		
+		//Se le da baja lógica...
+		$editorial= Editorial::find($id);
+		$editorial->dadoDeBaja=true;
+		$editorial->save();
 		
 		return Redirect::back();
 	}

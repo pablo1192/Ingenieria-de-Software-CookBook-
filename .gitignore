@@ -6,5 +6,9 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
-*.jpg
-*.png
+.jpg
+.JPG
+.Jpg
+.png
+.Png
+.PNG

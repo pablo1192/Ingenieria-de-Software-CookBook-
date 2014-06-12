@@ -61,7 +61,8 @@ class IdiomaController extends BaseController {
 	}
 	
 	public function formularioModificacion($id){
-		//ToDo: Proteger este metodo 
+		//To-Do: Proteger este metodo
+
 		if(!Cookbook::existeIdDistintoDe1($id,'idioma')){
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
@@ -74,7 +75,7 @@ class IdiomaController extends BaseController {
 	}
 	
 	public function baja($id){
-		//ToDo: Proteger este metodo
+		//To-Do: Proteger este metodo
 		if(!Cookbook::existeIdDistintoDe1($id,'idioma')){
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
@@ -82,18 +83,11 @@ class IdiomaController extends BaseController {
 		if(!Cookbook::accedeSoloDesdeRuta(['/admin/idiomas'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
-		if($id != 1){
-			$cantidadDeLibros= Idioma::find($id)->libros()->count();
-			
-			//Si hay al menos una libro asociado..actualizo al Idioma por defecto ("Sin Idioma")..
-			if($cantidadDeLibros){
-				$actualizaciónIds= DB::update('update libro set idioma_id = 1 where idioma_id = ? ', [$id]);
-				
-			}
-			//Elimino sin problemas
-			Idioma::destroy($id);
-
-		}
+		
+		//Se le da de baja logica...
+		$idioma=Idioma::find($id);
+		$idioma->dadoDeBaja=true;
+		$idioma->save();
 		return Redirect::back();
 	}
 

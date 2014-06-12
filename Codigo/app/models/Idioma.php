@@ -9,7 +9,7 @@ class Idioma extends Eloquent {
 	
 	//agrego al modelo la funcion disponibles, la cual ignora el "Sin idioma"
 	public function scopeDisponibles($query){
-		return $query->where('id','<>',1);
+		return $query->where('id','<>',1)->where('dadoDeBaja','=',0);
 	}
 	
 	//Defino las reglas para usar en Alta/Mod

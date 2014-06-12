@@ -7,7 +7,7 @@ class EtiquetasController extends BaseController
      */
     public function mostrarEtiquetas()
     {
-        $etiquetas= Etiqueta::where('id','<>',1)->get();// me qedo con todos menos con el <id> "Sin etiqueta"	        
+        $etiquetas= Etiqueta::disponibles()->get();// me qedo con todos menos con el <id> "Sin etiqueta" ni borrados logicamente
         return View::make('etiqueta.etiquetas', array('etiquetas' => $etiquetas));
         
         // El método make de la clase View indica cual vista vamos a mostrar al usuario 
@@ -90,24 +90,12 @@ class EtiquetasController extends BaseController
 		if(!Cookbook::accedeSoloDesdeRuta(['/admin/etiquetas'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
-		$cantidadDeLibros= Etiqueta::find($id)->libros()->count();
-		//Si hay al menos un libro asociado..actualizo el Autor por defecto ("Sin Autor")..
-		if($cantidadDeLibros){
-			$actualizaciónIds= DB::update('update libroetiqueta set etiqueta_id = 1 where etiqueta_id = ? ', [$id]);
-		}
-		$libros = Libro::disponibles()->get();
-		foreach($libros as $libro) 
-		{
-		    if($libro->etiquetas()->count() >= 1 && $libro->etiquetas()->where('etiqueta_id','=','1')->count() >= 1){
-				$libro->etiquetas()->detach(1);
-			}
-			if($libro->etiquetas()->count() == 0)
-			{   
-			   $libro->etiquetas()->attach(1);
-			}
-		}	
-		//Elimino 
-		Etiqueta::destroy($id);		
+		
+		//Se le da baja lógica...
+		$etiqueta= Etiqueta::find($id);
+		$etiqueta->dadoDeBaja=true;
+		$etiqueta->save();
+		
 		return Redirect::to('/admin/etiquetas');
 		
 	}	

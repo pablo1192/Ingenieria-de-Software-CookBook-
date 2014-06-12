@@ -46,5 +46,11 @@ class Etiqueta extends Eloquent
 		//Solo letras como minimo 5, q sea unico y no vacio..
 		return ['nombre'=>['alpha','min:5','required','unique:etiqueta,nombre,1']];
 	}
+	
+	//agrego al modelo la funcion disponibles, la cual ignora el "Sin Etiqueta"
+	//ni las etiquetas borradas logicamente
+	public function scopeDisponibles($query){
+		return $query->where('id','<>',1)->where('dadoDeBaja','=',0);
+	}
 }
 ?>
