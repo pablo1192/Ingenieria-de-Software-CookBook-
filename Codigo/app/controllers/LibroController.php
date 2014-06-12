@@ -33,9 +33,7 @@ class LibroController extends BaseController {
 
 
 	public function visualizarDetalles($id){
-		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros'])){
-			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
-		}	  
+  
 		if(!Cookbook::existeId($id,'libro')){
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
 		}
