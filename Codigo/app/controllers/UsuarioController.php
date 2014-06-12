@@ -7,9 +7,14 @@ class UsuarioController extends BaseController {
 
     public function mostrarUsuarios()
     {
-        $Usuario = Usuario::all();
-        
-        return View::make('usuario.lista', array('usuarios' => $Usuario));
+        $usuario = Usuario::all();
+        return View::make('usuario.lista', array('usuarios' => $usuario));
+    }
+
+    public function mostrarUsuariosBloqueados()
+    {
+        $usuario = Usuario::all();
+        return View::make('usuario.listaBloqueados', array('usuarios' => $usuario));
     }
 
     
@@ -123,7 +128,8 @@ class UsuarioController extends BaseController {
              $usuario->save();
             }
         }
-        return Redirect::to('/admin/usuarios#area');
+     /* return Redirect::to('/admin/usuarios#area'); */
+        return Redirect::back();
     }
 /*
     public function modificarDatos($id)
