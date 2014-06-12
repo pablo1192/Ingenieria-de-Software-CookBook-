@@ -50,17 +50,16 @@ Released   : 20140207
 				<span>Sistema web de venta de libros<br/><br/></span> </div>
 			<div id="menu">
 				<ul>
-						
+					@if (Auth::check())
+						@if (Auth::user()->esAdmin == 1)
+						<a href="/admin/libros" title="Ingrese a la gestión del sistema" class="button button-mediano">ADMINISTRACIÓN</a>
+						@endif
+					@endif
 					<li id="catalogo"><a href="/" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
 					<li id="contacto"><a href="/404" title="Póngase en contacto con Cookbook">Contacto</a></li>
 					<li id="ayuda"><a href="/404" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
 				</ul>
 			</div>
-			@if (Auth::check())
-				@if (Auth::user()->esAdmin == 1)
-				<center><a href="/admin/libros" title="Ingrese a la gestión del sistema" class="button button-mediano">ADMINISTRACIÓN</a></center>
-				@endif
-			@endif
 		</div>
 	</div>
 	<div id="wrapper3">

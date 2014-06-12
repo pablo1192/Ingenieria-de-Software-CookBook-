@@ -21,7 +21,6 @@
 @endif
 @endforeach
 </table>  
-<h2></h2>
 
 <h2>Funciones de búsqueda</h2>
 <a href="/admin/usuarios" title="Ver todos">Mostrar todos los usuarios.</a> 

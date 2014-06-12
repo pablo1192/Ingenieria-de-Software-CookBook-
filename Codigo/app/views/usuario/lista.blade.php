@@ -19,8 +19,6 @@
   </tr>
 @endforeach
 </table>  
-<h2></h2>
-
 
 <h2>Funciones de búsqueda</h2>
 <a href="/admin/usuarios/bloqueados" title="Ocultar eliminados">Ocultar los usuarios bloqueados y dados de baja.</a> 

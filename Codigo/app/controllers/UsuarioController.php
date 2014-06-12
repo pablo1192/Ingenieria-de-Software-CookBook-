@@ -58,7 +58,7 @@ class UsuarioController extends BaseController {
                );
 
         if (Auth::attempt($userdata)) {
-                return Redirect::to('/')->with('mensaje-registro', 'Se ha registrado con éxito en el sistema.');
+                return Redirect::to('/');
             }
          }
 

@@ -6,27 +6,11 @@ menuActivo='catalogo'
 
 @section('contenido')
 
-@if ($alert = Session::get('ingreso-exitoso'))
-    <center><div class="alert alert-warning">
-        <strong>{{ $alert }}</strong>
-    </div></center>
-@endif
-
-@if ($alert = Session::get('mensaje-registro'))
-    <center><div class="alert alert-warning">
-        <strong>{{ $alert }}</strong>
-    </div></center>
-@endif
-
 <a name="area"></a>
 @if(count($libros)> 0)
 
 <h1><font color="purple"><center>¡Bienvenido a nuestro catálogo!</center></font> </h1>
-<center><h2>Disponemos de los siguientes libros para ofrecerle:</h2></center>
-@if (! Auth::check())
-
-  </br><b><center><a href="/login" title="Iniciar sesión"><u>Inicie sesión</u></a> para acceder a los detalles de cada libro</b></center>
-@endif
+<h2></h2>
 <br></br>
 	
 	@if((count($libros)/4) >= 1)
@@ -54,9 +38,7 @@ menuActivo='catalogo'
 								</td>
 							</tr>
 							</table>							
-							@if (! Auth::guest())
 								<a href="/{{$libros[($i*4)+$j]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano">Ver detalles</a><br><br/>
-							@endif
 						</div>
 					</div>
 			  @endfor
@@ -87,9 +69,7 @@ menuActivo='catalogo'
 								</td>
 							</tr>
 							</table>							
-							@if (! Auth::guest())
 								<a href="/{{$libros[$i+(floor(count($libros)/4)*4)]->id}}/detalles" title="Conozca los detalles de este libro" class="button button-mediano">Ver detalles</a><br><br/>
-							@endif
 					</div>
 				</div>	
 	  @endfor

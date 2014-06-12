@@ -63,7 +63,7 @@ class HomeController extends BaseController {
 
 				} else {
 
-					return Redirect::to('/')->with('ingreso-exitoso', 'Ha ingresado con éxito al sistema.');
+					return Redirect::to('/');
 
 				}
 	
