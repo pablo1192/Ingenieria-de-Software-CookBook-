@@ -28,21 +28,20 @@ Released   : 20140207
 	<div id="header-wrapper">
 		<div class="menu">
 			¡Bienvenido, <strong>Administrador</strong>!
+			<a href="{{ URL::to('/admin/') }}">Mensajes (0)</a>
 			<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 			<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 		</div>
 		<div id="header" class="container">
 			<div id="logo">
 				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
-				<span>Sistema web de venta de libros</span> </div>
+				<span>Venta de libros online</span> </div>
 			<div id="menu">
 				<ul>
-					<a href="/" title="Regrese al catálogo" class="button button-mediano">CATÁLOGO</a>
+					<li id="catálogo"><a href="/" title="Catálogo de libros">Catálogo</a></li>
 					<li id="libros"><a href="/admin/libros/" title="Gestión de libros">Libros</a></li>
 					<li id="usuarios"><a href="/admin/usuarios/" title="Gestión de usuarios">Usuarios</a></li>
-					<li id="reportes"><a href="/admin/" title="Visualización de reportes y estadústicas">Reportes</a></li>
-					<li id="mensajes"><a href="/admin/" title="Gestión de Mensajes">Mensajes</a></li>
-					<li id="ayuda"><a href="/admin/" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
+					<li id="reportes"><a href="/admin/" title="Visualización de reportes y estadísticas">Reportes</a></li>
 				</ul>
 			</div>
 		</div>

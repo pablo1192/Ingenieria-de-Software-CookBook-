@@ -37,8 +37,10 @@ Released   : 20140207
 				¡Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
 				@endif
 				@if (Auth::user()->esAdmin == 1)
+				<a href="{{ URL::to('/admin/') }}">Mensajes (0)</a>
 				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 				@else
+				<a href="{{ URL::to('/404') }}">Pedidos</a>
 				<a href="{{ URL::to('/perfil') }}">Modificar Perfil</a>
 				@endif
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
@@ -47,7 +49,7 @@ Released   : 20140207
 		<div id="header" class="container">
 			<div id="logo">
 				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
-				<span>Sistema web de venta de libros<br/><br/></span> </div>
+				<span>Venta de libros online<br/><br/></span> </div>
 			<div id="menu">
 				<ul>
 					@if (Auth::check())

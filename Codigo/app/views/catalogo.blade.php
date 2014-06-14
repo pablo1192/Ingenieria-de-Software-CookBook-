@@ -9,9 +9,8 @@ menuActivo='catalogo'
 <a name="area"></a>
 @if(count($libros)> 0)
 
-<h1><font color="purple"><center>¡Bienvenido a nuestro catálogo!</center></font> </h1>
 <h2></h2>
-<br></br>
+</br>
 	
 	@if((count($libros)/4) >= 1)
 		@for($i = 0; $i<=(count($libros)/4)-1; $i++)
