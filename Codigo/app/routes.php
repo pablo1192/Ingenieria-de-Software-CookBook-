@@ -69,7 +69,7 @@ Route::get('/admin/autores/{id}/borrar',['uses'=>'AutorController@baja']);
 
 //Gestión de Usuarios para admin. Nuevo/Crear: funciones de prueba
 Route::get('/admin/usuarios', array('uses' => 'UsuarioController@mostrarUsuarios'))->before('admin_auth');
-Route::get('/admin/usuarios/bloqueados', array('uses' => 'UsuarioController@mostrarUsuariosNoBloqueados'))->before('admin_auth');
+Route::get('/admin/usuarios/vigentes', array('uses' => 'UsuarioController@mostrarUsuariosVigentes'))->before('admin_auth');
 //Route::get('/admin/usuarios/nuevo', array('uses' => 'UsuarioController@nuevoTestUsuario'));
 //Route::post('/admin/usuarios/crear', array('uses' => 'UsuarioController@crearUsuario'));
 Route::get('/admin/usuarios/{id}/ver', array('uses'=>'UsuarioController@verUsuario'));

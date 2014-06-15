@@ -48,11 +48,8 @@ menuActivo='usuarios'
 		</tr>
 	</table>
 	</div>
-	
 </div>
-
 </br>
-
 
 <table width="40%">
 	<tr>	
@@ -67,5 +64,6 @@ menuActivo='usuarios'
 </table>
 
 <h2></h2>
-<a href="/admin/usuarios" title="Retornar a Usuarios">Volver a la lista de usuarios.</a>
+<a href="/admin/usuarios" title="Retornar a usuarios totales">Volver a la lista de usuarios totales.</a> </br>
+<a href="/admin/usuarios/vigentes" title="Retornar a usuarios vigentes">Volver a la lista de usuarios vigentes.</a>
 @stop
