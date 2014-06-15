@@ -30,7 +30,7 @@ menuActivo='usuarios'
 @endforeach
 </table>
 @if (count($usuarios) == 0)
-	<div class="mensaje mensaje-error">No se encontró ningún usuario con ese dato. <a href="/admin/usuarios/vigentes" title="Regresar a la lista de usuarios">Haga click para volver atrás.</a></div>
+	<div class="mensaje mensaje-error">No se encontró ningún usuario con ese dato. <a href="/admin/usuarios/vigentes" title="Regresar a la lista de usuarios">Haga click aquí para regresar a la lista.</a></div>
 @endif
 
 <h2>Funciones de búsqueda</h2>

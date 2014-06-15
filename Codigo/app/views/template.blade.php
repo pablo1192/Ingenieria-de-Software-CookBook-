@@ -40,7 +40,7 @@ Released   : 20140207
 				<a href="{{ URL::to('/admin/') }}">Mensajes (0)</a>
 				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 				@else
-				<a href="{{ URL::to('/404') }}">Pedidos</a>
+				<a href="{{ URL::to('/pedidos') }}">Pedidos</a>
 				<a href="{{ URL::to('/perfil') }}">Modificar Perfil</a>
 				@endif
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>

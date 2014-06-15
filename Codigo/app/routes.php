@@ -92,6 +92,9 @@ Route::get('/eliminar', array('uses' => 'UsuarioController@darBaja'))->before('a
 Route::get('/admin/perfil', array('uses' => 'UsuarioController@formularioAdminPerfil'))->before('auth');
 Route::post('/admin/perfil', array('uses' => 'UsuarioController@modificarAdminPerfil'));
 
+//Pedidos
+Route::get('/pedidos', array('uses' => 'UsuarioController@verPedidos'))->before('auth');
+
 
 //Manejo de errores de Servidor
 Route::get('/404',function(){

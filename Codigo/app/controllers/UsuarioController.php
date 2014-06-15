@@ -374,5 +374,17 @@ class UsuarioController extends BaseController {
           }
     }
 
+
+    public function verPedidos()
+    {
+        if (Auth::user()->esAdmin != 1) {
+            $pedidos = Pedido::where('usuario_id', '=', Auth::user()->id)->get();
+            return View::make('usuario.pedidos',['pedidos'=>$pedidos]);
+        }
+        else {
+            return Redirect::to('/');
+        }
+    }
+
 }
 ?>
