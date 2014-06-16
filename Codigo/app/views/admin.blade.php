@@ -32,6 +32,9 @@ Released   : 20140207
 			<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 			<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 		</div>
+		<div class="ayuda">
+			<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/>
+		</div>
 		<div id="header" class="container">
 			<div id="logo">
 				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>

@@ -380,6 +380,7 @@
 
 	#header
 	{
+		position:relative;
 	}
 
 /*********************************************************************************/
@@ -458,9 +459,9 @@
 		/*float:left;*/
 		/*width:925px;*/
 		top:2.8em;
-		width:70%;
+		right:275px;
 		text-align:center;
-		left:20%;
+		left:275px;
 	}
 		
 	
@@ -932,4 +933,13 @@
 }
 .azul{
 	color: #1E79B0;
+}
+
+
+
+/*	Ayuda	*/
+.ayuda{
+	position:absolute;
+	top: 2.5em;
+	right: 1em;
 }

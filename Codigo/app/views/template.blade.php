@@ -46,6 +46,9 @@ Released   : 20140207
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 			@endif
 		</div>
+		<div class="ayuda">
+			<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/>
+		</div>
 		<div id="header" class="container">
 			<div id="logo">
 				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
@@ -58,8 +61,7 @@ Released   : 20140207
 						@endif
 					@endif
 					<li id="catalogo"><a href="/" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
-					<li id="contacto"><a href="/404" title="Póngase en contacto con Cookbook">Contacto</a></li>
-					<li id="ayuda"><a href="/404" title="Obtenga acceso a la ayuda del sistema">Ayuda</a></li>
+					<li id="contacto"><a href="/404" title="Póngase en contacto con Cookbook">Contacto</a></li>					
 				</ul>
 			</div>
 		</div>
