@@ -7,10 +7,62 @@ menuActivo='catalogo'
 @section('contenido')
 
 <a name="area"></a>
-@if(count($libros)> 0)
 
 <h2></h2>
-</br>
+<!-- Formularios de busqueda: no combinables. Autor, titulo, isbn, editorial(cerrada), etiqueta(cerrada) -->
+<table width="100%" style="margin-bottom:8px;">
+<tr>
+	<td width="40%">
+		<form method="GET" action="/">			
+			<select name="filtrar" style="padding:2px;width:80px;display:inline;">
+				<option value="titulo">Título</option>
+				<option value="isbn">ISBN</option>
+				<option value="autor">Autor</option>
+			</select>
+			<input name="valor" size="25" value="" placeholder="Ingrese su búsqueda..." />
+			<input value="Buscar" type="submit" />
+		</form>
+	</td>
+	<td >
+		<form method="GET" action="/">
+			<input type="hidden" name="filtrar" value="editorial"/>
+			<select name="valor" style="padding:2px;width:180px;" onchange="this.form.submit()">
+				<option value=""  selected="selected">Filtrar por Editorial</option>
+				@foreach(Editorial::disponibles()->get() as $editorial)
+					<option value="{{$editorial->id}}">{{$editorial->nombre}}</option>
+				@endforeach
+				
+			</select>
+		</form>
+	</td>
+	<td >
+		<form method="GET" action="/">
+			<input type="hidden" name="filtrar" value="etiqueta"/>
+			<select name="valor" style="padding:2px;width:180px;" onchange="this.form.submit()">
+				<option value=""  selected="selected">Filtrar por Etiqueta</option>
+				@foreach(Etiqueta::disponibles()->get() as $etiqueta)
+					<option value="{{$etiqueta->id}}">{{$etiqueta->nombre}}</option>
+				@endforeach
+				
+			</select>
+		</form>
+	</td>
+	<td>
+		@if($filtrado)
+			Estás filtrando por <a class="cookbook" href="/#area" title="Restablece el catálogo">{{$criterio}}</a> 
+		@endif
+	</td>
+</tr>
+</table>
+
+
+@if( ($filtrado) && (count($libros)==0))
+	<div class="mensaje mensaje-notificacion">
+		No existen libros que concuerden con su búsqueda. <a href="/#area">Haga click aquí para volver a intentarlo.</a>
+	</div>
+
+@elseif(count($libros)> 0)
+
 	
 	@if((count($libros)/4) >= 1)
 		@for($i = 0; $i<=(count($libros)/4)-1; $i++)

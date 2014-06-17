@@ -14,8 +14,34 @@ class LibroController extends BaseController {
 	public function mostrarCatalogo()
 	{
 		//Se ignoran los libros dados de baja logica
-		$libros=Libro::disponibles()->get();
-		return View::make('catalogo',['libros'=>$libros]);
+		$librosDisponibles=Libro::disponibles();
+		$filtrado=false;
+		//Si hay filtrado se agregan las condiciones...
+		if( (Input::has('filtrar')) && (input::has('valor')) ){
+			$valor=Input::get('valor');
+			
+			switch(Input::get('filtrar')){
+				case 'isbn':		$librosDisponibles->where('isbn','like','%'.$valor.'%');
+									break;
+				case 'titulo':		$librosDisponibles->where('título','like','%'.$valor.'%');
+									break;
+				case 'editorial':	$librosDisponibles->where('editorial_id','=',$valor);
+									break;
+				case 'etiqueta':	$librosDisponibles->whereHas('etiquetas', function($query) use ($valor) {$query->where('etiqueta_id','=',$valor);});
+									break;
+				case 'autor':		$librosDisponibles->whereHas('autores',function($query) use ($valor){$query->where('nombre','like','%'.$valor.'%');});
+									break;
+				default:			return Redirect::back()->withErrors(['El criterio de filtrado es invalido!.']);
+									break;
+			}
+			
+			$filtrado=true;
+		}
+		
+		$libros=$librosDisponibles->get();
+		
+		
+		return View::make('catalogo',['libros'=>$libros, 'filtrado'=>$filtrado,'criterio'=>Input::get('filtrar','ninguno'),'valor'=>Input::get('valor','ninguno')]);
 	}
 	
 	//Muestra los detalles de un libro, desde la administración
