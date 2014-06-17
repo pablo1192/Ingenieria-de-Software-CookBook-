@@ -7,7 +7,7 @@ class CarritoController extends BaseController {
 			//proceso el carrito, para indcar los detalles de cada item.
 			$carrito=Session::get('carrito');
 			$carritoProcesado=[];
-			
+			$montoTotal=0;
 			foreach($carrito as $id => $cantidad){
 				$libro= Libro::find($id);
 				
@@ -15,9 +15,10 @@ class CarritoController extends BaseController {
 				$carritoProcesado[$id]['cantidad']=$cantidad;
 				$carritoProcesado[$id]['precioUnitario']=$libro->precio;
 				$carritoProcesado[$id]['precioTotal']= $libro->precio * $cantidad;
+				$montoTotal+=($libro->precio * $cantidad);
 			}
 
-			return View::make('carrito',['carrito'=>$carritoProcesado]);
+			return View::make('carrito',['carrito'=>$carritoProcesado,'montoTotal'=>$montoTotal]);
 		}
 		else{
 			return View::make('carrito',['carrito'=>[]]);
@@ -72,7 +73,9 @@ class CarritoController extends BaseController {
 				//Elimino el libro del carrito
 				unset($carrito[$id]);
 			}
+			Session::put('carrito',$carrito);
 		}
+		return Redirect::back();
 	}
 	
 	//Elimina el carrito de la sesion

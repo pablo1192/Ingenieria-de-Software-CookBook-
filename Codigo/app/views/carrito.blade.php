@@ -21,18 +21,27 @@ menuActivo='catalogo'
 			<tr>
 				<td><a href="/{{$id}}/detalles"title="Visualizar «{{$item['titulo']}}»">{{$item['titulo']}}</a></td>
 				<td>{{$item['cantidad']}}</td>
-				<td>{{$item['precioUnitario']}}</td>
-				<td>{{$item['precioTotal']}}</td>
+				<td>$ {{$item['precioUnitario']}}</td>
+				<td>$ {{$item['precioTotal']}}</td>
 				<td>
-					<a href="/carrito/quitar/{{$id}}" title="Descuenta una unidad a la cantidad">Quitar</a> 					
+					<a href="/carrito/{{$id}}/quitar" title="Descuenta una unidad a la cantidad">Quitar</a> 					
 				</td>			
 			</tr>
 		@endforeach
+		
+		<tr class="azul">
+			<td style="padding-top:35px;"><strong>Total</strong></td>
+			<td style="padding-top:35px;"><strong>{{array_sum(array_pluck($carrito,'cantidad'))}}</strong></td>
+			<td style="padding-top:35px;"></td>
+			<td style="padding-top:35px;"><strong >$ {{$montoTotal}}</span></td>
+			<td></td>
+		</tr>
 	</table>
 <br/>
 <br/>
 <h2>Operaciones</h2>
 <a  href="/carrito/vaciar"class="button button-verde button-mediano" title="Vacia su carrito de compra" onclick="return confirm('¿Está seguro que desea vaciar su carrito de compras?')">Vaciar carrito</a>
+<a  href="#"class="button button-azul button-mediano" title="Realice la compra" >Realizar compra</a>
 
 @else
 <div class="mensaje mensaje-notificacion">
