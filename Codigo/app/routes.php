@@ -96,6 +96,13 @@ Route::post('/admin/perfil', array('uses' => 'UsuarioController@modificarAdminPe
 Route::get('/pedidos', array('uses' => 'UsuarioController@verPedidos'))->before('auth');
 
 
+//Carrito
+Route::get('/carrito', array('uses' => 'CarritoController@visualizar'))->before('auth');
+Route::post('/carrito', array('uses' => 'CarritoController@agregarLibro'))->before('auth');
+Route::get('/carrito/quitar/{$id}', array('uses' => 'CarritoController@quitarLibro'))->before('auth');
+Route::get('/carrito/vaciar', array('uses' => 'CarritoController@vaciarCarrito'))->before('auth');
+
+
 //Manejo de errores de Servidor
 Route::get('/404',function(){
 	return View::make('error404');

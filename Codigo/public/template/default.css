@@ -947,3 +947,19 @@
 	top: 2.5em;
 	right: 1em;
 }
+
+/*	Carrito	*/
+.carrito{
+	position:absolute;
+	top: 2.5em;
+	right: 8em;
+}
+
+.carrito a,.carrito a:hover,.carrito a:visited,.carrito a:link{
+	font-size:120%;
+	text-decoration:none;
+}
+.carrito a img{
+	vertical-align:middle;
+	width:32px;
+}

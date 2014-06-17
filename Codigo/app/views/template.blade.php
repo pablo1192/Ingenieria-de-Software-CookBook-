@@ -26,30 +26,38 @@ Released   : 20140207
 <body>
 <div id="wrapper1">
 	<div id="header-wrapper">
-		<div class="menu">
-			@if (Auth::guest() )
-				<a href="/login" title="Ingrese al sistema con su cuenta registrada">Iniciar Sesión</a> 
-				<a href="/registrarse" title="Obtenga una cuenta de usuario">Registrarse</a>
-			@else
-				@if (Auth::user()->esAdmin == 1)
-					¡Bienvenido, <strong>Administrador</strong>!
-				@else
-				¡Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
-				@endif
-				@if (Auth::user()->esAdmin == 1)
-				<a href="{{ URL::to('/admin/') }}">Mensajes (0)</a>
-				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
-				@else
-				<a href="{{ URL::to('/pedidos') }}">Pedidos</a>
-				<a href="{{ URL::to('/perfil') }}">Modificar Perfil</a>
-				@endif
-				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
-			@endif
-		</div>
-		<div class="ayuda">
-			<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/>
-		</div>
 		<div id="header" class="container">
+			<div class="menu">
+				@if (Auth::guest() )
+					<a href="/login" title="Ingrese al sistema con su cuenta registrada">Iniciar Sesión</a> 
+					<a href="/registrarse" title="Obtenga una cuenta de usuario">Registrarse</a>
+				@else
+					@if (Auth::user()->esAdmin == 1)
+						¡Bienvenido, <strong>Administrador</strong>!
+					@else
+					¡Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
+					@endif
+					@if (Auth::user()->esAdmin == 1)
+					<a href="{{ URL::to('/admin/') }}">Mensajes (0)</a>
+					<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
+					@else
+					<a href="{{ URL::to('/pedidos') }}">Pedidos</a>
+					<a href="{{ URL::to('/perfil') }}">Modificar Perfil</a>
+					@endif
+					<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
+				@endif
+			</div>
+		
+	
+			<div class="ayuda">
+				<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+			</div>
+			@if ( (Auth::user()) && (!Auth::user()->esAdmin) )
+			<div class="carrito">
+				<a href="/carrito" title="Acceda a su carrito de compras"><img src="/template/images/carrito.png" alt="Carrito"/> {{(Session::has('carrito'))? array_sum(Session::get('carrito')) : 0 }} </a>
+			</div>
+			@endif
+
 			<div id="logo">
 				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
 				<span>Venta de libros online<br/><br/></span> </div>

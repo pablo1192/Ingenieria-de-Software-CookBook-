@@ -26,16 +26,16 @@ Released   : 20140207
 <body>
 <div id="wrapper1">
 	<div id="header-wrapper">
-		<div class="menu">
-			¡Bienvenido, <strong>Administrador</strong>!
-			<a href="{{ URL::to('/admin/') }}">Mensajes (0)</a>
-			<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
-			<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
-		</div>
-		<div class="ayuda">
-			<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/>
-		</div>
 		<div id="header" class="container">
+			<div class="menu">
+				¡Bienvenido, <strong>Administrador</strong>!
+				<a href="{{ URL::to('/admin/') }}">Mensajes (0)</a>
+				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
+				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
+			</div>
+			<div class="ayuda">
+				<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/>
+			</div>
 			<div id="logo">
 				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
 				<span>Venta de libros online</span> </div>

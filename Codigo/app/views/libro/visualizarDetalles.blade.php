@@ -4,7 +4,14 @@
 menuActivo='catalogo'
 @stop
 
+
 @section('contenido')
+
+@if(Session::has('agregado'))
+	<div class="mensaje mensaje-notificacion">
+		{{Session::get('agregado')}}
+	</div>
+@endif
 <h1>Detalles de «{{$libro->título}}»</h1>
 <div style="width:850px;">
 	<div style="float:left;width:250px;text-align:center;">
@@ -52,9 +59,19 @@ menuActivo='catalogo'
 	
 	</div>
 	<br style="clear:both;"/><br/>
-<strong>Precio: ${{$libro->precio}}</strong><br/>
-<strong>Disponibilidad: {{($libro->agotado)? '<span title="Este libro figura en el catálogo como agotado y no puede ser comprado." >No</span>':'<span title="Este libro está disponible para comprarlo en el catálogo.">Sí</span>'}}</strong>
-
+	<div style="float:left;">
+		<strong>Precio: ${{$libro->precio}}</strong><br/>
+		<strong>Disponibilidad: {{($libro->agotado)? '<span title="Este libro figura en el catálogo como agotado y no puede ser comprado." >No</span>':'<span title="Este libro está disponible para comprarlo en el catálogo.">Sí</span>'}}</strong>
+	</div>
+	<div style="float:right;margin-right:80px;">
+		@if(!$libro->agotado)
+		<form method="POST" action="/carrito">
+			<input type="hidden" name="id" value="{{$libro->id}}">
+			<input type="submit" class="button button-verde button-mediano" value="Agregar al carrito">
+		</form>
+		@endif
+	</div>
+	<br style="clear:both;"/><br/>
 </div>
 	<br/><br/>
 	<a href="/" title="Retornar al catálogo">Volver al catálogo</a>
