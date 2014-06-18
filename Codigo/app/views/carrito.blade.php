@@ -24,7 +24,7 @@ menuActivo='catalogo'
 				<td>$ {{$item['precioUnitario']}}</td>
 				<td>$ {{$item['precioTotal']}}</td>
 				<td>
-					<a href="/carrito/{{$id}}/quitar" title="Descuenta una unidad a la cantidad">Quitar</a> 					
+					<a href="/carrito/{{$id}}/quitar" title="Descuenta una unidad a la cantidad" onclick="return confirm('¿Está Ud seguro que desea quitar 1 unidad de\n«{{$item['titulo']}}»?')">Quitar</a> 					
 				</td>			
 			</tr>
 		@endforeach

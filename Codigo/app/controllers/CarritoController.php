@@ -3,6 +3,7 @@
 class CarritoController extends BaseController {
 
 	public function visualizar(){
+
 		if(Session::has('carrito')){
 			//proceso el carrito, para indcar los detalles de cada item.
 			$carrito=Session::get('carrito');

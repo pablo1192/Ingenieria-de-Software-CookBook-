@@ -97,10 +97,10 @@ Route::get('/pedidos', array('uses' => 'UsuarioController@verPedidos'))->before(
 
 
 //Carrito
-Route::get('/carrito', array('uses' => 'CarritoController@visualizar'))->before('auth');
-Route::post('/carrito', array('uses' => 'CarritoController@agregarLibro'))->before('auth');
-Route::get('/carrito/vaciar', array('uses' => 'CarritoController@vaciarCarrito'))->before('auth');
-Route::get('/carrito/{id}/quitar', array('uses' => 'CarritoController@quitarLibro'))->before('auth');
+Route::get('/carrito', array('uses' => 'CarritoController@visualizar'))->before('auth.usrReg');
+Route::post('/carrito', array('uses' => 'CarritoController@agregarLibro'))->before('auth.usrReg');
+Route::get('/carrito/vaciar', array('uses' => 'CarritoController@vaciarCarrito'))->before('auth.usrReg');
+Route::get('/carrito/{id}/quitar', array('uses' => 'CarritoController@quitarLibro'))->before('auth.usrReg');
 
 //Manejo de errores de Servidor
 Route::get('/404',function(){

@@ -53,6 +53,15 @@ Route::filter('admin_auth', function()
     }
 });
 
+//Solo Usuarios Reg: No Vistantes, ni el admin
+
+Route::filter('auth.usrReg', function()
+{
+  if( Auth::guest() || Auth::user()->esAdmin) {
+        return Redirect::to('/');
+    }
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
