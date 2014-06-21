@@ -386,5 +386,17 @@ class UsuarioController extends BaseController {
         }
     }
 
+
+    public function detallePedido($id)
+    {
+         $pedido = Pedido::find($id);
+         if ((Auth::user()->esAdmin != 1) && ($pedido)) {
+            return View::make('usuario.detallePedido',['pedido'=>$pedido]);
+        }
+        else {
+            return Redirect::to('/');
+        }
+    }
+
 }
 ?>
