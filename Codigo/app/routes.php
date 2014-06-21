@@ -49,7 +49,6 @@ Route::get('/admin/idiomas/{id}/modificar',['uses'=>'IdiomaController@formulario
 Route::post('/admin/idiomas/{id}/modificar',['uses'=>'IdiomaController@modificacion']);
 Route::get('/admin/idiomas/{id}/borrar',['uses'=>'IdiomaController@baja']);
 
-
 // Agregue algo de etiquetas
 Route::get('/admin/etiquetas', array('uses' => 'EtiquetasController@mostrarEtiquetas'));
 Route::get('/admin/etiquetas/crear',['uses'=>'EtiquetasController@formularioAlta']);
@@ -95,6 +94,7 @@ Route::post('/admin/perfil', array('uses' => 'UsuarioController@modificarAdminPe
 //Pedidos
 Route::get('/pedidos', array('uses' => 'UsuarioController@verPedidos'))->before('auth');
 Route::get('/pedidos/{id}/ver', array('uses'=>'UsuarioController@detallePedido'))->before('auth');
+Route::get('/admin/pedidos', array('uses' => 'UsuarioController@verPedidosAdmin'))->before('admin_auth');
 
 //Carrito
 Route::get('/carrito', array('uses' => 'CarritoController@visualizar'))->before('auth.usrReg');
@@ -113,5 +113,4 @@ Route::get('/500',function(){
 
 
 //Rutea los que no sean admin, al catálogo.
- 
 Route::when('admin/*', 'admin_auth');

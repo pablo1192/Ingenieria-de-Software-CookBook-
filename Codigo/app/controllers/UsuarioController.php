@@ -389,13 +389,21 @@ class UsuarioController extends BaseController {
 
     public function detallePedido($id)
     {
-         $pedido = Pedido::find($id);
-         if ((Auth::user()->esAdmin != 1) && ($pedido)) {
+        $pedido = Pedido::find($id);
+        if ((Auth::user()->esAdmin != 1) && ($pedido)) {
             return View::make('usuario.detallePedido',['pedido'=>$pedido]);
         }
         else {
             return Redirect::to('/');
         }
+    }
+
+    public function verPedidosAdmin()
+    {
+        /* Por defecto, ordena por fecha más antigua. Este método es el que hay que cambiar para el filtro de solicitudes. */
+        $pedidos = Pedido::orderBy('fecha', 'ASC')->get();
+        $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->get();
+        return View::make('usuario.pedidosAdmin',['pedidos'=>$pedidos]);
     }
 
 }
