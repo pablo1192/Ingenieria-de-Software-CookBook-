@@ -340,7 +340,7 @@ class LibroController extends BaseController {
 	
 	protected function modificarInfo($id,$datos){
 		$reglasDeValidacion=[
-			'isbn'=>['required','numeric','digits_between:10,13', 'unique:libro,isbn'],
+			'isbn'=>['required','numeric','digits_between:10,13', 'unique:libro,isbn,'.$id],
 			'titulo'=>['required','regex:/[a-zñÑáéíóú 0-9]+/i','min:2','max:64'],
 			'editorial'=>['exists:editorial,id','required_without:editorial-otro'],
 			'editorial-otro'=>['regex:/[a-zñ ]+/i','max:64','min:5','unique:editorial,nombre,1','required_without:editorial'],
