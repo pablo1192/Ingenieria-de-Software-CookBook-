@@ -107,7 +107,7 @@ class IdiomaController extends BaseController {
 		if($idioma){
 			$idioma->dadoDeBaja=false;
 			$idioma->save();
-			return Redirect::to('/admin/libros/recuperar#idiomas')->with('idiomaRecuperado','¡El idioma «'.$idioma->nombre.'» ha sido recuperado exitosamente!');
+			return Redirect::to('/admin/libros/recuperar#idiomas')->with('recuperado','¡El idioma «'.$idioma->nombre.'» ha sido recuperado exitosamente!');
 		}
 		else{
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);

@@ -104,7 +104,7 @@ class AutorController extends BaseController {
 		if($autor){
 			$autor->dadoDeBaja=false;
 			$autor->save();
-			return Redirect::to('/admin/libros/recuperar#autores')->with('autorRecuperado','¡El autor «'.$autor->nombre.'» ha sido recuperado exitosamente!');
+			return Redirect::to('/admin/libros/recuperar#autores')->with('recuperado','¡El autor «'.$autor->nombre.'» ha sido recuperado exitosamente!');
 		}
 		else{
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);

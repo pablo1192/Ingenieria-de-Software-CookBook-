@@ -117,7 +117,7 @@ class EtiquetasController extends BaseController
 		if($etiqueta){
 			$etiqueta->dadoDeBaja=false;
 			$etiqueta->save();
-			return Redirect::to('/admin/libros/recuperar#etiquetas')->with('etiquetaRecuperada','¡La etiqueta «'.$etiqueta->nombre.'» ha sido recuperada exitosamente!');
+			return Redirect::to('/admin/libros/recuperar#etiquetas')->with('recuperado','¡La etiqueta «'.$etiqueta->nombre.'» ha sido recuperada exitosamente!');
 		}
 		else{
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);

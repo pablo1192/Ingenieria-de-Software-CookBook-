@@ -114,7 +114,7 @@ class EditorialController extends BaseController {
 		if($editorial){
 			$editorial->dadoDeBaja=false;
 			$editorial->save();
-			return Redirect::to('/admin/libros/recuperar#editoriales')->with('editorialRecuperada','¡La editorial «'.$editorial->nombre.'» ha sido recuperada exitosamente!');
+			return Redirect::to('/admin/libros/recuperar#editoriales')->with('recuperado','¡La editorial «'.$editorial->nombre.'» ha sido recuperada exitosamente!');
 		}
 		else{
 			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
