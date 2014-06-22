@@ -44,7 +44,7 @@ Released   : 20140207
 					<li id="catálogo"><a href="/" title="Catálogo de libros">Catálogo</a></li>
 					<li id="libros"><a href="/admin/libros/" title="Gestión de libros">Libros</a></li>
 					<li id="usuarios"><a href="/admin/usuarios/" title="Gestión de usuarios">Usuarios</a></li>
-					<li id="usuarios"><a href="/admin/pedidos/" title="Gestión de usuarios">Pedidos</a></li>
+					<li id="pedidos"><a href="/admin/pedidos/" title="Gestión de usuarios">Pedidos</a></li>
 					<li id="reportes"><a href="/admin/" title="Visualización de reportes y estadísticas">Reportes</a></li>
 				</ul>
 			</div>

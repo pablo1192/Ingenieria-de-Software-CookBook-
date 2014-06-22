@@ -8,5 +8,9 @@ class Pedido extends Eloquent {
 		return $this->belongsToMany('Libro','libropedido','pedido_id','libro_id')->withPivot('cantidad');
 	}
 
+	public function usuario(){
+		return $this->belongsTo('Usuario', 'usuario_id');
+	}
+
 }
 ?>

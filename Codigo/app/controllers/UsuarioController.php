@@ -378,7 +378,8 @@ class UsuarioController extends BaseController {
     public function verPedidos()
     {
         if (Auth::user()->esAdmin != 1) {
-            $pedidos = Pedido::where('usuario_id', '=', Auth::user()->id)->get();
+            /* Devuelve los pedidos del usuario autenticado. Ignora los que están Finalizados.  */
+            $pedidos = Pedido::where('usuario_id', '=', Auth::user()->id)->where('estado', '!=', 'f')->get();
             return View::make('usuario.pedidos',['pedidos'=>$pedidos]);
         }
         else {
@@ -390,20 +391,73 @@ class UsuarioController extends BaseController {
     public function detallePedido($id)
     {
         $pedido = Pedido::find($id);
-        if ((Auth::user()->esAdmin != 1) && ($pedido)) {
-            return View::make('usuario.detallePedido',['pedido'=>$pedido]);
+        /* Si el pedido existe. Si el pedido no está Finalizado (protege URL). */
+        if (($pedido) && ($pedido->estado != "f")) {
+            /* Lo muestra si el usuario no es admin. Si el pedido pertenece al usuario (protege URL). */
+            if ((Auth::user()->esAdmin != 1) && ($pedido->usuario_id == Auth::user()->id))
+            {
+                return View::make('usuario.detallePedido',['pedido'=>$pedido]);
+            }
+            else {
+                return Redirect::to('/404');
+            }
         }
         else {
-            return Redirect::to('/');
+            return Redirect::to('/404');
+        }
+    }
+
+    public function cambiarEstado($id)
+    {
+        $pedido = Pedido::find($id);
+        /* Lo cambia si el usuario no es admin. Si el pedido existe. Si el pedido pertenece al usuario (protege URL). Si ha sido Enviado (protege URL). */
+        if ((Auth::user()->esAdmin != 1) && ($pedido) && ($pedido->usuario_id == Auth::user()->id) && ($pedido->estado == "e")) {
+            $pedido->estado = "f";
+            $pedido->save();
+            return Redirect::to('/pedidos');
+        }
+        else {
+            /* El admin lo quiere cambiar. Si el pedido existe. */
+            if ((Auth::user()->esAdmin) && ($pedido)) {
+                /* De Pendiente a Enviado. */
+                if ((Auth::user()->esAdmin) && ($pedido->estado == "p")) {
+                    $pedido->estado = "e";
+                    $pedido->save();
+                    return Redirect::to('/admin/pedidos');
+                }
+                /* De Enviado a Finalizado. */
+                else if ((Auth::user()->esAdmin) && ($pedido->estado == "e")) {
+                    $pedido->estado = "f";
+                    $pedido->save();
+                    return Redirect::to('/admin/pedidos');
+                }
+            }
+            else {
+                return Redirect::to('/404');  
+            }
+          return Redirect::to('/404');  
         }
     }
 
     public function verPedidosAdmin()
     {
         /* Por defecto, ordena por fecha más antigua. Este método es el que hay que cambiar para el filtro de solicitudes. */
-        $pedidos = Pedido::orderBy('fecha', 'ASC')->get();
+        /* Devuelve todos los pedidos del sistema, excepto los Finalizados. */
+        $pedidos = Pedido::orderBy('fecha', 'ASC')->where('estado', '!=', 'f')->get();
         $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->get();
         return View::make('usuario.pedidosAdmin',['pedidos'=>$pedidos]);
+    }
+
+    public function detallePedidoAdmin($id)
+    {
+        $pedido = Pedido::find($id);
+        /* Lo muestra si el usuario no es admin. Si el pedido existe. Si el pedido pertenece al usuario (protege URL). Si el pedido no está Finalizado (protege URL).*/
+        if (($pedido) && ($pedido->estado != "f")) {
+            return View::make('usuario.detallePedidoAdmin',['pedido'=>$pedido]);
+        }
+        else {
+            return Redirect::to('/404');
+        }
     }
 
 }
