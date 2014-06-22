@@ -99,7 +99,9 @@ Route::post('/admin/perfil', array('uses' => 'UsuarioController@modificarAdminPe
 //Pedidos
 Route::get('/pedidos', array('uses' => 'UsuarioController@verPedidos'))->before('auth');
 Route::get('/pedidos/{id}/ver', array('uses'=>'UsuarioController@detallePedido'))->before('auth');
+Route::get('/pedidos/{id}/cambiar', array('uses' => 'UsuarioController@cambiarEstado'))->before('auth');
 Route::get('/admin/pedidos', array('uses' => 'UsuarioController@verPedidosAdmin'))->before('admin_auth');
+Route::get('/admin/pedidos/{id}/ver', array('uses'=>'UsuarioController@detallePedidoAdmin'))->before('admin_auth');
 
 //Carrito
 Route::get('/carrito', array('uses' => 'CarritoController@visualizar'))->before('auth.usrReg');
