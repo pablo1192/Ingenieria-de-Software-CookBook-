@@ -52,5 +52,15 @@ class Etiqueta extends Eloquent
 	public function scopeDisponibles($query){
 		return $query->where('id','<>',1)->where('dadoDeBaja','=',0);
 	}
+	
+	public function scopeNoDisponibles($query){
+		return $query->where('id','<>',1)->where('dadoDeBaja','=',1);
+	}
+	
+	//Restaura un registro
+	//True=Si efectivamente lo hizo (xq existe), False caso contrario.
+	public static function restaurar($nombre){
+		return (boolean) (DB::table('etiqueta')->where('nombre','=',$nombre)->where('dadoDeBaja','=',1)->update(['dadoDeBaja'=>0]));
+	}
 }
 ?>

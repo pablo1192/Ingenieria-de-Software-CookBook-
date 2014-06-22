@@ -12,9 +12,14 @@ class IdiomaController extends BaseController {
 		
 		$validador= Validator::make(Input::all(),Idioma::reglasDeValidacion());
 		
-		if($validador->fails()){
-			//~ return Redirect::to('/admin/idiomas/crear')->withErrors($validador);
-			return Redirect::back()->withErrors($validador);
+		if($validador->fails()){			
+			//Si se logra restaurar, es xq lo req el usr
+			if(Idioma::restaurar(Input::get('nombre'))){
+				return Redirect::to('/admin/idiomas/');
+			}
+			else{
+				return Redirect::back()->withErrors($validador);
+			}
 		}
 		else{
 			//Creo el idioma
@@ -89,6 +94,24 @@ class IdiomaController extends BaseController {
 		$idioma->dadoDeBaja=true;
 		$idioma->save();
 		return Redirect::back();
+	}
+	
+	public function restaurar($id){
+		//ToDo: Proteger este metodo
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros/recuperar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+		$idioma= Idioma::find($id);
+		
+		//existe?
+		if($idioma){
+			$idioma->dadoDeBaja=false;
+			$idioma->save();
+			return Redirect::to('/admin/libros/recuperar#idiomas')->with('idiomaRecuperado','¡El idioma «'.$idioma->nombre.'» ha sido recuperado exitosamente!');
+		}
+		else{
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}		
 	}
 
 }

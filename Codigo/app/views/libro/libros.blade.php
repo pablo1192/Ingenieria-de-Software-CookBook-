@@ -53,7 +53,9 @@ menuActivo='libros'
 <a href="/admin/etiquetas/" title="Gestione las etiquetas" class="button button-mediano">Etiquetas</a> 
 <a href="/admin/editoriales/" title="Gestione las editoriales" class="button button-mediano">Editoriales</a> 
 <a href="/admin/idiomas/" title="Gestione los idiomas" class="button button-mediano">Idiomas</a> 
-
+@if(Libro::recuperarEntidadesSecundarias())
+<a style="margin-left:20px;" href="/admin/libros/recuperar" title="Recupere alguna de las Entidades definidas" class="button button-mediano button-azul" >Recuperar</a> 
+@endif
 
 
 @stop

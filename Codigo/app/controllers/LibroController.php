@@ -505,6 +505,21 @@ class LibroController extends BaseController {
 			$libro->save();
 		}
 	}
+	
+	public function recuperarEntidadesSecundarias(){
+		//Hay info para recuperar?
+		$recuperar=Libro::recuperarEntidadesSecundarias();
+		if($recuperar){
+			$editoriales=Editorial::noDisponibles()->get();
+			$idiomas=Idioma::noDisponibles()->get();
+			$etiquetas=Etiqueta::noDisponibles()->get();
+			$autores=Autor::noDisponibles()->get();	
+			return View::make('libro.recuperarEntidadesSecundarias',['recuperar'=>$recuperar, 'editoriales'=>$editoriales, 'idiomas'=>$idiomas, 'etiquetas'=>$etiquetas, 'autores'=>$autores]);
+		}
+		else{
+			return View::make('libro.recuperarEntidadesSecundarias',['recuperar'=>$recuperar]);
+		}
+	}
 }
 
 ?>

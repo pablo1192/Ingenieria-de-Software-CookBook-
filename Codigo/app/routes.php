@@ -26,6 +26,7 @@ Route::get('/admin/libros',['uses'=>'LibroController@listar']);
 Route::get('/admin/libros/crear',['uses'=>'LibroController@formularioAlta']);
 Route::post('/admin/libros/crear',['uses'=>'LibroController@alta']);
 Route::get('/admin/libros/sinInformacion',['uses'=>'LibroController@librosSinInformación']);
+Route::get('/admin/libros/recuperar',['uses'=>'LibroController@recuperarEntidadesSecundarias']);
 Route::get('/admin/libros/{id}',['uses'=>'LibroController@visualizar']);
 Route::get('/admin/libros/{id}/modificar',['uses'=>'LibroController@formularioModificacion']);
 Route::post('/admin/libros/{id}/modificar',['uses'=>'LibroController@modificacion']);
@@ -40,6 +41,7 @@ Route::post('/admin/editoriales/crear',['uses'=>'EditorialController@alta']);
 Route::get('/admin/editoriales/{id}/modificar',['uses'=>'EditorialController@formularioModificacion']);
 Route::post('/admin/editoriales/{id}/modificar',['uses'=>'EditorialController@modificacion']);
 Route::get('/admin/editoriales/{id}/borrar',['uses'=>'EditorialController@baja']);
+Route::get('/admin/editoriales/{id}/restaurar',['uses'=>'EditorialController@restaurar']);
 
 //Gestion de Idioma
 Route::get('/admin/idiomas',['uses'=>'IdiomaController@listar']);
@@ -48,6 +50,7 @@ Route::post('/admin/idiomas/crear',['uses'=>'IdiomaController@alta']);
 Route::get('/admin/idiomas/{id}/modificar',['uses'=>'IdiomaController@formularioModificacion']);
 Route::post('/admin/idiomas/{id}/modificar',['uses'=>'IdiomaController@modificacion']);
 Route::get('/admin/idiomas/{id}/borrar',['uses'=>'IdiomaController@baja']);
+Route::get('/admin/idiomas/{id}/restaurar',['uses'=>'IdiomaController@restaurar']);
 
 // Agregue algo de etiquetas
 Route::get('/admin/etiquetas', array('uses' => 'EtiquetasController@mostrarEtiquetas'));
@@ -56,6 +59,7 @@ Route::post('/admin/etiquetas/crear',['uses'=>'EtiquetasController@altaEtiqueta'
 Route::get('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@formularioModificacionEtiqueta']);
 Route::post('/admin/etiquetas/{id}/modificar',['uses'=>'EtiquetasController@modificacionEtiqueta']);
 Route::get('/admin/etiquetas/{id}/borrar',['uses'=>'EtiquetasController@baja']);
+Route::get('/admin/etiquetas/{id}/restaurar',['uses'=>'EtiquetasController@restaurar']);
 
 //Gestion de Autores (alta,modificacion)
 Route::get('/admin/autores',['uses'=>'AutorController@listar']);
@@ -64,6 +68,7 @@ Route::post('/admin/autores/crear',['uses'=>'AutorController@alta']);
 Route::get('/admin/autores/{id}/modificar',['uses'=>'AutorController@formularioModificacion']);
 Route::post('/admin/autores/{id}/modificar',['uses'=>'AutorController@modificacionAutor']);
 Route::get('/admin/autores/{id}/borrar',['uses'=>'AutorController@baja']);
+Route::get('/admin/autores/{id}/restaurar',['uses'=>'AutorController@restaurar']);
 
 
 //Gestión de Usuarios para admin. Nuevo/Crear: funciones de prueba

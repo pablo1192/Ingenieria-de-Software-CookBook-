@@ -100,5 +100,14 @@ class Libro extends Eloquent {
 		);
 	}
 	
+	
+	//Compureba si hay entidades secundarias para recuperar
+	//True=hay...
+	public static function recuperarEntidadesSecundarias(){
+		return (
+			(Editorial::noDisponibles()->count()) || (Idioma::noDisponibles()->count()) ||  (Etiqueta::noDisponibles()->count()) ||  (Autor::noDisponibles()->count())
+		);
+	}
+	
 }
 ?>

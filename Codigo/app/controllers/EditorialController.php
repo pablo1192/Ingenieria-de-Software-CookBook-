@@ -14,7 +14,15 @@ class EditorialController extends BaseController {
 		$validador= Validator::make(Input::all(),Editorial::reglasDeValidacion());
 		
 		if($validador->fails()){
-			return Redirect::back()->withErrors($validador);
+			//posible editorial ya creada
+			//Si existe una llamada igual, directamente se la recupera... caso contrario, se informa del error de validacion
+			if(Editorial::restaurar(Input::get('nombre'))){
+				return Redirect::to('/admin/editoriales/');
+			}
+			else{
+				return Redirect::back()->withErrors($validador);
+			}
+			
 		}
 		else{
 			//Creo el idioma
@@ -75,7 +83,7 @@ class EditorialController extends BaseController {
 		$editorial=Editorial::find($id);
 		return View::make('editorial.modificar',['editorial'=>$editorial]);
 	}
-	
+
 	public function baja($id){
 		//ToDo: Proteger este metodo
 
@@ -94,7 +102,25 @@ class EditorialController extends BaseController {
 		
 		return Redirect::back();
 	}
-
+	
+	public function restaurar($id){
+		//ToDo: Proteger este metodo
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros/recuperar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+		$editorial= Editorial::find($id);
+		
+		//existe?
+		if($editorial){
+			$editorial->dadoDeBaja=false;
+			$editorial->save();
+			return Redirect::to('/admin/libros/recuperar#editoriales')->with('editorialRecuperada','¡La editorial «'.$editorial->nombre.'» ha sido recuperada exitosamente!');
+		}
+		else{
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}		
+	}
+	
 }
 
 ?>

@@ -36,8 +36,14 @@ class EtiquetasController extends BaseController
         // Dependiendo de la respuesta del modelo 
         // retornamos los mensajes de error con los datos viejos del formulario 
         // o un mensaje de éxito de la operación 
-        if ($respuesta['error'] == true){
-            return Redirect::back()->withErrors($respuesta['mensaje'] )->withInput();
+        if ($respuesta['error'] == true){            
+            //Si se logra restaurar, es xq lo req el usr
+			if(Idioma::restaurar(Input::get('nombre'))){
+				return Redirect::to('/admin/etiquetas');
+			}
+			else{
+				return Redirect::back()->withErrors($respuesta['mensaje'] )->withInput();
+			}
         }else{
             return Redirect::to('/admin/etiquetas')->with('mensaje', $respuesta['mensaje']);
         }
@@ -99,6 +105,24 @@ class EtiquetasController extends BaseController
 		return Redirect::to('/admin/etiquetas');
 		
 	}	
+ 
+ 	public function restaurar($id){
+		//ToDo: Proteger este metodo
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros/recuperar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+		$etiqueta= Etiqueta::find($id);
+		
+		//existe?
+		if($etiqueta){
+			$etiqueta->dadoDeBaja=false;
+			$etiqueta->save();
+			return Redirect::to('/admin/libros/recuperar#etiquetas')->with('etiquetaRecuperada','¡La etiqueta «'.$etiqueta->nombre.'» ha sido recuperada exitosamente!');
+		}
+		else{
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}		
+	}
  
 }
 ?>

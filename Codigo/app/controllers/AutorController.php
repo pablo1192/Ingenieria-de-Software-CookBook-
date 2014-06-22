@@ -13,8 +13,13 @@ class AutorController extends BaseController {
 		$validador= Validator::make(Input::all(),Autor::reglasDeValidacion());
 		
 		if($validador->fails()){
-			//~ return Redirect::to('/admin/idiomas/crear')->withErrors($validador);
-			return Redirect::back()->withErrors($validador);
+			//Si se logra restaurar, es xq lo req el usr
+			if(Autor::restaurar(Input::get('nombre'))){
+				return Redirect::to('/admin/autores/');
+			}
+			else{
+				return Redirect::back()->withErrors($validador);
+			}
 		}
 		else{
 			//Creo el autor
@@ -86,6 +91,24 @@ class AutorController extends BaseController {
 		
 		return Redirect::back();
 		
+	}
+	
+	public function restaurar($id){
+		//ToDo: Proteger este metodo
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros/recuperar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+		$autor= Autor::find($id);
+		
+		//existe?
+		if($autor){
+			$autor->dadoDeBaja=false;
+			$autor->save();
+			return Redirect::to('/admin/libros/recuperar#autores')->with('autorRecuperado','¡El autor «'.$autor->nombre.'» ha sido recuperado exitosamente!');
+		}
+		else{
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}		
 	}
 	
 
