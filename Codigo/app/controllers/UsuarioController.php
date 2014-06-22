@@ -8,21 +8,20 @@ class UsuarioController extends BaseController {
     public function mostrarUsuarios()
     {
         /*  Busca por nombre y apellido. No necesita ser idéntico. */
-        if (Input::get('nombre')) {
-            $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where(function($query)
+        if((Input::has('filtro')) && (input::has('valor'))){
+            if (Input::get('filtro') == 'nombre') {
+                $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where(function($query)
                                                                                 {
-                                                                                    $nombre = Input::get('nombre');
+                                                                                    $nombre = Input::get('valor');
                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
                                                                                           ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
                                                                                 })
                                                                                 ->get();
-        }
-        else {
-            /*  Busca por DNI. El dato debe ser idéntico. */
-            if (Input::get('dni')) {
+            }
+            else if (Input::get('filtro') == 'dni') {
                 $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where(function($query)
                                                                                 {
-                                                                                    $dni = Input::get('dni');
+                                                                                    $dni = Input::get('valor');
                                                                                     $query->where('dni', '=', $dni);
                                                                                 })
                                                                                 ->get();
@@ -32,31 +31,33 @@ class UsuarioController extends BaseController {
                 $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->get();
             }
         }
+        else {
+            $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->get();
+        }
         return View::make('usuario.lista', array('usuarios' => $usuario));
     }
 
     public function mostrarUsuariosVigentes()
     {
         /*  Busca por nombre y apellido en vigentes. No necesita ser idéntico. */
-        if (Input::get('nombre')) {
-            $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where('dadoDeBaja', '=', '0')
-                                                                       ->where('bloqueado', '=', '0')
-                                                                       ->where(function($query)
-                                                                            {
-                                                                                $nombre = Input::get('nombre');
-                                                                                $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                      ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
-                                                                            })
-                                                                            ->get();
-        }
-        else {
-            /*  Busca por DNI en vigentes. El dato debe ser idéntico. */
-            if (Input::get('dni')) {
+        if((Input::has('filtro')) && (input::has('valor'))){
+            if (Input::get('filtro') == 'nombre') {
                 $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where('dadoDeBaja', '=', '0')
                                                                            ->where('bloqueado', '=', '0')
                                                                            ->where(function($query)
                                                                                 {
-                                                                                    $dni = Input::get('dni');
+                                                                                    $nombre = Input::get('valor');
+                                                                                    $query->where('apellido', 'LIKE', '%' . $nombre . '%')
+                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
+                                                                                })
+                                                                                ->get();
+            }
+            else if (Input::get('filtro') == 'dni') {
+                $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where('dadoDeBaja', '=', '0')
+                                                                           ->where('bloqueado', '=', '0')
+                                                                           ->where(function($query)
+                                                                                {
+                                                                                    $dni = Input::get('valor');
                                                                                     $query->where('dni', '=', $dni);
                                                                                 })
                                                                                 ->get();
@@ -70,6 +71,14 @@ class UsuarioController extends BaseController {
                                                                                         })
                                                                                         ->get();
                 }
+            }
+            else {
+                $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where(function($query)
+                                                                                        {
+                                                                                            $query->where('dadoDeBaja', '=', '0')
+                                                                                                  ->where('bloqueado', '=', '0');
+                                                                                        })
+                                                                                        ->get();
             }
         return View::make('usuario.listaVigentes', array('usuarios' => $usuario));
     }

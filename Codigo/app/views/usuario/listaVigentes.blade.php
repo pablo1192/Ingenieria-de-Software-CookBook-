@@ -34,21 +34,14 @@ menuActivo='usuarios'
 @endif
 
 <h2>Funciones de búsqueda</h2>
-<table>
 <form method="get" action="/admin/usuarios/vigentes">
-	<tr>
-    	<td align="center">Nombre:</td> <td><input type="text" name="nombre" value=""></td>
-   		<td><input type="submit" value="Buscar"></td>
-    </tr>
+  <select name="filtro" style="padding:2px;width:90px;display:inline;">
+        <option value="nombre">Nombre</option>
+        <option value="dni">DNI</option>
+  </select>
+  <input name="valor" size="25" value=""/>
+  <input value="Buscar" type="submit"/> <span class="tooltip" title="El DNI a buscar debe ser exacto, no así el nombre o apellido.">[?]</span>
 </form>
-<form method="get" action="/admin/usuarios/vigentes">
-    <tr>
-    	<td align="center">DNI:</td> <td><input type="text" name="dni" value=""></td>
-    	<td><input type="submit" value="Buscar"></td>
-    </tr>
-</form>
-</table>
-</br>
 <a href="/admin/usuarios/" title="Mostrar eliminados y bloqueados">Mostrar todos los usuarios.</a>
 
 
