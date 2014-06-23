@@ -5,11 +5,13 @@ menuActivo='libros'
 @stop
 
 @section('contenido')
+{{--
 @if($librosSinInformación)
 	<div class="mensaje mensaje-error">
 		Ud posee libros que cuentan con información sin definir. <a href="/admin/libros/sinInformacion" title="Libros sin información">Haga click aquí para conocer más detalles</a>.
 	</div>
 @endif
+--}}
 <a name="area"></a>
 <h1>Gestión de libros:</h1>
 <h2>Libros <span title="Cantidad de libros en el Sistema">({{count($libros)}})</span>:</h2>

@@ -25,7 +25,7 @@ Route::get('/test', function()
 Route::get('/admin/libros',['uses'=>'LibroController@listar']);
 Route::get('/admin/libros/crear',['uses'=>'LibroController@formularioAlta']);
 Route::post('/admin/libros/crear',['uses'=>'LibroController@alta']);
-Route::get('/admin/libros/sinInformacion',['uses'=>'LibroController@librosSinInformación']);
+//Route::get('/admin/libros/sinInformacion',['uses'=>'LibroController@librosSinInformación']);
 Route::get('/admin/libros/recuperar',['uses'=>'LibroController@recuperarEntidadesSecundarias']);
 Route::get('/admin/libros/{id}',['uses'=>'LibroController@visualizar']);
 Route::get('/admin/libros/{id}/modificar',['uses'=>'LibroController@formularioModificacion']);

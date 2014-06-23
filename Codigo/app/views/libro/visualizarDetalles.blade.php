@@ -56,7 +56,7 @@ menuActivo='catalogo'
 		<strong>Disponibilidad: {{($libro->agotado)? '<span title="Este libro figura en el catálogo como agotado y no puede ser comprado." >No</span>':'<span title="Este libro está disponible para comprarlo en el catálogo.">Sí</span>'}}</strong>
 	</div>
 	<div style="float:right;margin-right:80px;">
-		@if(!$libro->agotado)
+		@if((!$libro->agotado) && (!Auth::user()->esAdmin))
 		<form method="POST" action="/carrito">
 			<input type="hidden" name="id" value="{{$libro->id}}">
 			<input type="submit" class="button button-verde button-mediano" value="Agregar al carrito">
