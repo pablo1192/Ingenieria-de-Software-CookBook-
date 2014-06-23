@@ -102,6 +102,8 @@ Route::get('/pedidos/{id}/ver', array('uses'=>'UsuarioController@detallePedido')
 Route::get('/pedidos/{id}/cambiar', array('uses' => 'UsuarioController@cambiarEstado'))->before('auth');
 Route::get('/admin/pedidos', array('uses' => 'UsuarioController@verPedidosAdmin'))->before('admin_auth');
 Route::get('/admin/pedidos/{id}/ver', array('uses'=>'UsuarioController@detallePedidoAdmin'))->before('admin_auth');
+//filtro pedidos.(ordenar por fecha, funciona solo con todos los pedidos) 
+Route::get('/admin/pedidos/ordenD', array('uses' => 'UsuarioController@verPedidosAdminOrdDesc'))->before('admin_auth');
 
 //Carrito
 Route::get('/carrito', array('uses' => 'CarritoController@visualizar'))->before('auth.usrReg');

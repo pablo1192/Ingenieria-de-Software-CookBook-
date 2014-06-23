@@ -44,7 +44,7 @@ menuActivo='pedidos'
 	@endforeach
 <h2>Funciones:</h2>
 Ordenar por fecha.</br>
-	   Orden Ascendente. <a href="/admin/pedidos/ordenD" title="Cambiar orden">Cambiar a Orden Descendente.</a></td></br>
+	   Orden Descendente. <a href="/admin/pedidos" title="Cambiar orden">Cambiar a Orden Ascendente.</a></td></br>
 Buscar por nombre.</br>
 Buscar por estado.
 <form method="get" action="/admin/pedidos/">
@@ -53,7 +53,7 @@ Buscar por estado.
         <option value="estado">Estado</option>
   </select>
   <input name="valor" size="25" value=""/>
-  <input value="Buscar" type="submit"/> <span class="tooltip" title="El caracter a buscar debe ser exacto, no así el nombre o apellido.">[?]</span>
+  <input value="Buscar" type="submit"/> <span class="tooltip" title="El DNI a buscar debe ser exacto, no así el nombre o apellido.">[?]</span>
 </form>
 * Al buscar por Estado: </br>
 Ingrese 'p' para mostrar todos los pedidos pendientes.</br>
@@ -61,9 +61,6 @@ Ingrese 'e' para mostrar todos los pedidos enviados.</br>
 Ingrese 'f' para mostrar todos los pedidos finalizados.</br>
 
 @else
-	<div class="mensaje mensaje-notificacion">No Hay pedidos que gestionar. <a href="/admin/pedidos/" title="Regresar a la gestión de los pedidos">Haga click aquí para regresar a la gestión de los pedidos.</a></div>
+	<div class="mensaje mensaje-notificacion">No Hay pedidos vigentes. <a href="/" title="Regresar al catálogo">Haga click aquí para regresar al catálogo.</a></div>
 @endif
 @stop
-
-
-

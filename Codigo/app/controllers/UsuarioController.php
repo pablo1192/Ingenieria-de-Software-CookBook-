@@ -452,13 +452,83 @@ class UsuarioController extends BaseController {
 
     public function verPedidosAdmin()
     {
+	   if((Input::has('filtro')) && (input::has('valor'))){
+            if (Input::get('filtro') == 'nombre') {
+                $pedidos = Pedido::where('usuario_id', '<>', '1')->join('usuario', function($join)
+                                                                   {
+                                                                        $join->on('usuario.id', '=', 'pedido.usuario_id');
+                                                                    })->where(function($query)
+                                                                                {
+                                                                                    $nombre = Input::get('valor');
+                                                                                    $query->where('apellido', 'LIKE', '%' . $nombre . '%')
+                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
+                                                                                })->orderBy('fecha', 'ASC')->get();
+            }
+            else if (Input::get('filtro') == 'estado' ){
+			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')) 
+				   {
+                        $pedidos = Pedido::where('usuario_id', '<>', '1')->where(function($query)
+                                                                                    {
+                                                                                    $est = Input::get('valor');
+                                                                                    $query->where('estado', '=', $est);
+                                                                                    })->orderBy('fecha', 'ASC')->get();
+					}
+					else  //se ingreso un caracter no valido.Se muestra que no hay pedidos en ese estado.
+                         $pedidos = null;				
+            }
+            else {
+                /* Input está vacío. Muestra todos los pedidos menos los finalizados. */
+                $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'ASC')->get();
+            }
+        }
+        else {
+            $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'ASC')->get();
+        }
+		
+        return View::make('usuario.pedidosAdmin', array('pedidos' => $pedidos));
         /* Por defecto, ordena por fecha más antigua. Este método es el que hay que cambiar para el filtro de solicitudes. */
         /* Devuelve todos los pedidos del sistema, excepto los Finalizados. */
         $pedidos = Pedido::orderBy('fecha', 'ASC')->where('estado', '!=', 'f')->get();
         $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->get();
         return View::make('usuario.pedidosAdmin',['pedidos'=>$pedidos]);
     }
-
+	 public function verPedidosAdminOrdDesc()//Metodo completamente similar al sup, solo cambia el orden de las fechas.
+    {
+	   if((Input::has('filtro')) && (input::has('valor'))){
+            if (Input::get('filtro') == 'nombre') {
+                $pedidos = Pedido::where('usuario_id', '<>', '1')->join('usuario', function($join)
+                                                                   {
+                                                                        $join->on('usuario.id', '=', 'pedido.usuario_id');
+                                                                    })->where(function($query)
+                                                                                {
+                                                                                    $nombre = Input::get('valor');
+                                                                                    $query->where('apellido', 'LIKE', '%' . $nombre . '%')
+                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
+                                                                                })->orderBy('fecha', 'DESC')->get();
+            }
+            else if (Input::get('filtro') == 'estado' ){
+			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')) 
+				   {
+                        $pedidos = Pedido::where('usuario_id', '<>', '1')->where(function($query)
+                                                                                    {
+                                                                                    $est = Input::get('valor');
+                                                                                    $query->where('estado', '=', $est);
+                                                                                    })->orderBy('fecha', 'DESC')->get();
+					}
+					else  //se ingreso un caracter no valido.Se muestran mensaje que no se encuentran pedidos.
+                         $pedidos = null;					
+            }
+            else {
+                /* Input está vacío. Muestra todos excepto el Admin. */
+                $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'DESC')->get();
+            }
+        }
+        else {
+            $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'DESC')->get();
+        }
+		
+        return View::make('usuario.pedidosAdminDesc', array('pedidos' => $pedidos));
+    }
     public function detallePedidoAdmin($id)
     {
         $pedido = Pedido::find($id);
