@@ -41,7 +41,7 @@ Ordenar por fecha.</br>
 Buscar por nombre.</br>
 Buscar por estado.
 @else
-	<div class="mensaje mensaje-notificacion">No posee pedidos vigentes. <a href="/" title="Regresar al catálogo">Haga click aquí para regresar al catálogo.</a>
+	<div class="mensaje mensaje-notificacion">No posee pedidos vigentes. <a href="/" title="Regresar al catálogo">Haga click aquí para regresar al catálogo.</a></div>
 @endif
 @stop
 

@@ -87,5 +87,10 @@
 	</a>
 </form>
 <h2></h2>
-<a href="/eliminar" class="button button-rojo button-mediano" title="Darse de baja" onclick="return confirm('¿Realmente desea darse de baja en el sistema?')">Darse de baja</a> | <strong>Advertencia: Esta operación no puede deshacerse.</strong>
+<a href="/eliminar" class="button button-rojo button-mediano" title="Darse de baja" onclick="return confirm('¿Realmente desea darse de baja en el sistema?')">Darse de baja</a> | <strong>Esta operación no puede deshacerse.</strong>
+@if (count($pedidos) >= 1)
+</br><div class="mensaje mensaje-error">Advertencia: Posee {{count($pedidos)}} pedido/s de compra sin finalizar. Si desea darse de baja, por favor, aguarde su arribo. </br><a href="/pedidos" title="Dirigirse a la pantalla de pedidos">Haga click aquí para verificar el estado de sus solicitudes.</a></div>
+@endif
+
+
 @stop

@@ -4,14 +4,7 @@
 menuActivo='catalogo'
 @stop
 
-
 @section('contenido')
-
-@if(Session::has('agregado'))
-	<div class="mensaje mensaje-notificacion">
-		{{Session::get('agregado')}}
-	</div>
-@endif
 <h1>Detalles de «{{$libro->título}}»</h1>
 <div style="width:850px;">
 	<div style="float:left;width:250px;text-align:center;">
@@ -56,7 +49,6 @@ menuActivo='catalogo'
 			<td>{{implode(', ',array_pluck($libro->etiquetas,'nombre'))}}</td>
 		</tr>
 	</table>
-	
 	</div>
 	<br style="clear:both;"/><br/>
 	<div style="float:left;">
@@ -73,6 +65,11 @@ menuActivo='catalogo'
 	</div>
 	<br style="clear:both;"/><br/>
 </div>
+@if(Session::has('agregado'))
+	<div class="mensaje mensaje-notificacion">
+		{{Session::get('agregado')}} </br><a href="/carrito" title="Dirigirse al carrito">Haga click aquí para ver su carrito de compras ({{(Session::has('carrito'))? array_sum(Session::get('carrito')) : 0 }})</a>
+	</div>
+@endif
 	<br/><br/>
 	<a href="/" title="Retornar al catálogo">Volver al catálogo</a>
 @stop

@@ -275,7 +275,9 @@ class UsuarioController extends BaseController {
     {
         if (Auth::user()->esAdmin != 1) {
             $provincias= Provincia::all();
-            return View::make('usuario.perfil',['provincias'=>$provincias]);
+            /* Pedidos no finalizados del usuario, para advertirlo si desea darse de baja. */
+            $pedidos = Pedido::where('usuario_id', '=', Auth::user()->id)->where('estado', '!=', 'f')->get();
+            return View::make('usuario.perfil',['provincias'=>$provincias, 'pedidos'=>$pedidos]);
         }
         else {
             return View::make('usuario.adminPerfil');
