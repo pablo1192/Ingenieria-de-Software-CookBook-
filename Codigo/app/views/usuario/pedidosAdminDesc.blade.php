@@ -17,7 +17,11 @@ menuActivo='pedidos'
 		<table width="100%">
 			<tr>
 				<td width="8%"><strong>Fecha:</strong> {{$pedido->fecha}}</td>
-				<td width="10%"><strong>Cliente:</strong> <a href="/admin/usuarios/{{ $pedido->usuario->id }}/ver" title="Ver datos">{{$pedido->usuario->nombre}} {{$pedido->usuario->apellido}}</a></td>
+				<td width="10%"><strong>Cliente:</strong> <a href="/admin/usuarios/{{ $pedido->usuario->id }}/ver" title="Ver datos">{{$pedido->usuario->nombre}} {{$pedido->usuario->apellido}}</a>
+				@if (($pedido->usuario->bloqueado) OR ($pedido->usuario->dadoDeBaja))
+					<strong><font color="red"><span class="tooltip" title="El usuario ha sido bloqueado o dado de baja. Usted deberá cambiar el estado del pedido manualmente.">- Inactivo [?]</span></font></strong>
+				@endif
+				</td>
 				<td width="8%"><strong>Estado:</strong> @if($pedido->estado == "p")
 												           Pendiente
 														@endif   
@@ -43,17 +47,14 @@ menuActivo='pedidos'
 		@if ($cont = $cont+1) @endif
 	@endforeach
 <h2>Funciones:</h2>
-Ordenar por fecha.</br>
-	   Orden Descendente. <a href="/admin/pedidos" title="Cambiar orden">Cambiar a Orden Ascendente.</a></td></br>
-Buscar por nombre.</br>
-Buscar por estado.
+Pedidos ordenados por fechas descendentes. <a href="/admin/pedidos" title="Cambiar orden">Cambiar a orden ascendente.</a></td></br>
 <form method="get" action="/admin/pedidos/">
   <select name="filtro" style="padding:2px;width:90px;display:inline;">
         <option value="nombre">Nombre</option>
         <option value="estado">Estado</option>
   </select>
   <input name="valor" size="25" value=""/>
-  <input value="Buscar" type="submit"/> <span class="tooltip" title="El DNI a buscar debe ser exacto, no así el nombre o apellido.">[?]</span>
+  <input value="Buscar" type="submit"/> <span class="tooltip" title="El estado a buscar debe ser exacto, no así el nombre o apellido.">[?]</span>
 </form>
 * Al buscar por Estado: </br>
 Ingrese 'p' para mostrar todos los pedidos pendientes.</br>
@@ -61,6 +62,7 @@ Ingrese 'e' para mostrar todos los pedidos enviados.</br>
 Ingrese 'f' para mostrar todos los pedidos finalizados.</br>
 
 @else
-	<div class="mensaje mensaje-notificacion">No Hay pedidos vigentes. <a href="/" title="Regresar al catálogo">Haga click aquí para regresar al catálogo.</a></div>
+	<div class="mensaje mensaje-notificacion">No hay pedidos que gestionar o no se encontraron en la búsqueda. </br>
+	<a href="/admin/pedidos/" title="Regresar a la gestión de los pedidos">Haga click aquí para regresar a la gestión de los pedidos.</a></div>
 @endif
 @stop

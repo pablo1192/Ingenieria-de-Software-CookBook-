@@ -465,7 +465,8 @@ class UsuarioController extends BaseController {
                                                                                 })->orderBy('fecha', 'ASC')->get();
             }
             else if (Input::get('filtro') == 'estado' ){
-			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')) 
+			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
+                       ||(Input::get('valor')== 'F')||(Input::get('valor')== 'P')||(Input::get('valor')== 'E'))
 				   {
                         $pedidos = Pedido::where('usuario_id', '<>', '1')->where(function($query)
                                                                                     {
@@ -507,7 +508,8 @@ class UsuarioController extends BaseController {
                                                                                 })->orderBy('fecha', 'DESC')->get();
             }
             else if (Input::get('filtro') == 'estado' ){
-			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')) 
+			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
+                       ||(Input::get('valor')== 'F')||(Input::get('valor')== 'P')||(Input::get('valor')== 'E'))
 				   {
                         $pedidos = Pedido::where('usuario_id', '<>', '1')->where(function($query)
                                                                                     {
