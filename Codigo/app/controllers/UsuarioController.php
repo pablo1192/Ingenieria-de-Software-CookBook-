@@ -454,7 +454,7 @@ class UsuarioController extends BaseController {
     {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') {
-                $pedidos = Pedido::where('usuario_id', '<>', '1')->join('usuario', function($join)
+                $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', function($join)
                                                                    {
                                                                         $join->on('usuario.id', '=', 'pedido.usuario_id');
                                                                     })->where(function($query)
@@ -497,7 +497,7 @@ class UsuarioController extends BaseController {
     {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') {
-                $pedidos = Pedido::where('usuario_id', '<>', '1')->join('usuario', function($join)
+                $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', function($join)
                                                                    {
                                                                         $join->on('usuario.id', '=', 'pedido.usuario_id');
                                                                     })->where(function($query)
