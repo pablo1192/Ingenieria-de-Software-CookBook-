@@ -41,7 +41,7 @@ menuActivo='catalogo'
 <br/>
 <h2>Operaciones</h2>
 <a  href="/carrito/vaciar"class="button button-verde button-mediano" title="Vacia su carrito de compra" onclick="return confirm('¿Está seguro que desea vaciar su carrito de compras?')">Vaciar carrito</a>
-<a  href="#"class="button button-azul button-mediano" title="Realice la compra" >Realizar compra</a>
+<a  href="/carrito/tarjeta"class="button button-azul button-mediano" title="Realice la compra" >Realizar compra</a>
 
 @else
 <div class="mensaje mensaje-notificacion">

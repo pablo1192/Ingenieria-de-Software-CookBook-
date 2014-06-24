@@ -111,6 +111,10 @@ Route::post('/carrito', array('uses' => 'CarritoController@agregarLibro'))->befo
 Route::get('/carrito/vaciar', array('uses' => 'CarritoController@vaciarCarrito'))->before('auth.usrReg');
 Route::get('/carrito/{id}/quitar', array('uses' => 'CarritoController@quitarLibro'))->before('auth.usrReg');
 
+//Compra
+Route::get('/carrito/tarjeta', array('uses' => 'CarritoController@solicDatosTarjeta'))->before('auth.usrReg');
+Route::get('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@comprar'))->before('auth.usrReg');
+Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@altaPedido'))->before('auth.usrReg');
 //Manejo de errores de Servidor
 Route::get('/404',function(){
 	return View::make('error404');

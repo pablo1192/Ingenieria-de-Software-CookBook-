@@ -4,7 +4,12 @@
 <h2>Pedidos vigentes ({{count($pedidos)}}):</h2>
 
 {{-- ToDo: Funciones varias (comprobante, estado, etc). --}}
-
+@if(Session::has('notificacionDeCompra'))
+	<div class="mensaje mensaje-notificacion">
+		{{Session::get('notificacionDeCompra')}} </br>
+		{{Session::forget('notificacionDeCompra')}}
+	</div>
+@endif
 @if (count($pedidos) >= 1)
 	{{-- "Declara" una variable contador --}}
 	@if ($cont = '1') @endif

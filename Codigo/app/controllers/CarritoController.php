@@ -18,7 +18,10 @@ class CarritoController extends BaseController {
 				$carritoProcesado[$id]['precioTotal']= $libro->precio * $cantidad;
 				$montoTotal+=($libro->precio * $cantidad);
 			}
-
+			
+            Session::put('monto',$montoTotal);// Agregado para mantener el monto 
+			Session::put('carritoProc',$carritoProcesado);//
+			
 			return View::make('carrito',['carrito'=>$carritoProcesado,'montoTotal'=>$montoTotal]);
 		}
 		else{
@@ -91,7 +94,78 @@ class CarritoController extends BaseController {
 		
 		return Redirect::back();
 	}
-
+	
+	//Solicita los datos de la tarjeta
+	public function solicDatosTarjeta()
+	{
+	  if(!Cookbook::accedeSoloDesdeRuta(['/carrito','/carrito/tarjeta'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+	  if(Session::has('carrito'))
+	  {
+	        $carrito = Session::get('carrito');
+			$montoTotal = Session::get('monto');
+			return View::make('datosTarjeta',['carrito'=>$carrito,'monto'=>$montoTotal]);
+	  }
+	  return Redirect::back();
+	}
+	public function comprar()
+	{
+	    if(!Cookbook::accedeSoloDesdeRuta(['/carrito/tarjeta'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+		$reglasTarjeta =['numero'=>['digits:16','required'],'contraseña'=>['digits:3','required','confirmed']];
+		$validador= Validator::make(Input::all(),$reglasTarjeta);
+        if($validador->fails()){
+            return Redirect::back()->withInput()->withErrors($validador);
+        }
+        else
+		{	
+		   $carrito = Session::get('carrito');
+		   $montoTotal = Session::get('monto');
+		   return View::make('confCompra',['carrito'=>$carrito,'monto'=>$montoTotal]);;
+		}
+    }
+	public function altaPedido()
+	{
+	  // if(!Cookbook::accedeSoloDesdeRuta(['/carrito/tarjeta/confirmarCompra'])){
+		//	return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		//}
+	   if(Auth::user()->esAdmin != 1)
+	   {
+	     if(Session::has('carrito'))
+	     {
+	        $carr= Session::get('carritoProc');
+		    $ped = new Pedido;
+		    $ped->monto = Session::get('monto');
+		    $ped->fecha = date('Y/m/d');
+		    $ped->usuario_id = Auth::user()->id;
+		    $ped->save();
+			
+			foreach($carr as $id => $cantidad){
+				$libro= Libro::find($id);
+				
+				$carritoProcesado[$id]['titulo']=$libro->título;
+				$carritoProcesado[$id]['cantidad']=$cantidad;
+				
+			}
+		 
+		 
+		    Session::forget('carrito');
+		    Session::forget('monto');
+			Session::forget('carritoProc');
+			Session::put('notificacionDeCompra', 'La compra ha sido exitosa! Revise sus pedidos para ver si ya ha sido enviado.');
+		    return Redirect::to('/pedidos')->with('Se realizó la compra con éxito! ');
+		 } 
+		 else{
+		    return Redirect::to('/');
+			}
+	  }
+	  else{
+	      return Redirect::to('/');
+		  }
+       	  
+	}
 }
 
 ?>
