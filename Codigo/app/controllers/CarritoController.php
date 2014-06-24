@@ -135,27 +135,25 @@ class CarritoController extends BaseController {
 	   {
 	     if(Session::has('carrito'))
 	     {
-	        $carr= Session::get('carritoProc');
-		    $ped = new Pedido;
+	        $carrito= Session::get('carrito');
+			$ped = new Pedido;
 		    $ped->monto = Session::get('monto');
 		    $ped->fecha = date('Y/m/d');
 		    $ped->usuario_id = Auth::user()->id;
 		    $ped->save();
-			
-			foreach($carr as $id => $cantidad){
-				$libro= Libro::find($id);
-				
-				$carritoProcesado[$id]['titulo']=$libro->título;
-				$carritoProcesado[$id]['cantidad']=$cantidad;
-				
-			}
+			//crea la relacion del pedido con los libros.
+			$ca=[];			
+			foreach($carrito as $id => $cantidad){
+				$ca[$id]['libro_id']=$id;
+				$ca[$id]['cantidad']=$cantidad;
+			}	
+			$ped->libros()->sync($ca);		 
 		 
-		 
-		    Session::forget('carrito');
-		    Session::forget('monto');
-			Session::forget('carritoProc');
-			Session::put('notificacionDeCompra', 'La compra ha sido exitosa! Revise sus pedidos para ver si ya ha sido enviado.');
-		    return Redirect::to('/pedidos')->with('Se realizó la compra con éxito! ');
+		    Session::forget('carrito');//limpia el carrito
+		    Session::forget('monto');// limpia monto
+			Session::forget('carritoProc');// limpia el carrito procesado
+			Session::put('notificacionDeCompra', '¡La compra ha sido exitosa! Revise sus pedidos para ver si ya ha sido enviado.');//crea el mensaje a notificar que luego es eliminado desde la vista
+		    return Redirect::to('/pedidos');
 		 } 
 		 else{
 		    return Redirect::to('/');
