@@ -9,7 +9,10 @@ menuActivo='pedidos'
 
 <table width="90%">
 	<tr>		
-		<td><strong>Cliente:</strong> <a href="/admin/usuarios/{{ $pedido->usuario->id }}/ver" title="Ver datos">{{$pedido->usuario->nombre}} {{$pedido->usuario->apellido}}</a></td>
+		<td><strong>Cliente:</strong> <a href="/admin/usuarios/{{ $pedido->usuario->id }}/ver" title="Ver datos">{{$pedido->usuario->nombre}} {{$pedido->usuario->apellido}}</a>
+		@if (($pedido->usuario->bloqueado) OR ($pedido->usuario->dadoDeBaja))
+					<strong><font color="red"><span class="tooltip" title="El usuario ha sido bloqueado o dado de baja. Usted deberá cambiar el estado del pedido manualmente.">- Inactivo [?]</span></font></strong>
+		@endif</td>
 	</tr>
 	<tr>		
 		<td><strong>Fecha:</strong> {{$pedido->fecha}}</td>
@@ -20,8 +23,12 @@ menuActivo='pedidos'
 	<tr>		
 		<td><strong>Estado:</strong> @if($pedido->estado == "p")
 										Pendiente
-									 @elseif ($pedido->estado == "e")
+									 @endif
+									 @if($pedido->estado == "e")
 										Enviado
+									 @endif
+									 @if($pedido->estado == "f")
+										Finalizado
 									 @endif
 		</td>
 	</tr>

@@ -15,7 +15,7 @@ menuActivo='catalogo'
 @endif
 
 <h2>Datos de la Tarjeta de Crédito:</h2>
-El monto a abonar es de ${{$monto}}.</br></br>
+El monto final a abonar es de ${{$monto}}.</br></br>
 A continuación se le solicitarán los datos de su tarjeta de crédito:
 <form method="get" action="/carrito/tarjeta/confirmarCompra/">
     <table>
