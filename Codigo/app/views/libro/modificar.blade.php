@@ -37,6 +37,7 @@ menuActivo='libros'
 				</td>
 				<td>
 					<select name="editorial">
+						<option value="{{$libro->editorial->id}}" select="selected" >Selecione una editorial</option>
 						@foreach($editoriales as $editorial)
 							<option value="{{$editorial->id}}">{{$editorial->nombre}}</option>
 						@endforeach
@@ -65,6 +66,7 @@ menuActivo='libros'
 				</td>
 				<td>
 					<select name="idioma" >
+						<option value="{{$libro->idioma->id}}" select="selected" >Selecione un idioma</option>
 						@foreach($idiomas as $idioma)
 							<option value="{{$idioma->id}}">{{$idioma->nombre}}</option>
 						@endforeach

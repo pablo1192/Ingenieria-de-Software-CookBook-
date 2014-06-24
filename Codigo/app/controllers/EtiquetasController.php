@@ -36,9 +36,9 @@ class EtiquetasController extends BaseController
         // Dependiendo de la respuesta del modelo 
         // retornamos los mensajes de error con los datos viejos del formulario 
         // o un mensaje de éxito de la operación 
-        if ($respuesta['error'] == true){            
+        if ($respuesta['error']){            
             //Si se logra restaurar, es xq lo req el usr
-			if(Idioma::restaurar(Input::get('nombre'))){
+			if(Etiqueta::restaurar(Input::get('nombre'))){
 				return Redirect::to('/admin/etiquetas');
 			}
 			else{
