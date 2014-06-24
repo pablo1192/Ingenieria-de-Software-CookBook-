@@ -28,7 +28,7 @@ menuActivo='catalogo'
 			<input type="hidden" name="filtrar" value="editorial"/>
 			<select name="valor" style="padding:2px;width:180px;" onchange="this.form.submit()">
 				<option value=""  selected="selected">Filtrar por Editorial</option>
-				@foreach(Editorial::disponibles()->get() as $editorial)
+				@foreach(Editorial::all() as $editorial)
 					<option value="{{$editorial->id}}">{{$editorial->nombre}}</option>
 				@endforeach
 				
@@ -40,7 +40,7 @@ menuActivo='catalogo'
 			<input type="hidden" name="filtrar" value="etiqueta"/>
 			<select name="valor" style="padding:2px;width:180px;" onchange="this.form.submit()">
 				<option value=""  selected="selected">Filtrar por Etiqueta</option>
-				@foreach(Etiqueta::disponibles()->get() as $etiqueta)
+				@foreach(Etiqueta::all() as $etiqueta)
 					<option value="{{$etiqueta->id}}">{{$etiqueta->nombre}}</option>
 				@endforeach
 				
