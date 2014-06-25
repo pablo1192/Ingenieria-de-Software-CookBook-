@@ -51,16 +51,21 @@ Pedidos ordenados por fechas ascendentes. <a href="/admin/pedidos/ordenD" title=
 <form method="get" action="/admin/pedidos/">
   <select name="filtro" style="padding:2px;width:90px;display:inline;">
         <option value="nombre">Nombre</option>
-        <option value="estado">Estado</option>
   </select>
   <input name="valor" size="25" value=""/>
-  <input value="Buscar" type="submit"/> <span class="tooltip" title="El estado a buscar debe ser exacto, no así el nombre o apellido.">[?]</span>
+  <input value="Buscar" type="submit"/> <span class="tooltip" title="Ingrese el nombre o apellido a buscar.">[?]</span>
 </form>
-* Al buscar por Estado: </br>
-Ingrese 'p' para mostrar todos los pedidos pendientes.</br>
-Ingrese 'e' para mostrar todos los pedidos enviados.</br>
-Ingrese 'f' para mostrar todos los pedidos finalizados.</br>
-
+<td >
+		<form method="GET" action="/admin/pedidos/">
+			<input type="hidden" name="filtro" value="estado"/> Filtrar por Estado <span class="tooltip" title="Seleccione el estado a buscar">[?]</span>
+			<select name="valor" style="padding:2px;width:90px;" onchange="this.form.submit()">
+				<option value=""  selected="selected"> Estados </option> <span class="tooltip" title="Seleccione el estado a buscar">[?]</span>
+				    <option value="f">Finalizados</option>
+					<option value="p">Pendientes</option>
+					<option value="e">Enviados</option>
+			</select>
+		</form>
+</td>
 @else
 	<div class="mensaje mensaje-notificacion">No hay pedidos que gestionar o no se encontraron en la búsqueda. </br>
 	<a href="/admin/pedidos/" title="Regresar a la gestión de los pedidos">Haga click aquí para regresar a la gestión de los pedidos.</a></div>
