@@ -10,6 +10,12 @@
 		{{Session::forget('notificacionDeCompra')}}
 	</div>
 @endif
+@if(Session::has('notificacionComprobante'))
+	<div class="mensaje mensaje-notificacion">
+		{{Session::get('notificacionComprobante')}} </br>
+		{{Session::forget('notificacionComprobante')}}
+	</div>
+@endif
 @if (count($pedidos) >= 1)
 	{{-- "Declara" una variable contador --}}
 	@if ($cont = '1') @endif
@@ -24,7 +30,7 @@
 												Enviado
 											 @endif
 				</td>
-				<td width="30%"><strong>Funciones:</strong> <a href="/pedidos/{{ $pedido->id }}/ver" title="Visualizar datos del pedido">Ver Detalle</a> | <a href="/404" title="Visualizar comprobante">Ver Comprobante</a> @if ($pedido->estado == "e")
+				<td width="30%"><strong>Funciones:</strong> <a href="/pedidos/{{ $pedido->id }}/ver" title="Visualizar datos del pedido">Ver Detalle</a> | <a href="/pedidos/{{ $pedido->id }}/comprobante" title="Visualizar comprobante">Ver Comprobante</a> @if ($pedido->estado == "e")
 												| <a href="/pedidos/{{ $pedido->id }}/cambiar" title="Cambiar estado" onclick="return confirm('¿Le ha llegado el pedido? Si no es así, aguarde su arribo antes de cambiar el estado.\r\n Esta operación no se puede deshacer.')">Cambiar estado</a>
 												@endif</td>
 			</tr>

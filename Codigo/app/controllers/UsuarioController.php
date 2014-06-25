@@ -542,6 +542,26 @@ class UsuarioController extends BaseController {
             return Redirect::to('/404');
         }
     }
+	public function comprobanteUsuario($id)
+	{
+	    $pedido = Pedido::find($id);
+        /* Si el pedido existe. Si el pedido no está Finalizado (protege URL). */
+        if (($pedido) && ($pedido->estado != "f")) {
+            /* Lo muestra si el usuario no es admin. Si el pedido pertenece al usuario (protege URL). */
+            if ((Auth::user()->esAdmin != 1) && ($pedido->usuario_id == Auth::user()->id))
+            {
+			   // Session::put('notificacionComprobante','El comprobante se ha enviado a la cola de impresión.');
+                return View::make('usuario.comprobantePedidoUsuario',['pedido'=>$pedido]);
+            }
+            else {
+                return Redirect::to('/404');
+            }
+        }
+        else {
+            return Redirect::to('/404');
+        }
+	}
+
 
 }
 ?>

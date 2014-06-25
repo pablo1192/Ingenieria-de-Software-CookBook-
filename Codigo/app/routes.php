@@ -115,6 +115,11 @@ Route::get('/carrito/{id}/quitar', array('uses' => 'CarritoController@quitarLibr
 Route::get('/carrito/tarjeta', array('uses' => 'CarritoController@solicDatosTarjeta'))->before('auth.usrReg');
 Route::get('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@comprar'))->before('auth.usrReg');
 Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@altaPedido'))->before('auth.usrReg');
+
+//Comprobantes
+Route::get('/pedidos/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteUsuario'))->before('auth.usrReg');
+Route::get('/admin/pedidos/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteAdmin'))->before('admin_auth');
+
 //Manejo de errores de Servidor
 Route::get('/404',function(){
 	return View::make('error404');
