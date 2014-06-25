@@ -29,23 +29,21 @@ menuActivo='libros'
 			</tr>
 			<tr>
 				<td style="width:150px;">Título:</td>
-				<td><input size="64" value="{{$libro->título}}" name="titulo"/> <span class="tooltip" title="El título debe contener sólo letras y números, y debe ser de longitud mayor a 2.">[?]</span></td>
+				<td><input size="64" value="{{$libro->título}}" name="titulo"/> <span class="tooltip" title="El título debe contener sólo letras y números, y debe ser de longitud mayor a 2.">[?]</span><br/><br/></td>
 			</tr>
 			<tr>
 				<td style="width:150px;">Editorial: <span class="tooltip" title="Seleccione una editorial de la lista.">[?]</span><br/>
 					<span title="Valor actual" ><i>{{$libro->editorial->nombre}}</i></span>
 				</td>
 				<td>
-					<select name="editorial">
+					<select style="width:30%; padding: 0.50em 0.5em; margin: 0.50em 0.5em" name="editorial">
 						<option value="{{$libro->editorial->id}}" select="selected" >Selecione una editorial</option>
 						@foreach($editoriales as $editorial)
 							<option value="{{$editorial->id}}">{{$editorial->nombre}}</option>
 						@endforeach
 					</select>
 					<input name="editorial-checkbox"  type="checkbox" title="Habilitar la creación de una nueva editorial" onchange="habilitarOtro(this,'editorial-otro'); deshabilitarSeleccion(this,'editorial');"/>Otra: 
-					<input id="editorial-otro" name="editorial-otro" value="{{Input::old('editorial-otro')}}" disabled placeholder="Sudamericana" /><span class="tooltip" title="Tilde 'Otro' para crear una editorial que no se encuentra en la lista.">[?]</span>
-					<br/>
-					<br/>
+					<input id="editorial-otro" name="editorial-otro" value="{{Input::old('editorial-otro')}}" disabled placeholder="Sudamericana" /><span class="tooltip" title="Tilde 'Otro' para crear una editorial que no se encuentra en la lista.">[?]</span><br/><br/>
 				</td>
 			</tr>
 			<tr>
@@ -58,14 +56,14 @@ menuActivo='libros'
 			</tr>
 			<tr>
 				<td style="width:150px;">Cantidad de hojas:</td>
-				<td><input maxlength="4" size="8" value="{{$libro->hojas}}" name="hojas"/> <span class="tooltip" title="La cantidad de hojas debe ser un número entero entre 10 y 9999.">[?]</span></td>
+				<td><input maxlength="4" size="8" value="{{$libro->hojas}}" name="hojas"/> <span class="tooltip" title="La cantidad de hojas debe ser un número entero entre 10 y 9999.">[?]</span><br/><br/></td>
 			</tr>
 			<tr>
 				<td style="width:150px;">Idioma: <span class="tooltip" title="Seleccione un idioma de la lista.">[?]</span><br/>
 				<span title="Valor actual"><i>{{$libro->idioma->nombre}}</i></span>
 				</td>
 				<td>
-					<select name="idioma" >
+					<select style="width:30%; padding: 0.50em 0.5em; margin: 0.50em 0.5em" name="idioma" >
 						<option value="{{$libro->idioma->id}}" select="selected" >Selecione un idioma</option>
 						@foreach($idiomas as $idioma)
 							<option value="{{$idioma->id}}">{{$idioma->nombre}}</option>
@@ -183,9 +181,9 @@ menuActivo='libros'
 		</form>
 	</div>
 	<br style="clear:both;"/><br/>
-</div>
+
 	<br/><br/>
 	<a href="/admin/libros/" title="Retornar a la Gestión de Libros">Volver</a>
-	
+</div>	
 <script src="/scripts/formularioLibro.js">Requiere tener activado JavaScript para el correcto funcionamiento del formulario!</script>
 @stop

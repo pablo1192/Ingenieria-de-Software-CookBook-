@@ -47,25 +47,26 @@ menuActivo='pedidos'
 		@if ($cont = $cont+1) @endif
 	@endforeach
 <h2>Funciones:</h2>
-Pedidos ordenados por fechas descendentes. <a href="/admin/pedidos" title="Cambiar orden">Cambiar a orden ascendente.</a></td></br>
+Pedidos ordenados por fechas descendentes. <a href="/admin/pedidos" title="Cambiar orden">Cambiar a orden ascendente.</a></td></br></br>
 <form method="get" action="/admin/pedidos/ordenD">
+	Buscar por 
   <select name="filtro" style="padding:2px;width:90px;display:inline;">
-        <option value="nombre">Nombre</option>
+        <option value="nombre">Cliente</option>
   </select>
   <input name="valor" size="25" value=""/>
   <input value="Buscar" type="submit"/> <span class="tooltip" title="Ingrese el nombre o apellido a buscar.">[?]</span>
-</form>
-<td >
+</form></br>
+<table><tr>
 		<form method="GET" action="/admin/pedidos/ordenD">
-			<input type="hidden" name="filtro" value="estado"/>Filtrar por Estado <span class="tooltip" title="Seleccione el estado a buscar">[?]</span>
-			<select name="valor" style="padding:2px;width:90px;" onchange="this.form.submit()">
+			<td><input type="hidden" name="filtro" value="estado"/>Filtrar por</td>
+			<td><select name="valor" style="padding:2px;width:95px;" onchange="this.form.submit()">
 				<option value=""  selected="selected"> Estados </option>
-				    <option value="f">Finalizados</option>
 					<option value="p">Pendientes</option>
 					<option value="e">Enviados</option>
-			</select>
+					<option value="f">Finalizados</option>
+			</select></td>
 		</form>
-</td>
+</tr></table>
 @else
 	<div class="mensaje mensaje-notificacion">No hay pedidos que gestionar o no se encontraron en la búsqueda. </br>
 	<a href="/admin/pedidos/" title="Regresar a la gestión de los pedidos">Haga click aquí para regresar a la gestión de los pedidos.</a></div>
