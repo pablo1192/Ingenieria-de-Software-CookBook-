@@ -16,6 +16,9 @@
 	<tr>		
 		<td><strong>Monto final a abonar:</strong> ${{$pedido->monto}}</td>
 	</tr>
+	<tr>		
+		<td><strong>Dirección de envio:</strong> {{$pedido->usuario->dirección}}</td>
+	</tr>
 </table>
 <hr />
 <h3>Detalles de la compra</h3>
@@ -34,7 +37,9 @@
 
 @endforeach
 </table>
-
+<hr />
+<h4>La compra será enviada a la dirección de envio antes mencionada a través del Correo Argentino, para hacer entrega del pedido se solicitará el DNI del comprador.</h4>
+<hr />
 <h2></h2>	
 <a href="/pedidos" style="text-decoration:none;">
         <input type="button" class="button button-verde button-mediano" value="Volver" title="Regresa a los pedidos"/>
