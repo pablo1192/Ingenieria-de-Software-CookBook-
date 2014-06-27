@@ -21,17 +21,17 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:
     <table>
     <tr>
         <td>
-        Número de Tarjeta de Crédito: <input name="numero" value=""><span class="tooltip" title="El número debe contener 16 dígitos.">[?]</span>
+        Número de Tarjeta de Crédito: <input name="numero" value="" ><span class="tooltip" title="El número debe contener 16 dígitos.">[?]</span>
         </td>
     </tr>   
     <tr>
         <td>
-        Código de verificación: <input type=password name="contraseña" value=""><span class="tooltip" title="El código debe contener solo 3 digitos.">[?]</span>
+        Código de verificación: <input type=password name="contraseña" value="" size="1"><span class="tooltip" title="El código debe contener solo 3 digitos.">[?]</span>
         </td>
     </tr>
     <tr>
         <td>
-        Reescriba el código: <input type=password name="contraseña_confirmation" value=""><span class="tooltip" title="Repita el código de verificación.">[?]</span> <br/>
+        Reescriba el código: <input type=password name="contraseña_confirmation" value="" size="1"><span class="tooltip" title="Repita el código de verificación.">[?]</span> <br/>
         </td>
     </tr>
     </table>
