@@ -32,7 +32,7 @@ menuActivo='pedidos'
 														    Finalizado
 														@endif
 				</td>
-				<td width="30%"><strong>Funciones:</strong> <a href="/admin/pedidos/{{ $pedido->id }}/ver" title="Visualizar datos del pedido">Ver Detalle</a> | <a href="/404" title="Visualizar comprobante">Ver Comprobante</a> | 
+				<td width="30%"><strong>Funciones:</strong> <a href="/admin/pedidos/{{ $pedido->id }}/ver" title="Visualizar datos del pedido">Ver Detalle</a> | <a href="/admin/pedidos/ordenD/{{ $pedido->id }}/comprobante" title="Visualizar comprobante">Ver Comprobante</a> | 
 				@if ($pedido->estado == "p")
 					<a href="/pedidos/{{ $pedido->id }}/cambiar" title="Cambiar estado">Cambiar a Enviado</a></td>
 				@else

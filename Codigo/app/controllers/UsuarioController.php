@@ -561,6 +561,45 @@ class UsuarioController extends BaseController {
             return Redirect::to('/404');
         }
 	}
+	
+	public function comprobanteAdmin($id)
+	{
+	    $pedido = Pedido::find($id);
+        /* Si el pedido existe.*/
+        if ($pedido) {
+            /* Lo muestra si el usuario es admin.*/
+            if (Auth::user()->esAdmin == 1)
+            {
+			   // Session::put('notificacionComprobante','El comprobante se ha enviado a la cola de impresión.');
+                return View::make('usuario.comprobantePedidoAdmin',['pedido'=>$pedido]);
+            }
+            else {
+                return Redirect::to('/404');
+            }
+        }
+        else {
+            return Redirect::to('/404');
+        }
+	}
+	public function comprobanteAdminDesc($id)
+	{
+	    $pedido = Pedido::find($id);
+        /* Si el pedido existe.*/
+        if ($pedido) {
+            /* Lo muestra si el usuario es admin.*/
+            if (Auth::user()->esAdmin == 1)
+            {
+			   // Session::put('notificacionComprobante','El comprobante se ha enviado a la cola de impresión.');
+                return View::make('usuario.comprobantePedidoAdminDesc',['pedido'=>$pedido]);
+            }
+            else {
+                return Redirect::to('/404');
+            }
+        }
+        else {
+            return Redirect::to('/404');
+        }
+	}
 
 
 }

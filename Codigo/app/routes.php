@@ -119,7 +119,7 @@ Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoControll
 //Comprobantes
 Route::get('/pedidos/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteUsuario'))->before('auth.usrReg');
 Route::get('/admin/pedidos/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteAdmin'))->before('admin_auth');
-
+Route::get('/admin/pedidos/ordenD/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteAdminDesc'))->before('admin_auth');
 //Manejo de errores de Servidor
 Route::get('/404',function(){
 	return View::make('error404');
