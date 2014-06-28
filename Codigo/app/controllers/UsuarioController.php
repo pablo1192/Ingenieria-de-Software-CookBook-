@@ -13,8 +13,10 @@ class UsuarioController extends BaseController {
                 $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where(function($query)
                                                                                 {
                                                                                     $nombre = Input::get('valor');
+                                                                                    $completo = DB::raw('CONCAT(nombre, " ", apellido)');
                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
+                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
+                                                                                          ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                 })
                                                                                 ->get();
             }
@@ -47,8 +49,10 @@ class UsuarioController extends BaseController {
                                                                            ->where(function($query)
                                                                                 {
                                                                                     $nombre = Input::get('valor');
+                                                                                    $completo = DB::raw('CONCAT(nombre, " ", apellido)');
                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
+                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
+                                                                                          ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                 })
                                                                                 ->get();
             }
@@ -450,25 +454,30 @@ class UsuarioController extends BaseController {
         }
     }
 
+
     public function verPedidosAdmin()
     {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') {
-                //~ $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', function($join)
-                                                                   //~ {
-                                                                        //~ $join->on('usuario.id', '=', 'pedido.usuario_id');
-                                                                    //~ })->where(function($query)
-                                                                                //~ {
-                                                                                    //~ $nombre = Input::get('valor');
-                                                                                    //~ $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                          //~ ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
-                                                                                //~ })->orderBy('fecha', 'ASC')->get();
+                 $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+                                                                     ->where(function($query)
+                                                                                 {
+                                                                                     $nombre = Input::get('valor');
+                                                                                     $completo = DB::raw('CONCAT(nombre, " ", apellido)');
+                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
+                                                                                           ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
+                                                                                           ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
+                                                                                 })->orderBy('fecha', 'ASC')->select('pedido.*', 'usuario_id')->get();
+                               
             
             //Consulta alternativa (la de arriba superpone id de usr con la comprobante, imprimiendose mal y tirando error 404.):
-            $nombre= Input::get('valor');
-            $pedidos= Pedido::where('estado', '!=', 'f')->whereHas('usuario',function($query) use ($nombre){
-							$query->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%');
-						})->orderBy('fecha', 'ASC')->get();
+            
+           // $pedidos= Pedido::where('estado', '!=', 'f')->whereHas('usuario',function($query){
+           //                 $nombre = Input::get('valor');
+			//				$query->where('apellido', 'LIKE', '%' . $nombre . '%')
+           //                       ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
+			//			})
+           //             ->orderBy('fecha', 'ASC')->get();
             }
             else if (Input::get('filtro') == 'estado' ){
 			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
