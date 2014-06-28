@@ -454,23 +454,18 @@ class UsuarioController extends BaseController {
     {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') {
-                //~ $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', function($join)
-                                                                   //~ {
-                                                                        //~ $join->on('usuario.id', '=', 'pedido.usuario_id');
-                                                                    //~ })->where(function($query)
-                                                                                //~ {
-                                                                                    //~ $nombre = Input::get('valor');
-                                                                                    //~ $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                          //~ ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
-                                                                                //~ })->orderBy('fecha', 'ASC')->get();
-            
-            //Consulta alternativa (la de arriba superpone id de usr con la comprobante, imprimiendose mal y tirando error 404.):
-            $nombre= Input::get('valor');
-            $pedidos= Pedido::where('estado', '!=', 'f')->whereHas('usuario',function($query) use ($nombre){
-							$query->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%');
-						})->orderBy('fecha', 'ASC')->get();
+			    $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+                                                                     ->where(function($query)
+                                                                                 {
+                                                                                     $nombre = Input::get('valor');
+                                                                                     $completo = DB::raw('CONCAT(nombre, " ", apellido)');
+                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
+                                                                                           ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
+                                                                                           ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
+                                                                                 })->orderBy('fecha', 'ASC')->select('pedido.*', 'usuario_id')->get();
             }
-            else if (Input::get('filtro') == 'estado' ){
+            else if (Input::get('filtro') == 'estado' )
+			     {
 			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
                        ||(Input::get('valor')== 'F')||(Input::get('valor')== 'P')||(Input::get('valor')== 'E'))
 				   {
@@ -482,11 +477,12 @@ class UsuarioController extends BaseController {
 					}
 					else  //se ingreso un caracter no valido.Se muestra que no hay pedidos en ese estado.
                          $pedidos = null;				
-            }
-            else {
-                //Input está vacío. Muestra todos los pedidos menos los finalizados. 
-                $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'ASC')->get();
-            }
+                 }
+                 else 
+				 {
+                   //Input está vacío. Muestra todos los pedidos menos los finalizados. 
+                   $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'ASC')->get();
+                 }
         }
         else {
             $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'ASC')->get();
@@ -494,57 +490,20 @@ class UsuarioController extends BaseController {
 		
         return View::make('usuario.pedidosAdmin', array('pedidos' => $pedidos));
 		
-	}	
-		// Alternativa con nombre en formato
-		/*
-		if((Input::has('filtro')) && (input::has('valor'))){
-		    if (Input::get('filtro') == 'estado' ){
-			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
-                       ||(Input::get('valor')== 'F')||(Input::get('valor')== 'P')||(Input::get('valor')== 'E'))
-				    {
-                        $pedidos = Pedido::where('usuario_id', '<>', '1')->where(function($query)
-                                                                                    {
-                                                                                    $est = Input::get('valor');
-                                                                                    $query->where('estado', '=', $est);
-                                                                                    })->orderBy('fecha', 'ASC')->get();
-					}
-					else  //se ingreso un caracter no valido.Se muestra que no hay pedidos en ese estado.
-                         $pedidos = null;				
-            }
-            
-        }
-		else{		
-		  if(Input::has('nombre')){
-		   $nombre= Input::get('nombre');
-           $pedidos= Pedido::where('estado', '!=', 'f')->whereHas('usuario',function($query) use ($nombre){
-							$query->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%');
-						})->orderBy('fecha', 'ASC')->get();
-		  }
-          else {
-            $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'ASC')->get();
-          }
-		}
-		return View::make('usuario.pedidosAdmin', array('pedidos' => $pedidos));*/
- 
+	}	 
 	 public function verPedidosAdminOrdDesc()//Metodo completamente similar al sup, solo cambia el orden de las fechas.
     {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') 
-			{/*
-                $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', function($join)
-                                                                   {
-                                                                        $join->on('usuario.id', '=', 'pedido.usuario_id');
-                                                                    })->where(function($query)
-                                                                                {
-                                                                                    $nombre = Input::get('valor');
-                                                                                    $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
-                                                                                })->orderBy('fecha', 'DESC')->get();*/
-				$nombre= Input::get('valor');
-                $pedidos= Pedido::where('estado', '!=', 'f')->whereHas('usuario',function($query) use ($nombre)
-				                                                                {
-							                                                      $query->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%');
-						                                                        })->orderBy('fecha', 'DESC')->get();
+			{$pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+                                                                     ->where(function($query)
+                                                                                 {
+                                                                                     $nombre = Input::get('valor');
+                                                                                     $completo = DB::raw('CONCAT(nombre, " ", apellido)');
+                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
+                                                                                           ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
+                                                                                           ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
+                                                                                 })->orderBy('fecha', 'DESC')->select('pedido.*', 'usuario_id')->get();
             }
             else if (Input::get('filtro') == 'estado' ){
 			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
@@ -570,37 +529,7 @@ class UsuarioController extends BaseController {
 		
         return View::make('usuario.pedidosAdminDesc', array('pedidos' => $pedidos));
 	}	
-		// Alternativa con nombre en formato
-		/*
-		if((Input::has('filtro')) && (input::has('valor'))){
-		    if (Input::get('filtro') == 'estado' ){
-			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
-                       ||(Input::get('valor')== 'F')||(Input::get('valor')== 'P')||(Input::get('valor')== 'E'))
-				    {
-                        $pedidos = Pedido::where('usuario_id', '<>', '1')->where(function($query)
-                                                                                    {
-                                                                                    $est = Input::get('valor');
-                                                                                    $query->where('estado', '=', $est);
-                                                                                    })->orderBy('fecha', 'DESC')->get();
-					}
-					else  //se ingreso un caracter no valido.Se muestra que no hay pedidos en ese estado.
-                         $pedidos = null;				
-            }
-            
-        }
-		else{		
-		  if(Input::has('nombre')){
-		   $nombre= Input::get('nombre');
-           $pedidos= Pedido::where('estado', '!=', 'f')->whereHas('usuario',function($query) use ($nombre){
-							$query->where('nombre','like','%'.$nombre.'%')->orWhere('apellido','like','%'.$nombre.'%');
-						})->orderBy('fecha', 'DESC')->get();
-		  }
-          else {
-            $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'DESC')->get();
-          }
-		}
-		return View::make('usuario.pedidosAdminDesc', array('pedidos' => $pedidos)); */
-    
+		
     public function detallePedidoAdmin($id)
     {
         $pedido = Pedido::find($id);

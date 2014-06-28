@@ -49,7 +49,7 @@ menuActivo='pedidos'
 <h2>Funciones:</h2>
 Pedidos ordenados por fechas descendentes. <a href="/admin/pedidos" title="Cambiar orden">Cambiar a orden ascendente.</a></td></br></br>
 <form method="get" action="/admin/pedidos/ordenD">
-	Buscar por Cliente: <input type="text" name="nombre" value=""><input value="Buscar" type="submit"/> <span class="tooltip" title="Ingrese el nombre o apellido a buscar.">[?]</span>
+	Buscar por Cliente: <input type="hidden" name="filtro" value="nombre"/><input type="text" name="valor"><input value="Buscar" type="submit"/> <span class="tooltip" title="Ingrese el nombre o apellido a buscar.">[?]</span>
 </form></br>
 <table><tr>
 		<form method="GET" action="/admin/pedidos/ordenD">
