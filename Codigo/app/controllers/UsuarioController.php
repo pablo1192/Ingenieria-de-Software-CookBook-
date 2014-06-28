@@ -13,8 +13,10 @@ class UsuarioController extends BaseController {
                 $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where(function($query)
                                                                                 {
                                                                                     $nombre = Input::get('valor');
+                                                                                    $completo = DB::raw('CONCAT(nombre, " ", apellido)');
                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
+                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
+                                                                                          ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                 })
                                                                                 ->get();
             }
@@ -47,8 +49,10 @@ class UsuarioController extends BaseController {
                                                                            ->where(function($query)
                                                                                 {
                                                                                     $nombre = Input::get('valor');
+                                                                                    $completo = DB::raw('CONCAT(nombre, " ", apellido)');
                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
+                                                                                          ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
+                                                                                          ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                 })
                                                                                 ->get();
             }
@@ -450,11 +454,15 @@ class UsuarioController extends BaseController {
         }
     }
 
+
     public function verPedidosAdmin()
     {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') {
-			    $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+
+
+                 $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+
                                                                      ->where(function($query)
                                                                                  {
                                                                                      $nombre = Input::get('valor');
@@ -463,10 +471,11 @@ class UsuarioController extends BaseController {
                                                                                            ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
                                                                                            ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                  })->orderBy('fecha', 'ASC')->select('pedido.*', 'usuario_id')->get();
+
             }
             else if (Input::get('filtro') == 'estado' )
-			     {
-			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
+                 {
+                   if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
                        ||(Input::get('valor')== 'F')||(Input::get('valor')== 'P')||(Input::get('valor')== 'E'))
 				   {
                         $pedidos = Pedido::where('usuario_id', '<>', '1')->where(function($query)
