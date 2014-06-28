@@ -36,7 +36,7 @@
 @endforeach
 </table>
 <hr/><h4>La compra será enviada a la dirección de envío antes mencionada a través del Correo Argentino.</br>
-Para hacer efectiva la entrega del pedido, se le solicitará al comprador su DNI. Si la compra es por contrareembolso, se le solicitirá el pago.</h4><hr/>
+Para hacer efectiva la entrega del pedido, se le solicitará al comprador su DNI.</h4><hr/>
 <h2></h2>	
 <a href="/pedidos" style="text-decoration:none;">
         <input type="button" class="button button-verde button-mediano" value="Volver" title="Regresa a los pedidos"/>
