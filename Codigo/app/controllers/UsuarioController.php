@@ -451,7 +451,7 @@ class UsuarioController extends BaseController {
     }
 
     public function verPedidosAdmin()
-    {/*
+    {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') {
                 //~ $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', function($join)
@@ -484,7 +484,7 @@ class UsuarioController extends BaseController {
                          $pedidos = null;				
             }
             else {
-                /* Input está vacío. Muestra todos los pedidos menos los finalizados. 
+                //Input está vacío. Muestra todos los pedidos menos los finalizados. 
                 $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'ASC')->get();
             }
         }
@@ -493,9 +493,10 @@ class UsuarioController extends BaseController {
         }
 		
         return View::make('usuario.pedidosAdmin', array('pedidos' => $pedidos));
-		*/
 		
+	}	
 		// Alternativa con nombre en formato
+		/*
 		if((Input::has('filtro')) && (input::has('valor'))){
 		    if (Input::get('filtro') == 'estado' ){
 			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
@@ -523,14 +524,14 @@ class UsuarioController extends BaseController {
             $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'ASC')->get();
           }
 		}
-		return View::make('usuario.pedidosAdmin', array('pedidos' => $pedidos));
-    }
+		return View::make('usuario.pedidosAdmin', array('pedidos' => $pedidos));*/
+ 
 	 public function verPedidosAdminOrdDesc()//Metodo completamente similar al sup, solo cambia el orden de las fechas.
-    {/*
+    {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') 
-			{
-                /*$pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', function($join)
+			{/*
+                $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', function($join)
                                                                    {
                                                                         $join->on('usuario.id', '=', 'pedido.usuario_id');
                                                                     })->where(function($query)
@@ -538,7 +539,7 @@ class UsuarioController extends BaseController {
                                                                                     $nombre = Input::get('valor');
                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
                                                                                           ->orWhere('nombre', 'LIKE', '%' . $nombre . '%');
-                                                                                })->orderBy('fecha', 'DESC')->get();
+                                                                                })->orderBy('fecha', 'DESC')->get();*/
 				$nombre= Input::get('valor');
                 $pedidos= Pedido::where('estado', '!=', 'f')->whereHas('usuario',function($query) use ($nombre)
 				                                                                {
@@ -559,7 +560,7 @@ class UsuarioController extends BaseController {
                          $pedidos = null;					
             }
             else {
-                /* Input está vacío. Muestra todos excepto el Admin. 
+                // Input está vacío. Muestra todos excepto el Admin. 
                 $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'DESC')->get();
             }
         }
@@ -568,8 +569,9 @@ class UsuarioController extends BaseController {
         }
 		
         return View::make('usuario.pedidosAdminDesc', array('pedidos' => $pedidos));
-		*/
+	}	
 		// Alternativa con nombre en formato
+		/*
 		if((Input::has('filtro')) && (input::has('valor'))){
 		    if (Input::get('filtro') == 'estado' ){
 			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
@@ -597,8 +599,8 @@ class UsuarioController extends BaseController {
             $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'DESC')->get();
           }
 		}
-		return View::make('usuario.pedidosAdminDesc', array('pedidos' => $pedidos));
-    }
+		return View::make('usuario.pedidosAdminDesc', array('pedidos' => $pedidos)); */
+    
     public function detallePedidoAdmin($id)
     {
         $pedido = Pedido::find($id);
