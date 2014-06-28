@@ -114,7 +114,7 @@ class CarritoController extends BaseController {
 	    if(!Cookbook::accedeSoloDesdeRuta(['/carrito/tarjeta'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
-		$reglasTarjeta =['numero'=>['digits:16','required'],'contraseña'=>['digits:3','required','confirmed']];
+		$reglasTarjeta =['numero'=>['digits:16','required'],'codigo'=>['digits:3','required','confirmed']];
 		$validador= Validator::make(Input::all(),$reglasTarjeta);
         if($validador->fails()){
             return Redirect::back()->withInput()->withErrors($validador);

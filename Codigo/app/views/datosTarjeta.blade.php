@@ -28,12 +28,12 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:
     </tr>   
     <tr>
         <td>
-        Código de verificación: <input type=password name="contraseña" value="" size="2"><span class="tooltip" title="El código debe contener solo 3 digitos.">[?]</span>
+        Código de verificación: <input type=password name="codigo" value="" size="2"><span class="tooltip" title="El código debe contener solo 3 digitos.">[?]</span>
         </td>
     </tr>
     <tr>
         <td>
-        Reescriba el código: <input type=password name="contraseña_confirmation" value="" size="2"><span class="tooltip" title="Repita el código de verificación.">[?]</span> <br/>
+        Reescriba el código: <input type=password name="codigo_confirmation" value="" size="2"><span class="tooltip" title="Repita el código de verificación.">[?]</span> <br/>
         </td>
     </tr>
     </table>

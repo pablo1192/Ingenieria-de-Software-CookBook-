@@ -61,6 +61,8 @@ menuActivo='catalogo'
 			<input type="hidden" name="id" value="{{$libro->id}}">
 			<input type="submit" class="button button-verde button-mediano" value="Agregar al carrito">
 		</form>
+		@elseif ($libro->agotado) 
+			<div class="mensaje mensaje-error">El libro se encuentra agotado en este momento.</div>
 		@endif
 	</div>
 	<br style="clear:both;"/><br/>
