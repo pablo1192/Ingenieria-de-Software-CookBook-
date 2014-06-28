@@ -105,16 +105,22 @@ Route::get('/admin/pedidos/{id}/ver', array('uses'=>'UsuarioController@detallePe
 //filtro pedidos.(ordenar por fecha, funciona solo con todos los pedidos) 
 Route::get('/admin/pedidos/ordenD', array('uses' => 'UsuarioController@verPedidosAdminOrdDesc'))->before('admin_auth');
 
+
+
 //Carrito
 Route::get('/carrito', array('uses' => 'CarritoController@visualizar'))->before('auth.usrReg');
 Route::post('/carrito', array('uses' => 'CarritoController@agregarLibro'))->before('auth.usrReg');
 Route::get('/carrito/vaciar', array('uses' => 'CarritoController@vaciarCarrito'))->before('auth.usrReg');
 Route::get('/carrito/{id}/quitar', array('uses' => 'CarritoController@quitarLibro'))->before('auth.usrReg');
 
+
 //Compra
 Route::get('/carrito/tarjeta', array('uses' => 'CarritoController@solicDatosTarjeta'))->before('auth.usrReg');
-Route::get('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@comprar'))->before('auth.usrReg');
-Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@altaPedido'))->before('auth.usrReg');
+//~ Route::get('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@comprar'))->before('auth.usrReg');
+Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@comprar'));
+//~ Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@altaPedido'))->before('auth.usrReg');
+Route::post('/carrito/tarjeta/finalizarCompra', array('uses' => 'CarritoController@altaPedido'));
+
 
 //Comprobantes
 Route::get('/pedidos/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteUsuario'))->before('auth.usrReg');

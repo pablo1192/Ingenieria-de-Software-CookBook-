@@ -19,7 +19,7 @@ menuActivo='catalogo'
 
 El monto final a abonar es de ${{$monto}}.</br></br>
 A continuación se le solicitarán los datos de su tarjeta de crédito:
-<form method="get" action="/carrito/tarjeta/confirmarCompra/">
+<form method="post" action="/carrito/tarjeta/confirmarCompra">
     <table>
     <tr>
         <td>
