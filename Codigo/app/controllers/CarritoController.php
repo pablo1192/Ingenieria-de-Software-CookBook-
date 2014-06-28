@@ -152,7 +152,7 @@ class CarritoController extends BaseController {
 		    Session::forget('carrito');//limpia el carrito
 		    Session::forget('monto');// limpia monto
 			Session::forget('carritoProc');// limpia el carrito procesado
-			Session::put('notificacionDeCompra', '¡La compra ha sido exitosa! Revise sus pedidos para ver si ya ha sido enviado.');//crea el mensaje a notificar que luego es eliminado desde la vista
+			Session::put('notificacionDeCompra', '¡La compra ha sido exitosa! Consulte sus pedidos para conocer su estado.');//crea el mensaje a notificar que luego es eliminado desde la vista
 		    return Redirect::to('/pedidos');
 		 } 
 		 else{
