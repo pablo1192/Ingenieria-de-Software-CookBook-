@@ -14,7 +14,17 @@ menuActivo='libros'
 	</div>
 @endif	
 @if( $recuperar )
-	<p>Se presentarán a continuación aquellas entidades que podrán ser recuperadas</p>
+	<p>Se presentarán a continuación aquellos datos que podrán ser recuperados</p>
+	@if($libros->count())
+		<a name="libros"></a>
+		<h3>Libro</h3>
+		@foreach($libros as $libro)
+			<ol>
+				<li><a href="/admin/libros/{{$libro->id}}/restaurar" onclick="return confirm('¿Esta seguro que desea recuperar \nel libro «{{$libro->título}}»?')" title="Recuperar el libro">{{$libro->título}} </li>
+			</ol>
+		@endforeach
+	@endif
+	
 	@if($editoriales->count())
 		<a name="editoriales"></a>
 		<h3>Editorial</h3>

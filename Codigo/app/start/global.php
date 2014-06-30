@@ -52,7 +52,7 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 	// agregada esta linea para proteger las URL compras!
 	// return Response::view('error404', array(), 404);
-	return Redirect::to('/404')->with('url',Request::url());
+	//return Redirect::to('/404')->with('url',Request::url());
 });
 
 /*

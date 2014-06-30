@@ -28,6 +28,10 @@ class Libro extends Eloquent {
 		return $query->where('dadoDeBaja','=',0);
 	}
 	
+	public function scopeNoDisponibles($query){
+		return $query->where('dadoDeBaja','=',1);
+	}
+	
 	public function scopeNoAgotados($query){
 		return $query->where('agotado','=',0);
 	}
@@ -101,13 +105,14 @@ class Libro extends Eloquent {
 	}
 	
 	
-	//Compureba si hay entidades secundarias para recuperar
+	//Compureba si hay entidades en gral para recuperar: Libros y Entidadades Secundarias
 	//True=hay...
-	public static function recuperarEntidadesSecundarias(){
+	public static function recuperar(){
 		return (
-			(Editorial::noDisponibles()->count()) || (Idioma::noDisponibles()->count()) ||  (Etiqueta::noDisponibles()->count()) ||  (Autor::noDisponibles()->count())
+			(Libro::noDisponibles()->count()) || (Editorial::noDisponibles()->count()) || (Idioma::noDisponibles()->count()) ||  (Etiqueta::noDisponibles()->count()) ||  (Autor::noDisponibles()->count())
 		);
 	}
 	
+
 }
 ?>

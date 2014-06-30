@@ -506,20 +506,43 @@ class LibroController extends BaseController {
 		}
 	}
 	
-	public function recuperarEntidadesSecundarias(){
+	//Recupera Libros y Entidades Secundarias...
+	protected function recuperar(){
 		//Hay info para recuperar?
-		$recuperar=Libro::recuperarEntidadesSecundarias();
+		$recuperar=Libro::recuperar();
 		if($recuperar){
+			$libros=Libro::noDisponibles()->get();
 			$editoriales=Editorial::noDisponibles()->get();
 			$idiomas=Idioma::noDisponibles()->get();
 			$etiquetas=Etiqueta::noDisponibles()->get();
 			$autores=Autor::noDisponibles()->get();	
-			return View::make('libro.recuperarEntidadesSecundarias',['recuperar'=>$recuperar, 'editoriales'=>$editoriales, 'idiomas'=>$idiomas, 'etiquetas'=>$etiquetas, 'autores'=>$autores]);
+			return View::make('libro.recuperar',['recuperar'=>$recuperar, 'libros'=>$libros, 'editoriales'=>$editoriales, 'idiomas'=>$idiomas, 'etiquetas'=>$etiquetas, 'autores'=>$autores]);
 		}
 		else{
-			return View::make('libro.recuperarEntidadesSecundarias',['recuperar'=>$recuperar]);
+			return View::make('libro.recuperar',['recuperar'=>$recuperar]);
 		}
+		
 	}
+	
+	//Recupera un libro dado de baja
+	public function restaurar($id){
+		//ToDo: Proteger este metodo
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/libros/recuperar'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}
+		$libro= Libro::find($id);
+		
+		//existe?
+		if($libro){
+			$libro->dadoDeBaja=false;
+			$libro->save();
+			return Redirect::to('/admin/libros/recuperar#libros')->with('recuperado','¡El libro «'.$libro->título.'» ha sido recuperado exitosamente!');
+		}
+		else{
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}		
+	}
+	
 }
 
 ?>
