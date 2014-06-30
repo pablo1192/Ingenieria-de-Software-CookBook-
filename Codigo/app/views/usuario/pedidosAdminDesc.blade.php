@@ -5,6 +5,43 @@ menuActivo='pedidos'
 @stop
 
 @section('contenido')
+</br>
+@if (Session::has('FiltNombre'))
+   <div class="mensaje mensaje-notificacion">
+		{{Session::get('FiltNombre')}} 	
+   </div> 
+@endif
+@if(Session::has('FiltEstado'))
+   <div class="mensaje mensaje-notificacion">
+		{{Session::get('FiltEstado')}} 		
+   </div> 
+@endif 
+@if ((Session::has('FiltNombre'))||(Session::has('FiltEstado')))
+   |<a href="/admin/pedidos/ordenD" title="Mostrar todos los pedidos "> Quitar filtro </a>|
+@endif   
+Pedidos ordenados por fechas más recientes. <a href="/admin/pedidos/" title="Cambiar orden">Cambiar a fechas más antiguas.</a></br></br>
+<table width="100%" style="margin-bottom:8px;">
+<tr>
+	<td width="7%">
+	    <form method="GET" action="/admin/pedidos/ordenD">
+		  <input type="hidden" name="filtro" value="estado"/> Filtrar por 
+		    <td>
+			<select name="valor" style="padding:2px;width:95px;" onchange="this.form.submit()">
+				    <option value=""  selected="selected"> Estados </option>
+					<option value="p">Pendientes</option>
+					<option value="e">Enviados</option>
+					<option value="f">Finalizados</option>
+			</select><span class="tooltip" title="Seleccione el estado deseado.">&nbsp;[?]</span>
+			</td>
+		</form>
+	</td>
+	<td >
+		<form method="get" action="/admin/pedidos/ordenD">
+	        Buscar por Cliente: <input type="hidden" name="filtro" value="nombre"/><input type="text" name="valor"><input value="Buscar" type="submit"/> <span class="tooltip" title="Ingrese el nombre o apellido a buscar.">[?]</span>
+        </form>
+	</td>	
+</tr>
+</table>
 <h2>Pedidos vigentes ({{count($pedidos)}}):</h2>
 
 {{-- ToDo: Funciones varias (comprobante, estado, etc). --}}
@@ -46,22 +83,6 @@ menuActivo='pedidos'
 		{{-- "Incrementa" la variable contador --}}
 		@if ($cont = $cont+1) @endif
 	@endforeach
-<h2>Funciones:</h2>
-Pedidos ordenados por fechas descendentes. <a href="/admin/pedidos" title="Cambiar orden">Cambiar a orden ascendente.</a></td></br></br>
-<form method="get" action="/admin/pedidos/ordenD">
-	Buscar por Cliente: <input type="hidden" name="filtro" value="nombre"/><input type="text" name="valor"><input value="Buscar" type="submit"/> <span class="tooltip" title="Ingrese el nombre o apellido a buscar.">[?]</span>
-</form></br>
-<table><tr>
-		<form method="GET" action="/admin/pedidos/ordenD">
-			<td><input type="hidden" name="filtro" value="estado"/>Filtrar por</td>
-			<td><select name="valor" style="padding:2px;width:95px;" onchange="this.form.submit()">
-				<option value=""  selected="selected"> Estados </option>
-					<option value="p">Pendientes</option>
-					<option value="e">Enviados</option>
-					<option value="f">Finalizados</option>
-			</select></td>
-		</form>
-</tr></table>
 @else
 	<div class="mensaje mensaje-notificacion">No hay pedidos que gestionar o no se encontraron en la búsqueda. </br>
 	<a href="/admin/pedidos/" title="Regresar a la gestión de los pedidos">Haga click aquí para regresar a la gestión de los pedidos.</a></div>

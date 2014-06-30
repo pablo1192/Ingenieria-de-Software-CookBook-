@@ -18,9 +18,14 @@ menuActivo='catalogo'
 @endif
 
 El monto final a abonar es de ${{$monto}}.</br></br>
-A continuación se le solicitarán los datos de su tarjeta de crédito:
+A continuación se le solicitarán los datos de su tarjeta de crédito:</br>
 <form method="post" action="/carrito/tarjeta/confirmarCompra">
     <table>
+	<tr>
+        <td>
+        Titular de la Tarjeta de Crédito: <input type=text name="titular" value="" size=""><span class="tooltip" title="Ingrese nombre y apellido del titular de la tarjeta de crédito.">[?]</span> <br/>
+        </td>
+    </tr>
     <tr>
         <td>
         Número de Tarjeta de Crédito: <input name="numero" value="" placeholder="16 dígitos"><span class="tooltip" title="El número debe contener 16 dígitos.">[?]</span>
@@ -31,9 +36,9 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:
         Código de verificación: <input type=password name="codigo" value="" size="2"><span class="tooltip" title="El código debe contener solo 3 digitos.">[?]</span>
         </td>
     </tr>
-    <tr>
+	<tr>
         <td>
-        Reescriba el código: <input type=password name="codigo_confirmation" value="" size="2"><span class="tooltip" title="Repita el código de verificación.">[?]</span> <br/>
+        Fecha de vencimiento: <input type=text id="datepicker" name="fechavencimiento" size="8" readonly><span class="tooltip" title="Seleccione la fecha de vencimiento de la tarjeta de crédito.">[?]</span> <br/>
         </td>
     </tr>
     </table>
