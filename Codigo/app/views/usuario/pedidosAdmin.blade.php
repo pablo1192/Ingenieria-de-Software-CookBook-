@@ -5,6 +5,44 @@ menuActivo='pedidos'
 @stop
 
 @section('contenido')
+</br>
+@if (Session::has('FiltNombre'))
+   <div class="mensaje mensaje-notificacion">
+		{{Session::get('FiltNombre')}} </br>		
+   </div> 
+@endif
+@if(Session::has('FiltEstado'))
+   <div class="mensaje mensaje-notificacion">
+		{{Session::get('FiltEstado')}} </br>		
+   </div> 
+@endif 
+@if ((Session::has('FiltNombre'))||(Session::has('FiltEstado')))
+   |<a href="/admin/pedidos" title="Mostrar todos los pedidos "> Quitar filtro </a>|</td>
+@endif   
+Pedidos ordenados por fechas ascendentes. <a href="/admin/pedidos/ordenD" title="Cambiar orden">Cambiar a orden descendente.</a></td></br></br>
+
+<table width="100%" style="margin-bottom:8px;">
+<tr>
+	<td width="8%">
+	    <form method="GET" action="/admin/pedidos/">
+		  <input type="hidden" name="filtro" value="estado"/> Filtrar por 
+		    <td>
+			<select name="valor" style="padding:2px;width:95px;" onchange="this.form.submit()">
+				    <option value=""  selected="selected"> Estados </option>
+					<option value="p">Pendientes</option>
+					<option value="e">Enviados</option>
+					<option value="f">Finalizados</option>
+			</select><span class="tooltip" title="Seleccione el estado deseado.">[?]</span>
+			</td>
+		</form>
+	</td>
+	<td >
+		<form method="get" action="/admin/pedidos/">
+	        Buscar por Cliente: <input type="hidden" name="filtro" value="nombre"/><input type="text" name="valor"><input value="Buscar" type="submit"/> <span class="tooltip" title="Ingrese el nombre o apellido a buscar.">[?]</span>
+        </form>
+	</td>	
+</tr>
+</table>
 <h2>Pedidos vigentes ({{count($pedidos)}}):</h2>
 
 {{-- ToDo: Funciones varias (comprobante, estado, etc). --}}
@@ -47,6 +85,21 @@ menuActivo='pedidos'
 		@if ($cont = $cont+1) @endif
 	@endforeach
 <h2>Funciones:</h2>
+@if ((Session::has('FiltNombre'))||(Session::has('FiltEstado')))
+   <a href="/admin/pedidos" title="Mostrar todos los pedidos ">Volver</a></td>
+@endif 
+@if (Session::has('FiltNombre'))
+   <div class="mensaje mensaje-notificacion">
+		{{Session::get('FiltNombre')}} </br>
+		
+   </div> 
+@endif
+@if(Session::has('FiltEstado'))
+   <div class="mensaje mensaje-notificacion">
+		{{Session::get('FiltEstado')}} </br>
+		
+   </div> 
+@endif   
 Pedidos ordenados por fechas ascendentes. <a href="/admin/pedidos/ordenD" title="Cambiar orden">Cambiar a orden descendente.</a></td></br></br>
 <form method="get" action="/admin/pedidos/">
 	Buscar por Cliente: <input type="hidden" name="filtro" value="nombre"/><input type="text" name="valor"><input value="Buscar" type="submit"/> <span class="tooltip" title="Ingrese el nombre o apellido a buscar.">[?]</span>

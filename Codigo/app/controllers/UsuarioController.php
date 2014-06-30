@@ -457,10 +457,11 @@ class UsuarioController extends BaseController {
 
     public function verPedidosAdmin()
     {
+	   Session::forget('FiltNombre');
+	   Session::forget('FiltEstado');
 	   if((Input::has('filtro')) && (input::has('valor'))){
-            if (Input::get('filtro') == 'nombre') {
-
-
+            if (Input::get('filtro') == 'nombre') 
+			{
                  $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
 
                                                                      ->where(function($query)
@@ -471,7 +472,7 @@ class UsuarioController extends BaseController {
                                                                                            ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
                                                                                            ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                  })->orderBy('fecha', 'ASC')->select('pedido.*', 'usuario_id')->get();
-
+                 Session::put('FiltNombre','Estás filtrando por los nombres o apellidos de los clientes.');
             }
             else if (Input::get('filtro') == 'estado' )
                  {
@@ -483,6 +484,7 @@ class UsuarioController extends BaseController {
                                                                                     $est = Input::get('valor');
                                                                                     $query->where('estado', '=', $est);
                                                                                     })->orderBy('fecha', 'ASC')->get();
+						Session::put('FiltEstado','Estás filtrando por los estados de los pedidos.');
 					}
 					else  //se ingreso un caracter no valido.Se muestra que no hay pedidos en ese estado.
                          $pedidos = null;				
@@ -504,29 +506,33 @@ class UsuarioController extends BaseController {
     {
 	   if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') 
-			{$pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
-                                                                     ->where(function($query)
-                                                                                 {
-                                                                                     $nombre = Input::get('valor');
-                                                                                     $completo = DB::raw('CONCAT(nombre, " ", apellido)');
-                                                                                     $query->where('apellido', 'LIKE', '%' . $nombre . '%')
-                                                                                           ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
-                                                                                           ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
-                                                                                 })->orderBy('fecha', 'DESC')->select('pedido.*', 'usuario_id')->get();
+			{
+			  $pedidos = Pedido::where('estado', '!=', 'f')->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+                                                           ->where(function($query)
+                                                            {
+                                                              $nombre = Input::get('valor');
+                                                              $completo = DB::raw('CONCAT(nombre, " ", apellido)');
+                                                              $query->where('apellido', 'LIKE', '%' . $nombre . '%')
+                                                                    ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
+                                                                    ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
+                                                            })->orderBy('fecha', 'DESC')->select('pedido.*', 'usuario_id')->get();
+			  Session::put('FiltNombre','Estás filtrando por los nombres o apellidos de los clientes.');																	 
             }
-            else if (Input::get('filtro') == 'estado' ){
+            else if (Input::get('filtro') == 'estado' )
+			    {
 			       if((Input::get('valor')== 'f')||(Input::get('valor')== 'p')||(Input::get('valor')== 'e')
                        ||(Input::get('valor')== 'F')||(Input::get('valor')== 'P')||(Input::get('valor')== 'E'))
-				   {
+				    {
                         $pedidos = Pedido::where('usuario_id', '<>', '1')->where(function($query)
-                                                                                    {
-                                                                                    $est = Input::get('valor');
-                                                                                    $query->where('estado', '=', $est);
-                                                                                    })->orderBy('fecha', 'DESC')->get();
-					}
+                                                                          {
+                                                                            $est = Input::get('valor');
+                                                                            $query->where('estado', '=', $est);
+                                                                          })->orderBy('fecha', 'DESC')->get();
+					    Session::put('FiltEstado','Estás filtrando por los estados de los pedidos.');	
+				    }
 					else  //se ingreso un caracter no valido.Se muestran mensaje que no se encuentran pedidos.
                          $pedidos = null;					
-            }
+                }
             else {
                 // Input está vacío. Muestra todos excepto el Admin. 
                 $pedidos = Pedido::where('estado', '!=', 'f')->orderBy('fecha', 'DESC')->get();
