@@ -7,21 +7,23 @@ menuActivo='pedidos'
 @section('contenido')
 <h2>Información de Pedido</h2>
 
-<table width="90%">
+<div style="width:600px">
+<div>
+<table width="38%" align="left">
 	<tr>		
-		<td><strong>Cliente:</strong> <a href="/admin/usuarios/{{ $pedido->usuario->id }}/ver" title="Ver datos">{{$pedido->usuario->nombre}} {{$pedido->usuario->apellido}}</a>
+		<td><strong>Cliente:</strong></td><td> <a href="/admin/usuarios/{{ $pedido->usuario->id }}/ver" title="Ver datos">{{$pedido->usuario->nombre}} {{$pedido->usuario->apellido}}</a>
 		@if (($pedido->usuario->bloqueado) OR ($pedido->usuario->dadoDeBaja))
 					<strong><font color="red"><span class="tooltip" title="El usuario ha sido bloqueado o dado de baja. Usted deberá cambiar el estado del pedido manualmente.">- Inactivo [?]</span></font></strong>
 		@endif</td>
 	</tr>
 	<tr>		
-		<td><strong>Fecha:</strong> {{$pedido->fecha}}</td>
+		<td><strong>Fecha:</strong></td><td> {{$pedido->fecha}}</td>
 	</tr>
 	<tr>		
-		<td><strong>Monto:</strong> ${{$pedido->monto}}</td>
+		<td><strong>Monto:</strong></td><td> ${{$pedido->monto}}</td>
 	</tr>
 	<tr>		
-		<td><strong>Estado:</strong> @if($pedido->estado == "p")
+		<td><strong>Estado:</strong></td><td> @if($pedido->estado == "p")
 										Pendiente
 									 @endif
 									 @if($pedido->estado == "e")
@@ -32,7 +34,28 @@ menuActivo='pedidos'
 									 @endif
 		</td>
 	</tr>
-</table>
+	</table>
+	</div>
+	<div>
+		<table width="40%" align="left">
+		<tr>
+			<strong>Dirección de envío:</strong>
+		</tr>
+		<tr>
+			<td>-> Provincia:</td>
+			<td>{{$pedido->usuario->provincia->nombre}}</td>
+		</tr>
+		<tr>
+			<td>-> Localidad:</td>
+			<td>{{$pedido->usuario->localidad}}</td>
+		</tr>
+		<tr>
+			<td>-> Domicilio:</td>
+			<td>{{$pedido->usuario->dirección}}</td>
+		</tr>
+	</table>
+	</div>
+</div></br></br></br></br>
 
 <h2>Libros solicitados</h2>
 	<table width="55%">
