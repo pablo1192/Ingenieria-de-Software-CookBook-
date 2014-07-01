@@ -65,9 +65,7 @@ class CarritoController extends BaseController {
 		if(!Cookbook::accedeSoloDesdeRuta(['/carrito'])){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
-		//if(!Cookbook::existeId($id,'libro')){
-		//	return View::make('error',['título'=>'¡Libro inexistente!', 'motivo'=>'Se ha intentado quitar al carrito un libro que no existe o bien no está disponible']);
-		//}
+
 		if( (Session::has('carrito')) && (isset(Session::get('carrito')[$id])) ){
 			$carrito = Session::get('carrito');
 			if($carrito[$id]>1){

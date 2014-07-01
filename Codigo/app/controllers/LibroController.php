@@ -59,13 +59,16 @@ class LibroController extends BaseController {
 
 
 	public function visualizarDetalles($id){
-  
-		if(!Cookbook::existeId($id,'libro')){
-			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		if(!Cookbook::accedeSoloDesdeRuta(['/','/admin/*','/pedidos/*'], true)){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}
-
-		$libro=Libro::find($id);		
-		return View::make('libro.visualizarDetalles',['libro'=>$libro]);
+		$libro=Libro::find($id);
+		if($libro){
+			return View::make('libro.visualizarDetalles',['libro'=>$libro]);
+		}
+		else{
+			return View::make('error',['título'=>'¡Acceso erroneo!', 'motivo'=>'Ud intenta acceder a un registro al cual no posee acceso o no existe.']);
+		}
 	}
 
 

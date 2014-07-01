@@ -35,13 +35,29 @@ class Cookbook {
     //Metodo algo trivial pero que intenta determinar si el USR
     //Provino de otro lado q no sea el esperado: p.e acciones manuales/forzar url
     // puede dar falsos positivos si el navegador cuenta cn plugs de privacidad...
-    //$rutas es un arreglo!.
-    public static function accedeSoloDesdeRuta($rutas){
+    //$rutas es un arreglo!. $patronDeRutas un booleano q indica si se def un comodin (el *). Por ejemplo /admin/* (para bloq todo /admin/)
+    public static function accedeSoloDesdeRuta($rutas,$patronEnRutas=false){
 		if(Cookbook::ACCESO_ACTIVADO){
 			if(Request::header('Referer') !== ''){						
 				//Elimina el nombre del host, dejando desde la / en adelante
 				$urlOrigen=preg_replace('/^http:[\/][\/][^\/]+/i','',Request::header('Referer'));
-				return (in_array($urlOrigen,$rutas));
+				if(!$patronEnRutas){
+					return (in_array($urlOrigen,$rutas));
+				}
+				else{
+					//cada comodin se reemplaza por el patron
+					$rutas=str_replace("*",".*",$rutas);
+					$rutas=str_replace("/","\/",$rutas);
+					
+					//Por cada ruta se verifica q coincida con urlOrigen.
+					foreach ($rutas as $ruta){
+						if(preg_match('/('.$ruta.')/i',$urlOrigen)){
+							return true;
+						}
+					}
+					//no hubo coincidencias. Se rechaza
+					return false;
+				}
 			}
 			else{
 				return false;
