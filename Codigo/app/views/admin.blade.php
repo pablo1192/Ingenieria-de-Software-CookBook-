@@ -21,6 +21,11 @@ Released   : 20140207
 	<link href="/template/fonts.css" rel="stylesheet" type="text/css" media="all" />
 	<meta name="generator" content="Sistema Web Cookbook" />
 	<link rel="shortcut icon" href="/favicon.png" />
+	<!--------------- DatePicker --------------------------------------------------------------------------------------------------->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<!--------------- Final del DatePicker ----------------------------------------------------------------------------------------->
 </head>
 
 <body>

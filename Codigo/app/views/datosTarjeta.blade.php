@@ -38,7 +38,7 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:</br>
     </tr>
 	<tr>
         <td>
-        Fecha de vencimiento: <input type=text id="datepicker" name="fechavencimiento" size="8" readonly><span class="tooltip" title="Seleccione la fecha de vencimiento de la tarjeta de crédito.">[?]</span> <br/>
+        Fecha de vencimiento: <input type=text id="datepicker" name="fecha" size="8" readonly><span class="tooltip" title="Seleccione la fecha de vencimiento de la tarjeta de crédito.">[?]</span> <br/>
         </td>
     </tr>
     </table>
@@ -46,6 +46,33 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:</br>
     <input type="submit" class="button button-azul button-mediano" value="Verificar Tarjeta" title="Verifica que la tarjeta sea válida y espera confirmación del usuario." />       
     <a href="/" style="text-decoration:none;">
         <input type="button" class="button button-verde button-mediano" value="Cancelar" title="Cancelar la operacion"/>
-    </a> 
+    </a>	
 </form> 
+<script>
+    $(function () 
+	{
+	 //Array para dar formato en español
+       $.datepicker.regional['es'] = 
+       {
+         closeText: 'Cerrar', 
+         prevText: 'Previo', 
+         nextText: 'Próximo',
+  
+         monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+         monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+         monthStatus: 'Ver otro mes', yearStatus: 'Ver otro año',
+         dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+         dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sáb'],
+         dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+         dateFormat: 'dd/mm/yy', firstDay: 0, 
+         initStatus: 'Selecciona la fecha', isRTL: false
+		}; 
+      $.datepicker.setDefaults($.datepicker.regional["es"]);
+      $("#datepicker").datepicker
+	  ({
+        minDate: "+1D",
+        maxDate: "+10Y"
+      });
+    });
+</script>
 @stop

@@ -22,41 +22,11 @@ Released   : 20140207
 	<meta name="generator" content="Sistema Web Cookbook" />
 	<link rel="shortcut icon" href="/favicon.png" />
 	
-	<!---------------DatePicker ----------------------------------------------------------------------------------------->
-	<title>jQuery UI Datepicker - Restringir el rango de fechas</title>
+	<!--------------- DatePicker --------------------------------------------------------------------------------------------------->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-    <script src="jquery.ui.datepicker-es.js"></script>
-
-    <script>
-    $(function () 
-	{
-	 //Array para dar formato en español
-       $.datepicker.regional['es'] = 
-       {
-         closeText: 'Cerrar', 
-         prevText: 'Previo', 
-         nextText: 'Próximo',
-  
-         monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-         monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-         monthStatus: 'Ver otro mes', yearStatus: 'Ver otro año',
-         dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-         dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sáb'],
-         dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
-         dateFormat: 'dd/mm/yy', firstDay: 0, 
-         initStatus: 'Selecciona la fecha', isRTL: false
-		}; 
-      $.datepicker.setDefaults($.datepicker.regional["es"]);
-      $("#datepicker").datepicker
-	  ({
-        minDate: "+1D",
-        maxDate: "+10Y"
-      });
-    });
-    </script>
-	<!---------------Final del DatePicker ----------------------------------------------------------------------------------------->
+	<!--------------- Final del DatePicker ----------------------------------------------------------------------------------------->
 </head>
 
 <body>
