@@ -17,8 +17,8 @@ menuActivo='pedidos'
    </div> 
 @endif 
 @if ((Session::has('FiltNombre'))||(Session::has('FiltEstado')))
-   |<a href="/admin/pedidos/ordenD" title="Mostrar todos los pedidos "> Quitar filtro </a>|
-@endif   
+   |<a href="/admin/pedidos/ordenD" title="Mostrar todos los pedidos ">Quitar filtro</a>
+@endif</br>
 Pedidos ordenados por fechas más recientes. <a href="/admin/pedidos/" title="Cambiar orden">Cambiar a fechas más antiguas.</a></br></br>
 <table width="100%" style="margin-bottom:8px;">
 <tr>

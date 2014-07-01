@@ -7,6 +7,8 @@ class UsuarioController extends BaseController {
 
     public function mostrarUsuarios()
     {
+        Session::forget('FiltNombre');
+        Session::forget('FiltDNI');
         /*  Busca por nombre y apellido. No necesita ser idéntico. */
         if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') {
@@ -19,6 +21,8 @@ class UsuarioController extends BaseController {
                                                                                           ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                 })
                                                                                 ->get();
+                $filtnombre = Input::get('valor');
+                Session::put('FiltNombre','Está filtrando por los clientes que coincidan con "'.$filtnombre.'".');
             }
             else if (Input::get('filtro') == 'dni') {
                 $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where(function($query)
@@ -27,6 +31,8 @@ class UsuarioController extends BaseController {
                                                                                     $query->where('dni', '=', $dni);
                                                                                 })
                                                                                 ->get();
+                $filtdni = Input::get('valor');
+                Session::put('FiltDNI','Está filtrando por el DNI que coincida con "'.$filtdni.'".');
             }
             else {
                 /* Input está vacío. Muestra todos excepto el Admin. */
@@ -41,6 +47,8 @@ class UsuarioController extends BaseController {
 
     public function mostrarUsuariosVigentes()
     {
+        Session::forget('FiltNombre');
+        Session::forget('FiltDNI');
         /*  Busca por nombre y apellido en vigentes. No necesita ser idéntico. */
         if((Input::has('filtro')) && (input::has('valor'))){
             if (Input::get('filtro') == 'nombre') {
@@ -55,6 +63,8 @@ class UsuarioController extends BaseController {
                                                                                           ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                 })
                                                                                 ->get();
+                $filtnombre = Input::get('valor');
+                Session::put('FiltNombre','Está filtrando por los clientes que coincidan con "'.$filtnombre.'".');
             }
             else if (Input::get('filtro') == 'dni') {
                 $usuario = Usuario::where('email', '<>', 'admin@gmail.com')->where('dadoDeBaja', '=', '0')
@@ -65,6 +75,8 @@ class UsuarioController extends BaseController {
                                                                                     $query->where('dni', '=', $dni);
                                                                                 })
                                                                                 ->get();
+                $filtdni = Input::get('valor');
+                Session::put('FiltDNI','Está filtrando por el DNI que coincida con "'.$filtdni.'".');
             }
             else {
                 /* Input está vacío. Muestra todos los vigentes excepto el Admin. */

@@ -8,6 +8,21 @@ menuActivo='usuarios'
 <a name="area"></a>
 <h1>Gestión de usuarios:</h1>
 <h2><a href="/admin/usuarios/" title="Regresar a la lista de usuarios">Usuarios totales <span title="Usuarios en el Sistema">({{count($usuarios)}})</span>:</a></h2>
+
+@if (Session::has('FiltNombre'))
+   <div class="mensaje mensaje-notificacion">
+    {{Session::get('FiltNombre')}}  
+   </div> 
+@endif
+@if(Session::has('FiltDNI'))
+   <div class="mensaje mensaje-notificacion">
+    {{Session::get('FiltDNI')}}    
+   </div> 
+@endif 
+@if ((Session::has('FiltNombre'))||(Session::has('FiltDNI')))
+   |<a href="/admin/usuarios" title="Mostrar todos los pedidos ">Quitar filtro</a>
+@endif
+
 <table width="80%">
   <tr>
     <th>Nombre</th>
