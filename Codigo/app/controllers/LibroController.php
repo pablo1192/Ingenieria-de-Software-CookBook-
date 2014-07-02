@@ -31,7 +31,7 @@ class LibroController extends BaseController {
 									break;
 				case 'autor':		$librosDisponibles->whereHas('autores',function($query) use ($valor){$query->where('nombre','like','%'.$valor.'%');});
 									break;
-				default:			return Redirect::back()->withErrors(['El criterio de filtrado es invalido!.']);
+				default:			return Redirect::to('/');
 									break;
 			}
 			

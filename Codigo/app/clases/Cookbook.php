@@ -46,7 +46,7 @@ class Cookbook {
 				}
 				else{
 					//cada comodin se reemplaza por el patron
-					$rutas=str_replace("*",".*",$rutas);
+					$rutas=str_replace("*",".*$",$rutas);
 					$rutas=str_replace("/","\/",$rutas);
 					
 					//Por cada ruta se verifica q coincida con urlOrigen.
