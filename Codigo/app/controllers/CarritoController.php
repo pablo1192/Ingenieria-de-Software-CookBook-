@@ -113,29 +113,20 @@ class CarritoController extends BaseController {
 			  {
 			    return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		      }
-		      
-		//$fechaHoy = date('Y/m');			 
-		//$fechaSel = input::get('valorAnio')."/".input::get('valorMes');
-		//if($fechaHoy <= $fechaSel)
-			    Session::forget('venc');
-			    $reglasTarjeta =['numero'=>['digits:16','required'],'codigo'=>['digits:3','required'],'selMes'=>['required'],'selAnio'=>['required'],'titular'=>['regex:/[a-zñÑáéíóú ]+/i','required','min:2']];
-		        $validador= Validator::make(Input::all(),$reglasTarjeta);
-                if($validador->fails())// falta algun dato
+			  Session::forget('venc');
+			  $reglasTarjeta =['numero'=>['digits:16','required'],'codigo'=>['digits:3','required'],'selMes'=>['required'],'selAnio'=>['required'],'titular'=>['regex:/[a-zñÑáéíóú ]+/i','required','min:2']];
+		      $validador= Validator::make(Input::all(),$reglasTarjeta);
+              if($validador->fails())// falta algun dato
+			  {
+				$fechaHoy = date('Y/m');			 
+		        $fechaSel = input::get('valorAnio')."/".input::get('valorMes');
+		        if($fechaHoy >= $fechaSel)// chequeo que no este vencida
 				{
-				  //if(Session::has('selMes')&& Session::has('selAnio'))// falta algun dato pero los datos de la fecha de venc estan.
-				  //{
-				      $fechaHoy = date('Y/m');			 
-		              $fechaSel = input::get('valorAnio')."/".input::get('valorMes');
-		              if($fechaHoy >= $fechaSel)// chequeo que no este vencida
-					  {
-                         Session::put('venc','Su tarjeta se encuentra vencida.');
-					  }  
-					  return Redirect::back()->withInput()->withErrors($validador);
-			      //}
-                  //  else//falta uno o los 2 datos de la fecha de venc
-                  //    return Redirect::back()->withInput()->withErrors($validador);					
-                }
-                else// todos los datos requeridos estan, a chequear que la fecha de venc sea valida
+                  Session::put('venc','Su tarjeta se encuentra vencida.');
+				}  
+				return Redirect::back()->withInput()->withErrors($validador);					
+              }
+              else// todos los datos requeridos estan, a chequear que la fecha de venc sea valida
 		        { 
                   $fechaHoy = date('Y/m');			 
 		          $fechaSel = input::get('valorAnio')."/".input::get('valorMes');

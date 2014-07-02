@@ -19,6 +19,7 @@ menuActivo='catalogo'
 @endif
 @if(Session::has('venc'))
   <strong>-> {{Session::get('venc')}}</strong></br></br>
+  {{Session::forget('venc')}}
 @endif
 </ul>
 El monto final a abonar es de ${{$monto}}.</br></br>
