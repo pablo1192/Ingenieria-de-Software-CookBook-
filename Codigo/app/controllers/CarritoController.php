@@ -109,10 +109,65 @@ class CarritoController extends BaseController {
 	}
 	public function comprar()
 	{
-	    if(!Cookbook::accedeSoloDesdeRuta(['/carrito/tarjeta'])){
-			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
-		}
-		$reglasTarjeta =['numero'=>['digits:16','required'],'codigo'=>['digits:3','required'],'fecha'=>['required'],'titular'=>['regex:/[a-zñÑáéíóú ]+/i','required','min:2']];
+	          if(!Cookbook::accedeSoloDesdeRuta(['/carrito/tarjeta']))
+			  {
+			    return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		      }
+		      
+		//$fechaHoy = date('Y/m');			 
+		//$fechaSel = input::get('valorAnio')."/".input::get('valorMes');
+		//if($fechaHoy <= $fechaSel)
+			    Session::forget('venc');
+			    $reglasTarjeta =['numero'=>['digits:16','required'],'codigo'=>['digits:3','required'],'selMes'=>['required'],'selAnio'=>['required'],'titular'=>['regex:/[a-zñÑáéíóú ]+/i','required','min:2']];
+		        $validador= Validator::make(Input::all(),$reglasTarjeta);
+                if($validador->fails())// falta algun dato
+				{
+				  //if(Session::has('selMes')&& Session::has('selAnio'))// falta algun dato pero los datos de la fecha de venc estan.
+				  //{
+				      $fechaHoy = date('Y/m');			 
+		              $fechaSel = input::get('valorAnio')."/".input::get('valorMes');
+		              if($fechaHoy >= $fechaSel)// chequeo que no este vencida
+					  {
+                         Session::put('venc','Su tarjeta se encuentra vencida.');
+					  }  
+					  return Redirect::back()->withInput()->withErrors($validador);
+			      //}
+                  //  else//falta uno o los 2 datos de la fecha de venc
+                  //    return Redirect::back()->withInput()->withErrors($validador);					
+                }
+                else// todos los datos requeridos estan, a chequear que la fecha de venc sea valida
+		        { 
+                  $fechaHoy = date('Y/m');			 
+		          $fechaSel = input::get('valorAnio')."/".input::get('valorMes');
+		          if($fechaHoy >= $fechaSel)// la tarjeta esta vencida vuelvo atras con el mensaje correspondiente.
+				  {
+				      Session::put('venc','Su tarjeta se encuentra vencida.');
+                      return Redirect::back();
+                  }
+                  else// avanzo a la confirmacion final.
+                  {				  
+		          $carrito = Session::get('carrito');
+		          $montoTotal = Session::get('monto');
+		          return View::make('confCompra',['carrito'=>$carrito,'monto'=>$montoTotal]);;
+				  }
+		        }
+	}
+			/*  else
+			  { 
+			    Session::put('venc','Su tarjeta se encuentra vencida.');
+			    $reglasTarjeta =['numero'=>['digits:16','required'],'codigo'=>['digits:3','required'],'selMes'=>['required'],'selAnio'=>['required'],'titular'=>['regex:/[a-zñÑáéíóú ]+/i','required','min:2']];
+		        $validador= Validator::make(Input::all(),$reglasTarjeta);
+                if($validador->fails()){
+                    return Redirect::back()->withInput()->withErrors($validador);
+                }
+			    return Redirect::back();
+			  }			  
+		   }
+		   
+		      
+		}*/
+		/*
+		$reglasTarjeta =['numero'=>['digits:16','required'],'codigo'=>['digits:3','required'],'selMes'=>['required'],'selAnio'=>['required'],'titular'=>['regex:/[a-zñÑáéíóú ]+/i','required','min:2']];
 		$validador= Validator::make(Input::all(),$reglasTarjeta);
         if($validador->fails()){
             return Redirect::back()->withInput()->withErrors($validador);
@@ -123,7 +178,8 @@ class CarritoController extends BaseController {
 		   $montoTotal = Session::get('monto');
 		   return View::make('confCompra',['carrito'=>$carrito,'monto'=>$montoTotal]);;
 		}
-    }
+		*/
+    
 	public function altaPedido()
 	{
 	  // if(!Cookbook::accedeSoloDesdeRuta(['/carrito/tarjeta/confirmarCompra'])){
