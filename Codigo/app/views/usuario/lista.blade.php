@@ -20,7 +20,7 @@ menuActivo='usuarios'
    </div> 
 @endif 
 @if ((Session::has('FiltNombre'))||(Session::has('FiltDNI')))
-   |<a href="/admin/usuarios" title="Mostrar todos los pedidos ">Quitar filtro</a>
+   |<a href="/admin/usuarios" title="Mostrar todos los usuarios ">Quitar filtro</a>
 @endif
 
 <table width="80%">

@@ -133,7 +133,7 @@ class CarritoController extends BaseController {
 		          if($fechaHoy >= $fechaSel)// la tarjeta esta vencida vuelvo atras con el mensaje correspondiente.
 				  {
 				      Session::put('venc','Su tarjeta se encuentra vencida.');
-                      return Redirect::back();
+                      return Redirect::back()->withInput(Input::except('codigo'));
                   }
                   else// avanzo a la confirmacion final.
                   {				  

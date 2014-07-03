@@ -28,12 +28,12 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:</br>
     <table>
 	<tr>
         <td>
-        Titular de la Tarjeta de Crédito: <input type=text name="titular" value="" size=""><span class="tooltip" title="Ingrese nombre y apellido del titular de la tarjeta de crédito.">[?]</span> <br/>
+        Titular de la Tarjeta de Crédito: <input type=text name="titular" size="" value="{{Input::old('titular')}}"><span class="tooltip" title="Ingrese nombre y apellido del titular de la tarjeta de crédito.">[?]</span> <br/>
         </td>
     </tr>
     <tr>
         <td>
-        Número de Tarjeta de Crédito: <input name="numero" value="" placeholder="16 dígitos"><span class="tooltip" title="El número debe contener 16 dígitos.">[?]</span>
+        Número de Tarjeta de Crédito: <input name="numero" placeholder="16 dígitos" value="{{Input::old('numero')}}"><span class="tooltip" title="El número debe contener 16 dígitos.">[?]</span>
         </td>
     </tr>   
     <tr>
@@ -49,8 +49,8 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:</br>
     </table>
 	<table>
 	   <tr>
-	      <td>
-            <input type="hidden" name="selMes" value="mes"/> Seleccione la fecha de vencimiento<span class="tooltip" title="Seleccione la fecha de vencimiento de la tarjeta de crédito.">[?]</span> 
+            <input type="hidden" name="selMes" value="mes"/> Seleccione la fecha de vencimiento: <span class="tooltip" title="Seleccione la fecha de vencimiento de la tarjeta de crédito.">[?]</span> 
+            <td>
 		    <select name="valorMes" style="padding:2px;width:105px;" >
 				    {{--<option value=""  selected="selected"> Mes </option>--}}
 					<option value="01">Enero</option>
@@ -68,7 +68,7 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:</br>
 			</select>
 		</td>
 		<td><input type="hidden" name="selAnio" value="Anio"/> 
-			<select name="valorAnio" style="padding:2px;width:95px;" >
+			<select name="valorAnio" style="padding:2px;width:65px;" >
 				   {{-- <option value=""  selected="selected"> Año </option>  --}}
 					<option value="2014">2014</option>
 					<option value="2015">2015</option>
@@ -78,6 +78,15 @@ A continuación se le solicitarán los datos de su tarjeta de crédito:</br>
 					<option value="2019">2019</option>
 					<option value="2020">2020</option>
 					<option value="2021">2021</option>
+					<option value="2022">2022</option>
+					<option value="2023">2023</option>
+					<option value="2024">2024</option>
+					<option value="2025">2025</option>
+					<option value="2026">2026</option>
+					<option value="2027">2027</option>
+					<option value="2028">2028</option>
+					<option value="2029">2029</option>
+					<option value="2030">2030</option>
 			</select>
         </td>
 	   </tr>

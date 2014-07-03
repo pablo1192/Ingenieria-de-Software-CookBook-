@@ -21,12 +21,18 @@ Released   : 20140207
 	<link href="/template/fonts.css" rel="stylesheet" type="text/css" media="all" />
 	<meta name="generator" content="Sistema Web Cookbook" />
 	<link rel="shortcut icon" href="/favicon.png" />
-	
-	<!--------------- DatePicker --------------------------------------------------------------------------------------------------->
+	<!-- DatePicker -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-	<!--------------- Final del DatePicker ----------------------------------------------------------------------------------------->
+	<!-- Final del DatePicker -->
+	<!-- Pop-up window. Cambiar width/height para el tamaño de ventana -->
+	<!-- Ejemplo de link: <a href="/ayuda/perfil" onclick="pop_up(this);" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>-->
+	<script>
+	function pop_up(url){
+	window.open(url,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=768,directories=no,location=no') 
+	}
+	</script>
 </head>
 
 <body>
@@ -44,7 +50,7 @@ Released   : 20140207
 					¡Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
 					@endif
 					@if (Auth::user()->esAdmin == 1)
-					<a href="{{ URL::to('/admin/') }}">Mensajes (0)</a>
+					<a href="{{ URL::to('/admin/') }}">Mensajes</a>
 					<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 					@else
 					<a href="{{ URL::to('/pedidos') }}">Pedidos</a>
@@ -53,10 +59,10 @@ Released   : 20140207
 					<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 				@endif
 			</div>
-		
-	
 			<div class="ayuda">
+				@section('ayuda')
 				<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+				@show
 			</div>
 			@if ( (Auth::user()) && (!Auth::user()->esAdmin) )
 			<div class="carrito">
