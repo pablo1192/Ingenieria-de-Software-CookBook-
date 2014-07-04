@@ -34,7 +34,6 @@ Route::get('/admin/libros/{id}/borrar',['uses'=>'LibroController@baja']);
 Route::get('/admin/libros/{id}/agotado',['uses'=>'LibroController@marcarComoAgotado']);
 Route::get('/admin/libros/{id}/restaurar',['uses'=>'LibroController@restaurar']);
 
-
 //Gestion de Editorial
 Route::get('/admin/editoriales',['uses'=>'EditorialController@listar']);
 Route::get('/admin/editoriales/crear',['uses'=>'EditorialController@formularioAlta']);
@@ -71,7 +70,6 @@ Route::post('/admin/autores/{id}/modificar',['uses'=>'AutorController@modificaci
 Route::get('/admin/autores/{id}/borrar',['uses'=>'AutorController@baja']);
 Route::get('/admin/autores/{id}/restaurar',['uses'=>'AutorController@restaurar']);
 
-
 //Gestión de Usuarios para admin. Nuevo/Crear: funciones de prueba
 Route::get('/admin/usuarios', array('uses' => 'UsuarioController@mostrarUsuarios'))->before('admin_auth');
 Route::get('/admin/usuarios/vigentes', array('uses' => 'UsuarioController@mostrarUsuariosVigentes'))->before('admin_auth');
@@ -106,14 +104,11 @@ Route::get('/admin/pedidos/{id}/ver', array('uses'=>'UsuarioController@detallePe
 //filtro pedidos.(ordenar por fecha, funciona solo con todos los pedidos) 
 Route::get('/admin/pedidos/ordenD', array('uses' => 'UsuarioController@verPedidosAdminOrdDesc'))->before('admin_auth');
 
-
-
 //Carrito
 Route::get('/carrito', array('uses' => 'CarritoController@visualizar'))->before('auth.usrReg');
 Route::post('/carrito', array('uses' => 'CarritoController@agregarLibro'))->before('auth.usrReg');
 Route::get('/carrito/vaciar', array('uses' => 'CarritoController@vaciarCarrito'))->before('auth.usrReg');
 Route::get('/carrito/{id}/quitar', array('uses' => 'CarritoController@quitarLibro'))->before('auth.usrReg');
-
 
 //Compra
 Route::get('/carrito/tarjeta', array('uses' => 'CarritoController@solicDatosTarjeta'))->before('auth.usrReg');
@@ -122,11 +117,48 @@ Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoControll
 //~ Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@altaPedido'))->before('auth.usrReg');
 Route::post('/carrito/tarjeta/finalizarCompra', array('uses' => 'CarritoController@altaPedido'))->before('auth.usrReg');
 
-
 //Comprobantes
 Route::get('/pedidos/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteUsuario'))->before('auth.usrReg');
 Route::get('/admin/pedidos/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteAdmin'))->before('admin_auth');
 Route::get('/admin/pedidos/ordenD/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteAdminDesc'))->before('admin_auth');
+
+
+//Mensajería
+//Route::get('/contacto', array('uses' => 'UsuarioController@XXXXX'))->before('auth.usrReg');
+//Route::post('/contacto', array('uses' => 'UsuarioController@XXXXX'))->before('auth.usrReg');
+//Route::get('/admin/mensajes', array('uses' => 'UsuarioController@XXXXX'))->before('admin_auth');
+//Otras funciones.
+
+
+
+//Ayuda
+//  El admin puede ver la ayuda del usuario. El usuario no puede ver la ayuda del admin.  //
+
+Route::get('/ayuda', array('uses' => 'UsuarioController@XXXXX'));
+Route::get('/admin/ayuda', array('uses' => 'UsuarioController@XXXXX'))->before('admin_auth');
+
+//  ID propuestas (para que abarquen varios temas y no separar por 20 ids diferentes.)  //
+//  /ayuda: Índice de temas.  //
+//#cuenta: Registro al sistema, pérdida de password y perfil (usuario)
+//#catalogo: La búsqueda y visualización de libros (usuario)
+//#compra: El carrito y compra efectiva (usuario)
+//#pedidos: Los pedidos y sus estados (usuario)
+//#contacto: La mensajería (usuario) 
+
+//  /admin/ayuda: Índice de temas.  //
+//#libros: Los libros, entidades secundarias y sus funciones (admin)
+//#usuarios: Los usuarios, búsqueda y sus funciones (admin)
+//#pedidos: Los pedidos, búsqueda y sus estados (admin)
+//#reportes: Los reportes y las funciones (admin)
+//#contacto: La mensajería (admin) 
+
+
+
+//Reportes
+//Route::get('/admin/reportes', array('uses' => 'UsuarioController@XXXXX'))->before('admin_auth');
+//Otras funciones.
+
+
 //Manejo de errores de Servidor
 Route::get('/404',function(){
 	return View::make('error404');

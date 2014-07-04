@@ -50,7 +50,7 @@ Released   : 20140207
 					¡Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
 					@endif
 					@if (Auth::user()->esAdmin == 1)
-					<a href="{{ URL::to('/admin/') }}">Mensajes</a>
+					<a href="{{ URL::to('/admin/mensajes') }}">Mensajes</a>
 					<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 					@else
 					<a href="{{ URL::to('/pedidos') }}">Pedidos</a>
@@ -81,7 +81,7 @@ Released   : 20140207
 						@endif
 					@endif
 					<li id="catalogo"><a href="/" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
-					<li id="contacto"><a href="/404" title="Póngase en contacto con Cookbook">Contacto</a></li>					
+					<li id="contacto"><a href="/contacto" title="Póngase en contacto con Cookbook">Contacto</a></li>					
 				</ul>
 			</div>
 		</div>

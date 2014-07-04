@@ -41,13 +41,13 @@ Released   : 20140207
 		<div id="header" class="container">
 			<div class="menu">
 				¡Bienvenido, <strong>Administrador</strong>!
-				<a href="{{ URL::to('/admin/') }}">Mensajes</a>
+				<a href="{{ URL::to('/admin/mensajes') }}">Mensajes</a>
 				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 			</div>
 			<div class="ayuda">
 				@section('ayuda')
-				<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/>
+				<a href="/admin/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/>
 				@show
 			</div>
 			<div id="logo">
@@ -59,7 +59,7 @@ Released   : 20140207
 					<li id="libros"><a href="/admin/libros/" title="Gestión de libros">Libros</a></li>
 					<li id="usuarios"><a href="/admin/usuarios/" title="Gestión de usuarios">Usuarios</a></li>
 					<li id="pedidos"><a href="/admin/pedidos/" title="Gestión de pedidos">Pedidos</a></li>
-					<li id="reportes"><a href="/admin/" title="Visualización de reportes y estadísticas">Reportes</a></li>
+					<li id="reportes"><a href="/admin/reportes/" title="Visualización de reportes y estadísticas">Reportes</a></li>
 				</ul>
 			</div>
 		</div>
