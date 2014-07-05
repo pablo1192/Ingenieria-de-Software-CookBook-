@@ -88,6 +88,9 @@ Route::get('/login', array('uses' => 'HomeController@showlogin'));
 Route::post('/login', array('uses' => 'HomeController@doLogin'));
 Route::get('/logout', array('uses' => 'HomeController@doLogout'))->before('auth');
 
+Route::get('/resetear', array('uses' => 'HomeController@showReset'));
+Route::post('/resetear', array('uses' => 'HomeController@doReset'));
+
 //Perfil, Darse de baja
 Route::get('/perfil', array('uses' => 'UsuarioController@formularioPerfil'))->before('auth');
 Route::post('/perfil', array('uses' => 'UsuarioController@modificarPerfil'));

@@ -6,7 +6,7 @@
 
 @section('contenido')
 
-<h1>Login</h1>
+<h1>Restablecer la contraseña</h1>
 
 </br>
 @if($errors->has())
@@ -17,24 +17,25 @@
 </ul>
 @endif
 
-@if (($alert = Session::get('ingreso-fallido')) || ($alert = Session::get('cuenta-invalida')) || ($alert = Session::get('email-fallido')) || ($alert = Session::get('email-encontrado')))
+@if ($alert = Session::get('ingreso-fallido'))
     <div class="alert alert-warning">
         {{ $alert }}
     </div></br>
 @endif
 
-<form method="post" action="/login">
-<table>
-	    <tr>Email:</tr></br>
+@if ($alert = Session::get('cuenta-invalida'))
+    <div class="alert alert-warning">
+        {{ $alert }}
+    </div></br>
+@endif
+
+Se le enviará un email de confirmación a la dirección de correo con la que se registró.</br></br>
+<form method="post" action="/resetear">
+	<table>
+	    <tr>Ingrese su email:</tr></br>
 	    <tr><input name="email" value="{{Input::old('email')}}" placeholder="ejemplo@gmail.com"></tr></br></br>
-	    <tr>Contraseña:</tr></br>
-	    <tr><input type=password name="contraseña" value=""></tr></br>
-    </table>
+	</table>
     <br/>
-    <input type="submit" value="Ingresar" title="Ingresar al sistema" />       
+    <input type="submit" value="Restablecer" title="Restablece la contraseña" onclick="return confirm('¿Seguro que desea restablecer su contraseña?')">       
 </form>
-
-<h2></h2>
-<a href="/resetear" style="text-decoration:none;">Restablecer la contraseña.</a> 
-
 @stop
