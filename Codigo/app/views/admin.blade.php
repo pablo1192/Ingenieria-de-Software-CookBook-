@@ -41,7 +41,13 @@ Released   : 20140207
 		<div id="header" class="container">
 			<div class="menu">
 				¡Bienvenido, <strong>Administrador</strong>!
-				<a href="{{ URL::to('/admin/mensajes') }}">Mensajes</a>
+				
+				@if(Mensaje::noLeidos()->count() > 0)
+					<a href="{{ URL::to('/admin/mensajes') }}">Mensajes <strong class="cookbook" title="Ud cuenta con mensajes sin leer">({{Mensaje::noLeidos()->count()}})</strong> </a>
+				@else
+					<a href="{{ URL::to('/admin/mensajes') }}">Mensajes </a>
+				@endif
+				
 				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 			</div>

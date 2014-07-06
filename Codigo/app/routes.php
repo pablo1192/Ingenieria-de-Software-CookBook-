@@ -124,9 +124,13 @@ Route::get('/admin/pedidos/ordenD/{id}/comprobante', array('uses' => 'UsuarioCon
 
 
 //Mensajería
-//Route::get('/contacto', array('uses' => 'UsuarioController@XXXXX'))->before('auth.usrReg');
-//Route::post('/contacto', array('uses' => 'UsuarioController@XXXXX'))->before('auth.usrReg');
-//Route::get('/admin/mensajes', array('uses' => 'UsuarioController@XXXXX'))->before('admin_auth');
+Route::get('/contacto', array('uses' => 'MensajeController@visualizarFormulario'))->before('auth.usrReg');
+Route::post('/contacto', array('uses' => 'MensajeController@enviarMensaje'))->before('auth.usrReg');
+Route::get('/admin/mensajes', array('uses' => 'MensajeController@listar'))->before('admin_auth');
+Route::get('/admin/mensajes/{id}/ver', array('uses' => 'MensajeController@visualizar'))->before('admin_auth');
+Route::get('/admin/mensajes/{id}/cambiarEstado', array('uses' => 'MensajeController@cambiarEstado'))->before('admin_auth');
+
+
 //Otras funciones.
 
 
