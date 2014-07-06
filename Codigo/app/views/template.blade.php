@@ -50,7 +50,11 @@ Released   : 20140207
 					¡Bienvenido, <strong>{{Auth::user()->nombre}} {{Auth::user()->apellido}}</strong>!
 					@endif
 					@if (Auth::user()->esAdmin == 1)
-					<a href="{{ URL::to('/admin/mensajes') }}">Mensajes</a>
+						@if(Mensaje::noLeidos()->count() > 0)
+							<a href="{{ URL::to('/admin/mensajes') }}">Mensajes <strong class="cookbook" title="Ud cuenta con mensajes sin leer">({{Mensaje::noLeidos()->count()}})</strong> </a>
+						@else
+							<a href="{{ URL::to('/admin/mensajes') }}">Mensajes </a>
+						@endif
 					<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 					@else
 					<a href="{{ URL::to('/pedidos') }}">Pedidos</a>
