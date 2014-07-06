@@ -19,7 +19,8 @@
 		</tr>	
 	</table>
 	<br/>
-	<a href="mailto:{{$mensaje->usuario->email}}?subject=Re:{{$mensaje->asunto}}" title="Responda vía mail a este mensaje" class="button button-mediano button-verde">Responder</a>
+	<a href="mailto:{{$mensaje->usuario->email}}?subject=Re:{{$mensaje->asunto}}" title="Responda vía mail a este mensaje" class="button button-mediano button-verde">Responder</a> &nbsp;&nbsp;&nbsp;
+	<a href="/admin/mensajes/{{$mensaje->id}}/borrar" title="Elimine este mensaje" class="button button-mediano button-rojo" onclick="return confirm('¿Está seguro que desea eliminar el mensaje\n«{{$mensaje->asunto}}» de {{$mensaje->usuario->nombre.' '.$mensaje->usuario->apellido}}')">Borrar</a>
 	<br/><br/>
 	<a title="Retornar a Gestión de Mensajes" href="/admin/mensajes">Volver</a>
 @stop

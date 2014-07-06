@@ -19,7 +19,7 @@
 				<td>{{date('d/m/Y', strtotime($mensaje->created_at))}}</td>
 				<td>
 					<a href="/admin/mensajes/{{$mensaje->id}}/cambiarEstado" title="Marque como este mensaje {{(($mensaje->leído)? 'No Leído':'Leído')}}">{{(($mensaje->leído)? 'No Leído':'Leído')}}</a> &nbsp;&nbsp;&nbsp;
-					<a href="#" title="Elimine el mensaje" onclick="return confirm('Esta seguro que desea eliminar el mensaje\n«{{$mensaje->asunto}}» de {{$mensaje->usuario->nombre.' '.$mensaje->usuario->apellido}}')">Borrar</a> 
+					<a href="/admin/mensajes/{{$mensaje->id}}/borrar" title="Elimine el mensaje" onclick="return confirm('¿Está seguro que desea eliminar el mensaje\n«{{$mensaje->asunto}}» de {{$mensaje->usuario->nombre.' '.$mensaje->usuario->apellido}}')" class="rojo">Borrar</a> 
 				</td>
 			</tr>	
 		@endforeach

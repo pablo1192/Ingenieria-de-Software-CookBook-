@@ -70,6 +70,20 @@ class MensajeController extends BaseController {
 		return Redirect::back();
 	}
 		
+
+
+	public function eliminar($id){
+		//ToDo: Proteger este metodo!
+		
+		$mensaje=Mensaje::find($id);		
+
+		if($mensaje){
+			$mensaje->delete();
+		}
+		
+		return Redirect::to('/admin/mensajes');
+	}
+		
 	
 	
 	

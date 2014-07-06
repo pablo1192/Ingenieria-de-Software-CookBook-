@@ -132,6 +132,7 @@ Route::post('/contacto', array('uses' => 'MensajeController@enviarMensaje'))->be
 Route::get('/admin/mensajes', array('uses' => 'MensajeController@listar'))->before('admin_auth');
 Route::get('/admin/mensajes/{id}/ver', array('uses' => 'MensajeController@visualizar'))->before('admin_auth');
 Route::get('/admin/mensajes/{id}/cambiarEstado', array('uses' => 'MensajeController@cambiarEstado'))->before('admin_auth');
+Route::get('/admin/mensajes/{id}/borrar', array('uses' => 'MensajeController@eliminar'))->before('admin_auth');
 
 
 //Otras funciones.
