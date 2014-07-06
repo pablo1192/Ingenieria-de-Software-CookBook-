@@ -26,11 +26,27 @@ Released   : 20140207
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 	<!-- Final del DatePicker -->
-	<!-- Pop-up window. Cambiar width/height para el tamaño de ventana -->
-	<!-- Ejemplo de link: <a href="/ayuda/perfil" onclick="pop_up(this);" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>-->
-	<script>
-	function pop_up(url){
-	window.open(url,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=768,directories=no,location=no') 
+	<!-- Pop-up Window. Cambiar width/height para el tamaño de ventana -->
+	<!-- Ejemplo de link: <a href="javascript: void(0)" onclick="popup('ayuda#indice')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a> -->
+	<script type="text/javascript">
+	function popup(url) 
+	{
+		 var width  = 800;
+		 var height = 600;
+		 var left   = (screen.width  - width)/2;
+		 var top    = (screen.height - height)/2;
+		 var params = 'width='+width+', height='+height;
+		 params += ', top='+top+', left='+left;
+		 params += ', directories=no';
+		 params += ', location=no';
+		 params += ', menubar=no';
+		 params += ', resizable=no';
+		 params += ', scrollbars=yes';
+		 params += ', status=no';
+		 params += ', toolbar=no';
+		 newwin=window.open(url,'windowname5', params);
+		 if (window.focus) {newwin.focus()}
+		 return false;
 	}
 	</script>
 </head>
@@ -41,19 +57,17 @@ Released   : 20140207
 		<div id="header" class="container">
 			<div class="menu">
 				¡Bienvenido, <strong>Administrador</strong>!
-				
 				@if(Mensaje::noLeidos()->count() > 0)
 					<a href="{{ URL::to('/admin/mensajes') }}">Mensajes <strong class="cookbook" title="Ud cuenta con mensajes sin leer">({{Mensaje::noLeidos()->count()}})</strong> </a>
 				@else
 					<a href="{{ URL::to('/admin/mensajes') }}">Mensajes </a>
 				@endif
-				
 				<a href="{{ URL::to('/admin/perfil') }}">Modificar Contraseña</a>
 				<a href="{{ URL::to('/logout') }}">Cerrar Sesión</a>
 			</div>
 			<div class="ayuda">
 				@section('ayuda')
-				<a href="/admin/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/>
+				<a href="javascript: void(0)" onclick="popup('admin/ayuda')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
 				@show
 			</div>
 			<div id="logo">
@@ -69,7 +83,6 @@ Released   : 20140207
 				</ul>
 			</div>
 		</div>
-
 	</div>
 	<div id="wrapper3">
 		<div id="portfolio" class="container">	

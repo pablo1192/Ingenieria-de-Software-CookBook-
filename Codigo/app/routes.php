@@ -135,15 +135,11 @@ Route::get('/admin/mensajes/{id}/cambiarEstado', array('uses' => 'MensajeControl
 Route::get('/admin/mensajes/{id}/borrar', array('uses' => 'MensajeController@eliminar'))->before('admin_auth');
 
 
-//Otras funciones.
-
-
-
 //Ayuda
 //  El admin puede ver la ayuda del usuario. El usuario no puede ver la ayuda del admin.  //
 
-Route::get('/ayuda', array('uses' => 'UsuarioController@XXXXX'));
-Route::get('/admin/ayuda', array('uses' => 'UsuarioController@XXXXX'))->before('admin_auth');
+Route::get('/ayuda', array('uses' => 'UsuarioController@verAyuda'));
+Route::get('/admin/ayuda', array('uses' => 'UsuarioController@verAyudaAdmin'))->before('admin_auth');
 
 //  ID propuestas (para que abarquen varios temas y no separar por 20 ids diferentes.)  //
 //  /ayuda: Índice de temas.  //

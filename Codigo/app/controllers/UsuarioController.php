@@ -625,6 +625,7 @@ class UsuarioController extends BaseController {
             return Redirect::to('/404');
         }
 	}
+
 	public function comprobanteAdminDesc($id)
 	{
 	    $pedido = Pedido::find($id);
@@ -645,6 +646,19 @@ class UsuarioController extends BaseController {
         }
 	}
 
+    public function verAyuda()
+    {
+        return View::make('ayuda');
+    }
 
+    public function verAyudaAdmin()
+    {
+        if (Auth::user()->esAdmin == 1) {
+            return View::make('ayudaadmin');
+        }
+        else {
+            return Redirect::to('/');
+        }
+    }
 }
 ?>

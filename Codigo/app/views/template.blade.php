@@ -26,11 +26,27 @@ Released   : 20140207
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 	<!-- Final del DatePicker -->
-	<!-- Pop-up window. Cambiar width/height para el tamaño de ventana -->
-	<!-- Ejemplo de link: <a href="/ayuda/perfil" onclick="pop_up(this);" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>-->
-	<script>
-	function pop_up(url){
-	window.open(url,'win2','status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=1076,height=768,directories=no,location=no') 
+	<!-- Pop-up Window. Cambiar width/height para el tamaño de ventana -->
+	<!-- Ejemplo de link: <a href="javascript: void(0)" onclick="popup('ayuda#indice')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a> -->
+	<script type="text/javascript">
+	function popup(url) 
+	{
+		 var width  = 800;
+		 var height = 600;
+		 var left   = (screen.width  - width)/2;
+		 var top    = (screen.height - height)/2;
+		 var params = 'width='+width+', height='+height;
+		 params += ', top='+top+', left='+left;
+		 params += ', directories=no';
+		 params += ', location=no';
+		 params += ', menubar=no';
+		 params += ', resizable=no';
+		 params += ', scrollbars=yes';
+		 params += ', status=no';
+		 params += ', toolbar=no';
+		 newwin=window.open(url,'windowname5', params);
+		 if (window.focus) {newwin.focus()}
+		 return false;
 	}
 	</script>
 </head>
@@ -65,7 +81,7 @@ Released   : 20140207
 			</div>
 			<div class="ayuda">
 				@section('ayuda')
-				<a href="/ayuda" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+				<a href="javascript: void(0)" onclick="popup('ayuda')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
 				@show
 			</div>
 			@if ( (Auth::user()) && (!Auth::user()->esAdmin) )
@@ -73,7 +89,6 @@ Released   : 20140207
 				<a href="/carrito" title="Acceda a su carrito de compras"><img src="/template/images/carrito.png" alt="Carrito"/> {{(Session::has('carrito'))? array_sum(Session::get('carrito')) : 0 }} </a>
 			</div>
 			@endif
-
 			<div id="logo">
 				<h1><a href="/"><img src="/template/images/Cookbook - Logo.limpio.png" alt="Logo Cookbook" title="Cookbook"/></a></h1>
 				<span>Venta de libros online<br/><br/></span> </div>
@@ -97,7 +112,6 @@ Released   : 20140207
 		</div>
 	</div>
 </div>
-
 <div id="copyright" class="container">
 	<p><span><strong>Cookbook</strong> - Sistema web de venta de libros</span><br/>
 	Diseño <a href="http://templated.co" rel="nofollow">Templated</a> | Implementación <a href="#">Soluciones Informáticas</a>.</p>
