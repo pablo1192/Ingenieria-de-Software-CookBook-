@@ -1,5 +1,9 @@
 @extends('admin')
 
+@section('ayuda')
+  <a href="/admin/ayuda#pedidos" onclick="pop_up(this);" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+@overwrite
+
 @section('menuActivo')
 menuActivo='pedidos'
 @stop

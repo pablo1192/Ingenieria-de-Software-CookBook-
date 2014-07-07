@@ -1,5 +1,9 @@
 @extends('template')
 
+@section('ayuda')
+    <a href="javascript: void(0)" onclick="popup('/ayuda#catalogo')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+@overwrite
+
 @section('menuActivo')
 menuActivo='catalogo'
 @stop

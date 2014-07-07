@@ -27,7 +27,7 @@ Released   : 20140207
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 	<!-- Final del DatePicker -->
 	<!-- Pop-up Window. Cambiar width/height para el tamaño de ventana -->
-	<!-- Ejemplo de link: <a href="javascript: void(0)" onclick="popup('ayuda#indice')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a> -->
+	<!-- Ejemplo de link: <a href="javascript: void(0)" onclick="popup('/ayuda#compra')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a> -->
 	<script type="text/javascript">
 	function popup(url) 
 	{
@@ -81,7 +81,7 @@ Released   : 20140207
 			</div>
 			<div class="ayuda">
 				@section('ayuda')
-				<a href="javascript: void(0)" onclick="popup('ayuda')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+				<a href="javascript: void(0)" onclick="popup('/ayuda')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
 				@show
 			</div>
 			@if ( (Auth::user()) && (!Auth::user()->esAdmin) )

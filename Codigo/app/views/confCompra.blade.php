@@ -1,4 +1,9 @@
 @extends('template')
+
+@section('ayuda')
+    <a href="javascript: void(0)" onclick="popup('/ayuda#compra')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+@overwrite
+
 @section('contenido')
 
 <h2>Confirmación de compra final</h2>

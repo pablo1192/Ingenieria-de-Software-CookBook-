@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('ayuda')
-	<a href="/ayuda/perfil" onclick="pop_up(this);" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+    <a href="javascript: void(0)" onclick="popup('/ayuda#cuenta')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
 @overwrite
 
 @section('contenido')

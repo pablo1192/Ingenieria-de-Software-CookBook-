@@ -4,6 +4,10 @@
 menuActivo='catalogo'
 @stop
 
+@section('ayuda')
+    <a href="javascript: void(0)" onclick="popup('/ayuda#compra')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+@overwrite
+
 @section('contenido')
 <a name="area"></a>
 <h2>Carrito de compras</h2>
