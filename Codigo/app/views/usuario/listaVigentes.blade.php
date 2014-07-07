@@ -1,7 +1,7 @@
 @extends('admin')
 
 @section('ayuda')
-  <a href="/admin/ayuda#usuarios" onclick="pop_up(this);" title="Obtenga acceso a la ayuda del sistema"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
+    <a href="javascript: void(0)" onclick="popup('/admin/ayuda#usuarios')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a>
 @overwrite
 
 @section('menuActivo')

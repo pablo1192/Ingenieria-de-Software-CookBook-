@@ -654,7 +654,7 @@ class UsuarioController extends BaseController {
     public function verAyudaAdmin()
     {
         if (Auth::user()->esAdmin == 1) {
-            return View::make('ayudaadmin');
+            return View::make('ayudaAdmin');
         }
         else {
             return Redirect::to('/');
