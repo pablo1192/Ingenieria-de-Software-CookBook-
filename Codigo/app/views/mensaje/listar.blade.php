@@ -20,7 +20,7 @@
 			<tr {{(($mensaje->leído)? '':'style="font-weight:bold;"')}}>
 				<td><a title="Acceda a los detalles del Usuario" href="/admin/usuarios/{{$mensaje->usuario->id}}/ver">{{$mensaje->usuario->nombre .' '. $mensaje->usuario->apellido}}</a></td>
 				<td><a title="Visualizar el mensaje" href="/admin/mensajes/{{$mensaje->id}}/ver">{{$mensaje->asunto}}</td>				
-				<td>{{date('d/m/Y', strtotime($mensaje->created_at))}}</td>
+				<td>{{date('d/m/Y H:m', strtotime($mensaje->created_at))}}</td>
 				<td>
 					<a href="/admin/mensajes/{{$mensaje->id}}/cambiarEstado" title="Marque como este mensaje {{(($mensaje->leído)? 'No Leído':'Leído')}}">{{(($mensaje->leído)? 'No Leído':'Leído')}}</a> &nbsp;&nbsp;&nbsp;
 					<a href="/admin/mensajes/{{$mensaje->id}}/borrar" title="Elimine el mensaje" onclick="return confirm('¿Está seguro que desea eliminar el mensaje\n«{{$mensaje->asunto}}» de {{$mensaje->usuario->nombre.' '.$mensaje->usuario->apellido}}')" class="rojo">Borrar</a> 

@@ -14,7 +14,7 @@
 		</tr>	
 			<td width="70px">Asunto:</td><td><a title="Visualice el mensaje" href="">{{$mensaje->asunto}}</td>				
 		</tr>	
-			<td width="70px">Fecha:</td><td>{{date('d/m/Y h:m', strtotime($mensaje->created_at))}}</td>
+			<td width="70px">Fecha:</td><td>{{date('d/m/Y H:m', strtotime($mensaje->created_at))}}</td>
 		</tr>	
 		<tr>				
 			<td style="border-top:1px solid #ccc;border-bottom:1px solid #ccc;padding-top:5px;" colspan="2">
