@@ -35,16 +35,42 @@ class MensajeController extends BaseController {
 	}
 	
 	public function listar(){
-		//ToDo: Proteger este metodo!
+		$mensajes=null;
+		$filtrar=false;
+		$criterio=null;
 		
-		$mensajes=Mensaje::all();
-		return View::make('mensaje.listar',['mensajes'=>$mensajes]);
+		if((Input::has('filtrar')) && (Input::get('filtrar') != ' ' )){
+			
+			$filtrar=true;
+			switch(Input::get('filtrar')){
+				case 'noLeidos':	$mensajes=Mensaje::noLeidos()->get();
+									$criterio='No leidos';
+									break;
+				case 'leidos':		$mensajes=Mensaje::leidos()->get();
+									$criterio='Leidos';
+									break;
+				//Si es cualquier otra opcion, ignoro el filtrado
+				default:			return Redirect::to('/admin/mensajes') ;
+									break;
+			}
+		}
+		else{
+			$mensajes=Mensaje::all();
+		}
+		
+		
+		return View::make('mensaje.listar',['mensajes'=>$mensajes, 'filtrar'=> $filtrar, 'criterio'=>$criterio]);
 	}
 	
 	
 	
 	public function visualizar($id){
-		//ToDo: Proteger este metodo!
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/mensajes'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}	  
+		if(!Cookbook::existeId($id,'mensaje')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}		
 		
 		$mensaje=Mensaje::find($id);		
 		
@@ -59,8 +85,13 @@ class MensajeController extends BaseController {
 	
 	//Cambia el estado de leido
 	public function cambiarEstado($id){
-		//ToDo: Proteger este metodo!
-		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/mensajes'])){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}	  
+		if(!Cookbook::existeId($id,'mensaje')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}		
+				
 		$mensaje=Mensaje::find($id);		
 
 		//Cambio su estado..
@@ -73,15 +104,20 @@ class MensajeController extends BaseController {
 
 
 	public function eliminar($id){
-		//ToDo: Proteger este metodo!
-		
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/mensajes','/admin/mensajes/*'],true)){
+			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
+		}	  
+		if(!Cookbook::existeId($id,'mensaje')){
+			return View::make('error',['título'=>Cookbook::MODIFICACION_TITULO, 'motivo'=>Cookbook::MODIFICACION_MOTIVO]);
+		}		
+				
 		$mensaje=Mensaje::find($id);		
 
 		if($mensaje){
 			$mensaje->delete();
 		}
 		
-		return Redirect::to('/admin/mensajes');
+		return Redirect::to('/admin/mensajes')->with('mensajeEliminado','¡El mensaje ha sido eliminado correctamente!.');
 	}
 		
 	

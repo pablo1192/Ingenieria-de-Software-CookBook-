@@ -12,9 +12,9 @@
 		<tr>
 			<td width="70px">Usuario:</td><td> <a title="Acceda a los detalles del Usuario" href="/admin/usuarios/{{$mensaje->usuario->id}}/ver">{{$mensaje->usuario->nombre .' '. $mensaje->usuario->apellido}}</a></td>
 		</tr>	
-			<td width="70px">Asunto:</td><td><a title="Visualice el mensaje" href="">{{$mensaje->asunto}}</td>				
+			<td width="70px">Asunto:</td><td>{{$mensaje->asunto}}</td>				
 		</tr>	
-			<td width="70px">Fecha:</td><td>{{date('d/m/Y H:m', strtotime($mensaje->created_at))}}</td>
+			<td width="70px">Enviado:</td><td>{{date('d/m/Y \a \l\a\s\  H:i:s', strtotime($mensaje->created_at))}}</td>
 		</tr>	
 		<tr>				
 			<td style="border-top:1px solid #ccc;border-bottom:1px solid #ccc;padding-top:5px;" colspan="2">
@@ -23,7 +23,7 @@
 		</tr>	
 	</table>
 	<br/>
-	<a href="mailto:{{$mensaje->usuario->email}}?subject=Re:{{$mensaje->asunto}}" title="Responda vía mail a este mensaje" class="button button-mediano button-verde">Responder</a> &nbsp;&nbsp;&nbsp;
+	<a href="mailto:{{$mensaje->usuario->email}}?subject=Re:{{$mensaje->asunto}}" title="Responda vía mail a este mensaje" class="button button-mediano button-azul">Responder</a> &nbsp;&nbsp;&nbsp;
 	<a href="/admin/mensajes/{{$mensaje->id}}/borrar" title="Elimine este mensaje" class="button button-mediano button-rojo" onclick="return confirm('¿Está seguro que desea eliminar el mensaje\n«{{$mensaje->asunto}}» de {{$mensaje->usuario->nombre.' '.$mensaje->usuario->apellido}}')">Borrar</a>
 	<br/><br/>
 	<a title="Retornar a Gestión de Mensajes" href="/admin/mensajes">Volver</a>

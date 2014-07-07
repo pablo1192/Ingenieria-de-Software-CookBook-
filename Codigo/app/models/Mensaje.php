@@ -13,8 +13,8 @@ class Mensaje extends Eloquent
 	
     public static function reglasDeValidacion(){
         return [
-			'asunto'=>['min:4','required'],
-			'cuerpo'=>['min:10','required'],
+			'asunto'=>['min:4','max:128','required'],
+			'cuerpo'=>['min:10','max:512','required'],
 			// Chequeo q exista y no permito q sea el Admin (id<>1)...
 			'usuario'=>['required','exists:usuario,id','not_in:1']
 		];
