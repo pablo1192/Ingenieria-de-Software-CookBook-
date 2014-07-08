@@ -161,7 +161,7 @@ Route::get('/admin/ayuda', array('uses' => 'UsuarioController@verAyudaAdmin'))->
 //Reportes
 Route::get('/admin/reportes', array('uses' => 'UsuarioController@mostrarReportes'))->before('admin_auth');
 //Otras funciones.
-
+Route::get('/admin/exportarBD', array('uses' => 'UsuarioController@exportarBD'))->before('admin_auth');
 
 //Manejo de errores de Servidor
 Route::get('/404',function(){

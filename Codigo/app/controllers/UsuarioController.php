@@ -692,5 +692,50 @@ class UsuarioController extends BaseController {
 	  }	  
 	  return View::make('usuario.reportes',['datosReporte'=>$reporte]);
 	}
+	
+	
+	//Experimental !!!
+	public function exportarBD(){
+		//Solucion indep del SO y "flexible" a cambios de Esquema de la BD
+		
+		//Consigo los nombres de las tablas de la BD.
+		$consulta=DB::select('Show tables') ;
+		$tablas=array_fetch($consulta,'Tables_in_cookbook');
+		
+		//Por cada una consigo sus campos (para el futuro inser into..)
+		$tablasConCampos=[];
+		foreach($tablas as $tabla){
+			$consulta=DB::select('Describe '.$tabla) ;
+			$tablasConCampos[$tabla]=array_fetch($consulta,'Field');
+		}
+
+
+		
+		//Encabezado sin chequeo de FK y otras compatibilidades...
+		$respuesta="SET FOREIGN_KEY_CHECKS=0;\nSET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";\nSET time_zone = \"+00:00\";\n\n";
+		
+		//Genero el Esquema de cada tabla y simulo el Insert Into..
+		foreach($tablasConCampos as $tabla => $campos){
+			$respuesta.="/*	Esquema de la tabla $tabla	*/\n";
+			$respuesta.=array_fetch(DB::select('Show create table '.$tabla),'Create Table')[0];
+			$respuesta.="\n\n";
+
+			$respuesta.='Insert into `'.$tabla.'` (`'.implode('`, `',$campos)."`) values \n";
+			$registros=DB::select('select * from '.$tabla);
+
+			//Genero la linea de inserción..
+			foreach($registros as $registro){
+				$respuesta.='('.implode(',',array_flatten($registro)).")\n";
+			}
+			
+			$respuesta.="\n\n";
+		}
+
+		//Reactivo las FK
+		$respuesta.='SET FOREIGN_KEY_CHECKS=1;';
+	
+	
+		return $respuesta;	
+	}
 }
 ?>
