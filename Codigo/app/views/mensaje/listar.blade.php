@@ -8,13 +8,6 @@
 <h1>Gestión de Mensajes</h1>
 
 <h2>Mensajes (<span title="Cantidad total de mensajes">{{count($mensajes)}}</span>):</h2>
-@if(count($mensajes))
-	@if(Session::get('mensajeEliminado'))
-	<div class="mensaje mensaje-info">
-		{{Session::get('mensajeEliminado')}}
-	</div>
-	@endif
-	
 	<table align="right" width="400px">
 		<tr>
 			<td>
@@ -33,6 +26,13 @@
 			</td>
 		</tr>
 	</table>
+
+@if(count($mensajes))
+	@if(Session::get('mensajeEliminado'))
+	<div class="mensaje mensaje-info">
+		{{Session::get('mensajeEliminado')}}
+	</div>
+	@endif
 	
 	<table width="950px" cellspacing="0" cellpadding="3">
 		<tr align="left">

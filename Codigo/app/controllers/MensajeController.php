@@ -65,7 +65,7 @@ class MensajeController extends BaseController {
 	
 	
 	public function visualizar($id){
-		if(!Cookbook::accedeSoloDesdeRuta(['/admin/mensajes'])){
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/mensajes','/admin/mensajes*'],true)){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}	  
 		if(!Cookbook::existeId($id,'mensaje')){
@@ -85,7 +85,7 @@ class MensajeController extends BaseController {
 	
 	//Cambia el estado de leido
 	public function cambiarEstado($id){
-		if(!Cookbook::accedeSoloDesdeRuta(['/admin/mensajes'])){
+		if(!Cookbook::accedeSoloDesdeRuta(['/admin/mensajes','/admin/mensajes*'],true)){
 			return View::make('error',['título'=>Cookbook::ACCESO_TITULO, 'motivo'=>Cookbook::ACCESO_MOTIVO]);
 		}	  
 		if(!Cookbook::existeId($id,'mensaje')){
