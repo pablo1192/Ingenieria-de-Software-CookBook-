@@ -159,7 +159,7 @@ Route::get('/admin/ayuda', array('uses' => 'UsuarioController@verAyudaAdmin'))->
 
 
 //Reportes
-//Route::get('/admin/reportes', array('uses' => 'UsuarioController@XXXXX'))->before('admin_auth');
+Route::get('/admin/reportes', array('uses' => 'UsuarioController@mostrarReportes'))->before('admin_auth');
 //Otras funciones.
 
 

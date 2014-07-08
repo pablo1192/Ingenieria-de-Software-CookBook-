@@ -62,7 +62,7 @@ class UsuarioController extends BaseController {
                                                                                           ->orWhere('nombre', 'LIKE', '%' . $nombre . '%')
                                                                                           ->orWhere ($completo, 'LIKE', '%' . $nombre . '%');
                                                                                 })
-                                                                                ->get();
+                                                                           ->get();
                 $filtnombre = Input::get('valor');
                 Session::put('FiltNombre','Está filtrando por los clientes que coincidan con "'.$filtnombre.'".');
             }
@@ -660,5 +660,37 @@ class UsuarioController extends BaseController {
             return Redirect::to('/');
         }
     }
+	//
+	public function mostrarReportes()
+	{
+	  $reporte = null;
+	  $reglas=['reporte'=>['required'],'desde'=>['required'],'hasta'=>['required']];
+	  if(Input::has('reporte'))
+	  {
+	     $validador = Validator::make(Input::all(),$reglas);
+		 if($validador->fails())
+		 {
+		    if(Input::get('valor')==''){
+			  Session::put('rep','Seleccione un tipo de reporte.');  
+			}
+            return Redirect::back()->withInput()->withErrors($validador);
+         }
+         else
+		 {
+		   if(Input::get('valor')==''){
+			  Session::put('rep','Seleccione un tipo de reporte.');  
+			}
+	       if(Input::get('valor')=='CantUs')
+		   {
+		     $fecDesde = Input::get('desde');
+			 $fecHasta = Input::get('hasta');
+		     $reporte = Usuario::whereBetween('created_at',[$fecDesde,$fecHasta])->whereNotIn('id',[1])->orderBy('created_at','ASC')->get();
+			 if(count($reporte)== 0)
+			   Session::put('sinRes','No hay resultados para las fechas ingresadas.');
+		   }
+		 }
+	  }	  
+	  return View::make('usuario.reportes',['datosReporte'=>$reporte]);
+	}
 }
 ?>
