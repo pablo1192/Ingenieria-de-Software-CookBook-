@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<title>Cookbook - Ayuda del sistema</title>
 <style type="text/css">
 html, body {
 overflow-x: auto;

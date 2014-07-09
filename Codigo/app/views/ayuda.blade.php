@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<title>Cookbook - Ayuda del sistema</title>
 <style type="text/css">
 html, body {
 overflow-x: auto;
@@ -18,7 +19,7 @@ font-weight: 400;
 <li><a href="#cuenta">Cuenta de usuario.</a></li>
 <li><a href="#catalogo">Catálogo de libros.</a></li>
 <li><a href="#compra">Compra de libros.</a></li>
-<li><a href="#pedidos">Solicitudes de compras.</a></li>
+<li><a href="#pedidos">Pedidos de compras.</a></li>
 <li><a href="#contacto">Contacto.</a></li>
 </ol>
 
@@ -68,7 +69,7 @@ ornare. Quisque a scelerisque massa. <a href="#indice" title="Ir al índice">↑
 
 <hr>
 
-<a name="pedidos"></a><h2>Solicitudes de compra.</h2>
+<a name="pedidos"></a><h2>Pedidos de compra.</h2>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nibh dolor, placerat quis diam vel, sagittis gravida
 dolor. Mauris sollicitudin diam id tincidunt pretium. Duis sapien elit, rhoncus quis imperdiet id, pellentesque in
 quam. Mauris mattis leo a ante pharetra, sit amet venenatis justo porttitor. In ut tellus dui. Fusce vehicula facilisis

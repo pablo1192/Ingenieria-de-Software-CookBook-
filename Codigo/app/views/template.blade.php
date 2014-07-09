@@ -100,7 +100,15 @@ Released   : 20140207
 						@endif
 					@endif
 					<li id="catalogo"><a href="/" title="Conozca los libros que tenemos para ofrecerle">Catálogo</a></li>
-					<li id="contacto"><a href="/contacto" title="Póngase en contacto con Cookbook">Contacto</a></li>					
+					@if (!Auth::check())
+						<li id="contacto"><a href="/login" title="Póngase en contacto con Cookbook">Contacto</a></li>
+					@else
+						@if (Auth::user()->esAdmin == 1)
+							<li id="contacto"><a href="/admin/mensajes" title="Ver su casilla de mensajes">Contacto</a></li>
+						@else
+							<li id="contacto"><a href="/contacto" title="Póngase en contacto con Cookbook">Contacto</a></li>
+						@endif
+					@endif					
 				</ul>
 			</div>
 		</div>

@@ -136,25 +136,8 @@ Route::get('/admin/mensajes/{id}/borrar', array('uses' => 'MensajeController@eli
 
 
 //Ayuda
-//  El admin puede ver la ayuda del usuario. El usuario no puede ver la ayuda del admin.  //
-
 Route::get('/ayuda', array('uses' => 'UsuarioController@verAyuda'));
 Route::get('/admin/ayuda', array('uses' => 'UsuarioController@verAyudaAdmin'))->before('admin_auth');
-
-//  ID propuestas (para que abarquen varios temas y no separar por 20 ids diferentes.)  //
-//  /ayuda: Índice de temas.  //
-//#cuenta: Registro al sistema, pérdida de password y perfil (usuario)
-//#catalogo: La búsqueda y visualización de libros (usuario)
-//#compra: El carrito y compra efectiva (usuario)
-//#pedidos: Los pedidos y sus estados (usuario)
-//#contacto: La mensajería (usuario) 
-
-//  /admin/ayuda: Índice de temas.  //
-//#libros: Los libros, entidades secundarias y sus funciones (admin)
-//#usuarios: Los usuarios, búsqueda y sus funciones (admin)
-//#pedidos: Los pedidos, búsqueda y sus estados (admin)
-//#reportes: Los reportes y las funciones (admin)
-//#contacto: La mensajería (admin) 
 
 
 
@@ -162,6 +145,8 @@ Route::get('/admin/ayuda', array('uses' => 'UsuarioController@verAyudaAdmin'))->
 Route::get('/admin/reportes', array('uses' => 'UsuarioController@mostrarReportes'))->before('admin_auth');
 //Otras funciones.
 Route::get('/admin/exportarBD', array('uses' => 'UsuarioController@exportarBD'))->before('admin_auth');
+
+
 
 //Manejo de errores de Servidor
 Route::get('/404',function(){
