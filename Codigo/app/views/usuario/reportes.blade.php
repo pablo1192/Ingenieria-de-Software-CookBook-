@@ -27,7 +27,7 @@ En esta sección usted podrá generar distintos reportes.</br></br>
 <table width="100%" style="margin-bottom:8px;">
 <tr>
 	<td width="0%">
-	    <form method="GET" action="/admin/reportes/">
+	    <form method="get" action="/admin/reportes/">
 		  <input type="hidden" name="reporte" value="estado"/>
 		    <td>
 			<select name="valor" style="padding:2px;width:250px;" >
@@ -45,7 +45,7 @@ En esta sección usted podrá generar distintos reportes.</br></br>
 	</td>	
 </tr>
 </table>
-@if (count($datosReporte) >= 1)
+@if ((count($datosReporte) >= 1)&&(Session::has('repUserReg')))
 <h2>Datos del reporte: </h2> 
 <table>
 	<tr>
@@ -59,7 +59,7 @@ En esta sección usted podrá generar distintos reportes.</br></br>
 	</tr>
 @endforeach
 </table></br>
-Total de clientes: {{count($datosReporte)}}
+Total de clientes: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
 @else
     @if (Session::has('sinRes'))
      <h1><font color="purple">{{Session::get('sinRes')}}</font></h1>

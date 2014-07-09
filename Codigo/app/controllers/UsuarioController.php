@@ -687,6 +687,10 @@ class UsuarioController extends BaseController {
 		     $reporte = Usuario::whereBetween('created_at',[$fecDesde,$fecHasta])->whereNotIn('id',[1])->orderBy('created_at','ASC')->get();
 			 if(count($reporte)== 0)
 			   Session::put('sinRes','No hay resultados para las fechas ingresadas.');
+			 Session::put('repUserReg','reporte de usuarios registrados'); // Esto nunca se muestra pero sirve para que la view sepa que reporte debe mostrar(con su formato de tabla especifico).   
+		   }
+		   if(Input::get('valor')=='VenLib'){
+		   // Aca iria el codigo del 2do reporte!
 		   }
 		 }
 	  }	  
