@@ -700,12 +700,11 @@ class UsuarioController extends BaseController {
 	
 	//Experimental !!!
 	public function exportarBD(){
-		//Solucion indep del SO y "flexible" a cambios de Esquema de la BD
-		
+		//Solucion indep del SO y "flexible" a cambios de Esquema de la BD. Recomandada para usar con MySQL.
 		//Consigo los nombres de las tablas de la BD.
 		$consulta=DB::select('Show tables') ;
 		$tablas=array_fetch($consulta,'Tables_in_cookbook');
-		
+
 		//Por cada una consigo sus campos (para el futuro inser into..)
 		$tablasConCampos=[];
 		foreach($tablas as $tabla){
@@ -713,33 +712,50 @@ class UsuarioController extends BaseController {
 			$tablasConCampos[$tabla]=array_fetch($consulta,'Field');
 		}
 
-
-		
 		//Encabezado sin chequeo de FK y otras compatibilidades...
-		$respuesta="SET FOREIGN_KEY_CHECKS=0;\nSET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";\nSET time_zone = \"+00:00\";\n\n";
-		
+		$scriptDeSQL="-- Backup completo generado por Cookbook\n-- Fecha: ".date('d/m/Y H:i:s')."\n-- Aclaración: este Script de SQL es solo compatible con el Gestor de BD MySQL.\n\n";
+		$scriptDeSQL.="SET FOREIGN_KEY_CHECKS=0;\nSET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";\nSET time_zone = \"+00:00\";\n\n";
+		$scriptDeSQL.="CREATE DATABASE IF NOT EXISTS `cookbook` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;\nUSE `cookbook`;\n\n";
+
 		//Genero el Esquema de cada tabla y simulo el Insert Into..
 		foreach($tablasConCampos as $tabla => $campos){
-			$respuesta.="/*	Esquema de la tabla $tabla	*/\n";
-			$respuesta.=array_fetch(DB::select('Show create table '.$tabla),'Create Table')[0];
-			$respuesta.="\n\n";
-
-			$respuesta.='Insert into `'.$tabla.'` (`'.implode('`, `',$campos)."`) values \n";
+			$scriptDeSQL.="/*	Esquema de la tabla $tabla	*/\n";
+			$scriptDeSQL.=str_replace('CREATE TABLE','CREATE TABLE IF NOT EXISTS',array_fetch(DB::select('Show create table '.$tabla),'Create Table')[0]).';';
+			$scriptDeSQL.="\n\n";
+		
 			$registros=DB::select('select * from '.$tabla);
 
-			//Genero la linea de inserción..
-			foreach($registros as $registro){
-				$respuesta.='('.implode(',',array_flatten($registro)).")\n";
+			//Solo si hay registros...se define el insert into
+			if(count($registros)){
+				$scriptDeSQL.='Insert into `'.$tabla.'` (`'.implode('`, `',$campos)."`) values \n";
+				
+				//Genero las lineas de inserción..
+				$cantidad=count($registros);
+				foreach($registros as $registro){
+					//Los datos separados por coma, rodeados por comillas simples. MySQL hace la conv de los String a Numeros
+					//cuando sea necesario. Se colocan los Null
+					$datos="('".implode("','",array_flatten($registro))."')".(($cantidad===1)?';':',');
+					$datos=str_replace("''","Null",$datos);
+					$scriptDeSQL.=$datos."\n";
+					$cantidad--;
+				}
+				
+				$scriptDeSQL.="\n\n";
 			}
-			
-			$respuesta.="\n\n";
 		}
 
 		//Reactivo las FK
-		$respuesta.='SET FOREIGN_KEY_CHECKS=1;';
-	
-	
-		return $respuesta;	
+		$scriptDeSQL.='SET FOREIGN_KEY_CHECKS=1;';
+		
+		
+		//Genero la respuesta: un archivo para descargar con nombre «Cookbook - Backup YYYY-MM-DD.sql»
+		$respuesta= Response::make($scriptDeSQL, 200);
+		$respuesta->header('Content-Type', 'application/x-sql');
+		$respuesta->header('Content-Disposition','attachment; filename="Cookbook - Backup '.date('Y-m-d').'.sql"');
+		//Se calcula el tamaño en funcion de la cantidad de caracteres q hay, si bien es
+		//multibyte, strlen devuelve la cant de bytes ;).
+		$respuesta->header('Content-Length',strlen($scriptDeSQL));
+		return $respuesta;
 	}
 }
 ?>
