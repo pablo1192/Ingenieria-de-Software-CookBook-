@@ -689,8 +689,21 @@ class UsuarioController extends BaseController {
 			   Session::put('sinRes','No hay resultados para las fechas ingresadas.');
 			 Session::put('repUserReg','reporte de usuarios registrados'); // Esto nunca se muestra pero sirve para que la view sepa que reporte debe mostrar(con su formato de tabla especifico).   
 		   }
-		   if(Input::get('valor')=='VenLib'){
-		   // Aca iria el codigo del 2do reporte!
+
+		   if(Input::get('valor')=='VenLib') {
+             $fecDesde = Input::get('desde');
+             $fecHasta = Input::get('hasta');
+             $reporte = Pedido::whereBetween('fecha',[$fecDesde,$fecHasta])->select(array('*', DB::raw('SUM(libropedido.cantidad) as cant')))
+                                                                           ->join('libropedido', 'libropedido.pedido_id', '=', 'pedido.id')
+                                                                           ->join('libro', 'libro.id', '=', 'libropedido.libro_id')
+                                                                           ->groupBy('libropedido.libro_id')
+                                                                           ->orderBy('cant', 'DESC')
+                                                                           ->get();
+
+             if(count($reporte)== 0) {
+               Session::put('sinRes','No hay resultados para las fechas ingresadas.');
+             }
+             Session::put('repLibrVen','reporte de libros vendidos');   
 		   }
 		 }
 	  }	  

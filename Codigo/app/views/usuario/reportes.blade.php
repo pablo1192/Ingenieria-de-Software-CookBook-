@@ -26,25 +26,26 @@ menuActivo='reportes'
 En esta sección usted podrá generar distintos reportes.</br></br>
 <table width="100%" style="margin-bottom:8px;">
 <tr>
-	<td width="0%">
-	    <form method="get" action="/admin/reportes/">
-		  <input type="hidden" name="reporte" value="estado"/>
-		    <td>
-			<select name="valor" style="padding:2px;width:250px;" >
-				    <option value=""  selected="selected"> Elija uno de estos reportes: </option>
-					<option value="CantUs">Cantidad de usuarios registrados </option>
-					<option value="VenLib">Venta de libros </option>
-			</select><span class="tooltip" title="Seleccione el tipo de reporte a mostrar.">&nbsp;[?]</span>
-			</td>
-	</td>
-	<td>
-	       desde <input type="text" id="from" name="desde" readonly value="{{Input::get('desde')}}">
-		   hasta <input type="text" id="to" name="hasta" readonly value="{{Input::get('hasta')}}">
-		   <input value="Generar Reporte" type="submit"/> <span class="tooltip" title="Genere el reporte.">[?]</span>
-        </form>
-	</td>	
+    <form method="get" action="/admin/reportes/">
+	  <input type="hidden" name="reporte" value="estado"/>
+      <td width="22%">
+	  <select name="valor" style="padding:2px;width:250px;" >
+		    <option value=""  selected="selected">Elija uno de estos reportes:</option>
+			<option value="CantUs">Cantidad de usuarios registrados</option>
+			<option value="VenLib">Venta de libros</option>
+	  </select>
+	  </td>
+	  <td>
+      	desde <input type="text" id="from" name="desde" readonly value="{{Input::get('desde')}}">
+	  	hasta <input type="text" id="to" name="hasta" readonly value="{{Input::get('hasta')}}">
+	  	<input value="Generar Reporte" type="submit"/>
+	  </td>
+    </form>
 </tr>
 </table>
+
+
+{{--Reporte de Usuarios--}}
 @if ((count($datosReporte) >= 1)&&(Session::has('repUserReg')))
 <h2>Datos del reporte: </h2> 
 <table>
@@ -65,7 +66,45 @@ Total de clientes: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
      <h1><font color="purple">{{Session::get('sinRes')}}</font></h1>
 	 {{Session::forget('sinRes')}}
 	@endif 
-@endif    
+@endif
+
+
+{{--Reporte de Libros--}}
+@if ((count($datosReporte) >= 1)&&(Session::has('repLibrVen')))
+@if ($total = '0') @endif
+<h2>Datos del reporte: </h2> 
+<table>
+	<tr>
+		<th>Libro</th>
+		<th>Vendidos</th>
+	</tr>
+@foreach($datosReporte as $dato)
+	<tr>
+		<td><a href="/{{$dato->id}}/detalles">{{$dato->título}}</a></td>
+		<td>{{$dato->cant}}</td>
+		@if ($total = $total+$dato->cant) @endif
+	</tr>
+@endforeach
+</table></br>
+Ventas totales: {{$total}} {{Session::forget('repLibrVen')}}
+@else
+    @if (Session::has('sinRes'))
+     <h1><font color="purple">{{Session::get('sinRes')}}</font></h1>
+	 {{Session::forget('sinRes')}}
+	@endif 
+@endif
+
+
+{{--Limpia la memoria--}}
+@if (Session::has('repUserReg'))
+ {{Session::forget('repUserReg')}}
+@endif 
+@if (Session::has('repLibrVen'))
+ {{Session::forget('repLibrVen')}}
+@endif 
+
+
+{{--Datepicker--}}
 <script>
 	$(function() {
 	 $.datepicker.regional['es'] = 
@@ -87,6 +126,7 @@ Total de clientes: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
 	  $( "#from" ).datepicker({
 			defaultDate: "+1w",
 			changeMonth: true,
+			changeYear: true,
 			onClose: function( selectedDate ) {
 				$( "#to" ).datepicker( "option", "minDate", selectedDate );
 			}
@@ -94,6 +134,7 @@ Total de clientes: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
 	  $( "#to" ).datepicker({
 			defaultDate: "+1w",
 			changeMonth: true,
+			changeYear: true,
 			onClose: function( selectedDate ) {
 				$( "#from" ).datepicker( "option", "maxDate", selectedDate );
 			}
