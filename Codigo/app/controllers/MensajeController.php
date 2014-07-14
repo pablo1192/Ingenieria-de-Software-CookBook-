@@ -12,7 +12,7 @@ class MensajeController extends BaseController {
 		$validador = Validator::make(Input::all(), Mensaje::reglasDeValidacion());
 		
 		if($validador->fails()){
-			return Redirect::back()->withErrors($validador);
+			return Redirect::back()->withErrors($validador)->withInput();
 		}
 		else{
 			//proceso el cuerpo y asunto del msj: Sustituyo caracters HTML (protección).

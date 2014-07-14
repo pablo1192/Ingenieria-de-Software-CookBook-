@@ -32,13 +32,13 @@ menuActivo='contacto'
 		<tr>
 			<td>Asunto:</td>
 			<td>
-				<input name="asunto" value="" size="35" placeholder="Asunto"/>
+				<input name="asunto" value="{{Input::old('asunto')}}" size="35" placeholder="Asunto"/>
 			</td>
 		</tr>
 		<tr>
 			<td valign="top">Mensaje:</td>
 			<td>
-				<textarea name="cuerpo" size="20" placeholder="Escriba aquí su mensaje"></textarea>
+				<textarea name="cuerpo" size="20" placeholder="Escriba aquí su mensaje">{{Input::old('cuerpo')}}</textarea>
 			</td>
 		</tr>
 		<tr>
