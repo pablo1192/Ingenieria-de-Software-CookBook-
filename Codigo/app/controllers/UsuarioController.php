@@ -764,7 +764,7 @@ class UsuarioController extends BaseController {
 		//Genero la respuesta: un archivo para descargar con nombre «Cookbook - Backup YYYY-MM-DD.sql»
 		$respuesta= Response::make($scriptDeSQL, 200);
 		$respuesta->header('Content-Type', 'application/x-sql');
-		$respuesta->header('Content-Disposition','attachment; filename="Cookbook - Backup '.date('Y-m-d').'.sql"');
+		$respuesta->header('Content-Disposition','attachment; filename="Cookbook - Backup '.date('Y-m-d h\h\si\m').'.sql"');
 		//Se calcula el tamaño en funcion de la cantidad de caracteres q hay, si bien es
 		//multibyte, strlen devuelve la cant de bytes ;).
 		$respuesta->header('Content-Length',strlen($scriptDeSQL));
