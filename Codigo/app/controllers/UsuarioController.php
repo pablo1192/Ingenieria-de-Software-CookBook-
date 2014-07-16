@@ -680,6 +680,8 @@ class UsuarioController extends BaseController {
 		   if(Input::get('valor')==''){
 			  Session::put('rep','Seleccione un tipo de reporte.');  
 			}
+
+           // ******* Reporte de Usuarios ******* //
 	       if(Input::get('valor')=='CantUs')
 		   {
 		     $fecDesde = Input::get('desde');
@@ -690,6 +692,7 @@ class UsuarioController extends BaseController {
 			 Session::put('repUserReg','reporte de usuarios registrados'); // Esto nunca se muestra pero sirve para que la view sepa que reporte debe mostrar(con su formato de tabla especifico).   
 		   }
 
+           // ******* Reporte de Libros ******* //
 		   if(Input::get('valor')=='VenLib') {
              $fecDesde = Input::get('desde');
              $fecHasta = Input::get('hasta');
@@ -705,6 +708,20 @@ class UsuarioController extends BaseController {
              }
              Session::put('repLibrVen','reporte de libros vendidos');   
 		   }
+
+           // ******* Reporte de Pedidos ******* //
+           if(Input::get('valor')=='ListaPedidos') {
+             $fecDesde = Input::get('desde');
+             $fecHasta = Input::get('hasta');
+             $reporte = Pedido::whereBetween('fecha',[$fecDesde,$fecHasta])->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+                                                                           ->orderBy('fecha', 'ASC')
+                                                                           ->select('pedido.*', 'usuario_id')
+                                                                           ->get();
+             if(count($reporte)== 0) {
+               Session::put('sinRes','No hay resultados para las fechas ingresadas.');
+             }
+             Session::put('repPedidos','reporte de libros vendidos');   
+           }
 		 }
 	  }	  
 	  return View::make('usuario.reportes',['datosReporte'=>$reporte]);

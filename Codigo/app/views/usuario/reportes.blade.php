@@ -32,7 +32,8 @@ En esta sección usted podrá generar distintos reportes.</br></br>
 	  <select name="valor" style="padding:2px;width:250px;" >
 		    <option value=""  selected="selected">Elija uno de estos reportes:</option>
 			<option value="CantUs">Cantidad de usuarios registrados</option>
-			<option value="VenLib">Venta de libros</option>
+			<option value="VenLib">Cantidad de libros vendidos</option>
+			<option value="ListaPedidos">Pedidos solicitados</option>
 	  </select>
 	  </td>
 	  <td>
@@ -47,20 +48,22 @@ En esta sección usted podrá generar distintos reportes.</br></br>
 
 {{--Reporte de Usuarios--}}
 @if ((count($datosReporte) >= 1)&&(Session::has('repUserReg')))
-<h2>Datos del reporte: </h2> 
-<table>
+<h2>Datos del reporte de usuarios: </h2> 
+<table width="30%">
 	<tr>
 		<th>Fecha de registro</th>
 		<th>Nombre</th>
+		{{-- <th>Función</th> --}}
 	</tr>
 @foreach($datosReporte as $dato)
-	<tr>
-		<td width="70%">{{$dato->created_at}}</td>
+	<tr align="center">
+		<td>{{(date('d/m/Y',strtotime($dato->created_at)))}}</td>
 		<td><a href="/admin/usuarios/{{ $dato->id }}/ver" title="Ver datos">{{$dato->nombre}} {{$dato->apellido}}</a></td>
+		{{-- <td><a href= "/admin/pedidos?filtro=nombre&valor={{ $dato->nombre }}+{{ $dato->apellido }}">Pedidos Activos</a></td> --}}
 	</tr>
 @endforeach
 </table></br>
-Total de clientes: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
+Total de clientes registrados: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
 @else
     @if (Session::has('sinRes'))
      <h1><font color="purple">{{Session::get('sinRes')}}</font></h1>
@@ -72,21 +75,56 @@ Total de clientes: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
 {{--Reporte de Libros--}}
 @if ((count($datosReporte) >= 1)&&(Session::has('repLibrVen')))
 @if ($total = '0') @endif
-<h2>Datos del reporte: </h2> 
-<table>
+<h2>Datos del reporte de libros: </h2> 
+<table width="40%">
 	<tr>
-		<th>Libro</th>
+		<th>ISBN</th>
+		<th>Título</th>
 		<th>Vendidos</th>
 	</tr>
 @foreach($datosReporte as $dato)
-	<tr>
+	<tr align="center">
+		<td>{{$dato->isbn}}</td>
 		<td><a href="/{{$dato->id}}/detalles">{{$dato->título}}</a></td>
 		<td>{{$dato->cant}}</td>
 		@if ($total = $total+$dato->cant) @endif
 	</tr>
 @endforeach
 </table></br>
-Ventas totales: {{$total}} {{Session::forget('repLibrVen')}}
+Total de libros vendidos: {{$total}} {{Session::forget('repLibrVen')}}
+@else
+    @if (Session::has('sinRes'))
+     <h1><font color="purple">{{Session::get('sinRes')}}</font></h1>
+	 {{Session::forget('sinRes')}}
+	@endif 
+@endif
+
+
+{{--Reporte de Pedidos--}}
+@if ((count($datosReporte) >= 1)&&(Session::has('repPedidos')))
+@if ($montoTotal = '0') @endif
+<h2>Datos del reporte de pedidos: </h2>
+<table width="40%">
+	<tr>
+		<th>Número</th>
+		<th>Fecha</th>
+		<th>Cliente</th>
+		<th>Monto</th>
+		{{-- <th>Función</th> --}}
+	</tr>
+@foreach($datosReporte as $dato)
+	<tr align="center">
+		<td><a href= "/admin/pedidos/{{ $dato->id }}/ver">{{$dato->id}}</a></td>
+		<td>{{(date('d/m/Y',strtotime($dato->fecha)))}}</td>
+		<td><a href="/admin/usuarios/{{ $dato->usuario->id }}/ver" title="Ver datos">{{$dato->usuario->nombre}} {{$dato->usuario->apellido}}</a>
+		<td>${{$dato->monto}}</td>
+		{{-- <td><a href= "/admin/pedidos/{{ $dato->id }}/ver">Detalles</a></td> --}}
+		@if ($montoTotal = $montoTotal+$dato->monto) @endif
+	</tr>
+@endforeach
+</table></br>
+Cantidad de pedidos: {{count($datosReporte)}} {{Session::forget('repPedidos')}}</br>
+Total recaudado: ${{$montoTotal}}
 @else
     @if (Session::has('sinRes'))
      <h1><font color="purple">{{Session::get('sinRes')}}</font></h1>
@@ -101,6 +139,9 @@ Ventas totales: {{$total}} {{Session::forget('repLibrVen')}}
 @endif 
 @if (Session::has('repLibrVen'))
  {{Session::forget('repLibrVen')}}
+@endif 
+@if (Session::has('repPedidos'))
+ {{Session::forget('repPedidos')}}
 @endif 
 
 
