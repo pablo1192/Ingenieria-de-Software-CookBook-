@@ -22,9 +22,11 @@ Released   : 20140207
 	<meta name="generator" content="Sistema Web Cookbook" />
 	<link rel="shortcut icon" href="/favicon.png" />
 	<!-- DatePicker -->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/jQuery/jquery-ui.css" />
+    <script src="/jQuery/jquery-1.9.1.js"></script>
+    <script src="/jQuery/jquery-ui.js"></script>
+    
+    
 	<!-- Final del DatePicker -->
 	<!-- Pop-up Window. Cambiar width/height para el tamaño de ventana -->
 	<!-- Ejemplo de link: <a href="javascript: void(0)" onclick="popup('/ayuda#compra')"><img width="24" src="/template/images/ayuda.png" alt="Ayuda"/></a> -->
