@@ -168,6 +168,7 @@ Total recaudado: ${{$montoTotal}}
 			defaultDate: "+1w",
 			changeMonth: true,
 			changeYear: true,
+			yearRange:"-50:+0",
 			onClose: function( selectedDate ) {
 				$( "#to" ).datepicker( "option", "minDate", selectedDate );
 			}
@@ -176,6 +177,7 @@ Total recaudado: ${{$montoTotal}}
 			defaultDate: "+1w",
 			changeMonth: true,
 			changeYear: true,
+			yearRange:"-50:+0",
 			onClose: function( selectedDate ) {
 				$( "#from" ).datepicker( "option", "maxDate", selectedDate );
 			}
