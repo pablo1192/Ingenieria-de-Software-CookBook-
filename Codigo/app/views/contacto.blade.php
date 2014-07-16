@@ -11,7 +11,7 @@ menuActivo='contacto'
 @section('contenido')
 <a name="area"></a>
 <h2>Contacto</h2>
-	<p>Puede ponerse en contacto con <strong class="cookbook">Cookbook</strong> através del siguiente formulario. El Administrador se pondrá en contacto a través de su correo electrónico.</p>
+	<p>Puede ponerse en contacto con <strong class="cookbook">Cookbook</strong> a través del siguiente formulario. El Administrador se pondrá en contacto a través de su correo electrónico.</p>
 	@if(Session::has('mensajeEnviado'))
 		<div class="mensaje mensaje-info">
 			{{Session::get('mensajeEnviado')}}
