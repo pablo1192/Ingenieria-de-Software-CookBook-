@@ -94,7 +94,7 @@ Released   : 20140207
 	</div>
 	
 	<div style="text-align:right;padding:20px;">
-		<a class="button button-mediano button-verde" href="/admin/exportarBD" title="Realice un Backup de su Base de Datos" onclick="return confirm('¿Desea realizar un backup completo de la Base de Datos?\n\nUd podrá restablecer el día de mañana al Sistema ante un\nfallo o modifciación indebida')" >Backup de BD</a>
+		<a class="button button-mediano button-verde" href="/admin/exportarBD" title="Realice un Backup de su Base de Datos" onclick="return confirm('¿Desea realizar un backup completo de la Base de Datos?\n\nUd podrá restablecer el día de mañana al Sistema ante un\nfallo o modificación indebida')" >Backup de BD</a>
 	</div>
 
 	
