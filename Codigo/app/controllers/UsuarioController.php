@@ -747,7 +747,7 @@ class UsuarioController extends BaseController {
 	  $output.= 'Total de usuarios registrados: '.count($table);
       $headers = array(
          'Content-Type' => 'text/csv',
-         'Content-Disposition' => 'attachment; filename="Reporte de Usuarios Registrados.txt"');
+         'Content-Disposition' => 'attachment; filename="Reporte de Usuarios Registrados.csv"');
       return Response::make(rtrim($output, "\n"), 200, $headers);
 	}
 	public function exportarRepLibrosVendidos()
@@ -775,7 +775,7 @@ class UsuarioController extends BaseController {
 	  $output.= 'Total de libros vendidos: '.$tot;
       $headers = array(
          'Content-Type' => 'text/csv',
-         'Content-Disposition' => 'attachment; filename="Reporte de libros vendidos.txt"');
+         'Content-Disposition' => 'attachment; filename="Reporte de libros vendidos.csv"');
       return Response::make(rtrim($output, "\n"), 200, $headers);
 		//return $table;
 	}
@@ -802,7 +802,7 @@ class UsuarioController extends BaseController {
 	  $output.= 'Monto total recaudado: $'.$montoTot;
       $headers = array(
          'Content-Type' => 'text/csv',
-         'Content-Disposition' => 'attachment; filename="Reporte de Pedidos.txt"');
+         'Content-Disposition' => 'attachment; filename="Reporte de Pedidos.csv"');
       return Response::make(rtrim($output, "\n"), 200, $headers);
 	}	
 	//Experimental !!!
