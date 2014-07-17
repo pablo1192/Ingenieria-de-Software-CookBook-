@@ -40,7 +40,7 @@ font-weight: 400;
 <li><strong>Modificar perfil</strong> - En todo momento, podrá modificar y actualizar sus datos personales.</li>
 	Usted tendrá la opción de darse de baja, si es que desea dejar de utilizar nuestro sistema. Esta operación NO puede deshacerse.</br>
 	Será informado si posee pedidos sin finalizar. Por favor, aguarde el arribo de los mismos, para asegurarse de que todo se encuentre en orden. Muchas gracias.
-<a href="#indice" title="Ir al índice">↑</a><P>
+<a href="#indice" title="Ir al índice">↑</a>
 </ul>
 
 <hr>
