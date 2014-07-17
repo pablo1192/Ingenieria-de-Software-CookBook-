@@ -66,7 +66,7 @@ En esta sección usted podrá generar distintos reportes.</br></br>
 Total de clientes registrados: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
 <form method="get" action="/admin/exportar/">
 	  <input type="hidden" name="fechaDesde" value="{{Input::get('desde')}}"/>
-	  <input type="hidden" name="fechasHasta" value="{{Input::get('hasta')}}"/>
+	  <input type="hidden" name="fechaHasta" value="{{Input::get('hasta')}}"/>
 	  <input value="Exportar Reporte" type="submit"/>
 </form>
 @else
@@ -97,6 +97,11 @@ Total de clientes registrados: {{count($datosReporte)}} {{Session::forget('repUs
 @endforeach
 </table></br>
 Total de libros vendidos: {{$total}} {{Session::forget('repLibrVen')}}
+<form method="get" action="/admin/exportarLibroVendidos/">
+	  <input type="hidden" name="fechaDesde" value="{{Input::get('desde')}}"/>
+	  <input type="hidden" name="fechaHasta" value="{{Input::get('hasta')}}"/>
+	  <input value="Exportar Reporte" type="submit"/>
+</form>
 @else
     @if (Session::has('sinRes'))
      <h1><font color="purple">{{Session::get('sinRes')}}</font></h1>
@@ -131,6 +136,11 @@ Total de libros vendidos: {{$total}} {{Session::forget('repLibrVen')}}
 Cantidad de pedidos: {{count($datosReporte)}} {{Session::forget('repPedidos')}}</br>
 </br>
 Total recaudado: ${{$montoTotal}}
+<form method="get" action="/admin/exportarPedidos/">
+	  <input type="hidden" name="fechaDesde" value="{{Input::get('desde')}}"/>
+	  <input type="hidden" name="fechaHasta" value="{{Input::get('hasta')}}"/>
+	  <input value="Exportar Reporte" type="submit"/>
+</form>
 @else
     @if (Session::has('sinRes'))
      <h1><font color="purple">{{Session::get('sinRes')}}</font></h1>

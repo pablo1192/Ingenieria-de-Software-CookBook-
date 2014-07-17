@@ -729,40 +729,81 @@ class UsuarioController extends BaseController {
 	
 	public function exportarRepCantUs()
 	{
-	  $fecDesde = Input::get('desde');
-	  $fecHasta = Input::get('hasta');
+	  $fecDesde = Input::get('fechaDesde');
+	  $fecHasta = Input::get('fechaHasta');
 	  $table = Usuario::whereBetween('created_at',[$fecDesde,$fecHasta])->whereNotIn('id',[1])
 	                                                                    ->orderBy('created_at','ASC')
 																		->select('nombre','apellido','created_at')
 																		->get();
-	  $output='|Nombre y Apellido               |Fecha';
+      $output= 'Usuarios registrados entre '.$fecDesde.' y '.$fecHasta."\r\n";
+      $output.= "\r\n";	  
+	  $output.='"Nombre ", "Apellido", "Fecha"'."\r\n";
       foreach ($table as $row) {
-         $output.=  implode(",",$row->toArray());
+         $columnas=$row->toArray();
+         $columnas['created_at']=date('d/m/Y h:i:s', strtotime($columnas['created_at']));
+         $output.=  '"'.implode('", "',$columnas)."\"\r\n";
       }
+	  $output.= "\r\n";
+	  $output.= 'Total de usuarios registrados: '.count($table);
       $headers = array(
          'Content-Type' => 'text/csv',
-         'Content-Disposition' => 'attachment; filename="Reporte de Cantidad de Usuarios Registrados.txt"');
+         'Content-Disposition' => 'attachment; filename="Reporte de Usuarios Registrados .txt"');
       return Response::make(rtrim($output, "\n"), 200, $headers);
-    }
+	}
 	public function exportarRepLibrosVendidos()
 	{
-	  $fecDesde = Input::get('desde');
-	  $fecHasta = Input::get('hasta');
-	  $reporte = Pedido::whereBetween('fecha',[$fecDesde,$fecHasta])->select(array('*', DB::raw('SUM(libropedido.cantidad) as cant')))
+	  $fecDesde = Input::get('fechaDesde');
+	  $fecHasta = Input::get('fechaHasta');
+	  $table = Pedido::whereBetween('fecha',[$fecDesde,$fecHasta])->select(array('isbn','título', DB::raw('SUM(libropedido.cantidad) as cant')))
                                                                     ->join('libropedido', 'libropedido.pedido_id', '=', 'pedido.id')
                                                                     ->join('libro', 'libro.id', '=', 'libropedido.libro_id')
                                                                     ->groupBy('libropedido.libro_id')
                                                                     ->orderBy('cant', 'DESC')
+																	//->select()
                                                                     ->get();
+	  $output= 'Libros vendidos entre '.$fecDesde.' y '.$fecHasta."\r\n";
+      $output.= "\r\n";	  
+	  $output.='"ISBN ", "Titulo", "Cantidad de Ventas"'."\r\n";
+	  $tot = 0 ;
+      foreach ($table as $row) {
+         $columnas=$row->toArray();
+         //$columnas['created_at']=date('d/m/Y h:i:s', strtotime($columnas['created_at']));
+		 $tot = $tot + $columnas['cant']; 
+         $output.=  '"'.implode('", "',$columnas)."\"\r\n";
+      }
+	  $output.= "\r\n";
+	  $output.= 'Total de libros vendidos: '.$tot;
+      $headers = array(
+         'Content-Type' => 'text/csv',
+         'Content-Disposition' => 'attachment; filename="Reporte de libros vendidos.txt"');
+      return Response::make(rtrim($output, "\n"), 200, $headers);
+		//return $table;
 	}
     public function exportarPedidos()
     {
-	  $fecDesde = Input::get('desde');
-      $fecHasta = Input::get('hasta');
-      $reporte = Pedido::whereBetween('fecha',[$fecDesde,$fecHasta])->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+	  $fecDesde = Input::get('fechaDesde');
+      $fecHasta = Input::get('fechaHasta');
+      $table = Pedido::whereBetween('fecha',[$fecDesde,$fecHasta])->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
                                                                     ->orderBy('fecha', 'ASC')
-                                                                    ->select('pedido.*', 'usuario_id')
+                                           							->select('pedido.id','pedido.created_at','usuario.nombre','usuario.apellido','pedido.monto')
                                                                     ->get();
+	  $output= 'Pedidos realizados entre '.$fecDesde.' y '.$fecHasta."\r\n";
+      $output.= "\r\n";	  
+	  $output.='"Numero ", "Fecha", "Nombre del cliente","Apellido del cliente","Monto"'."\r\n";
+	  $montoTot = 0;
+      foreach ($table as $row) {
+         $columnas=$row->toArray();
+         $columnas['created_at']=date('d/m/Y h:i:s', strtotime($columnas['created_at']));
+		 $montoTot = $montoTot + $columnas['monto'];
+         $output.=  '"'.implode('", "',$columnas)."\"\r\n";
+      }
+	  $output.= "\r\n";
+	  $output.= 'Total de Pedidos realizados: '.count($table);$output.= "\r\n";
+	  $output.= 'Monto total recaudado: '.$montoTot;
+      $headers = array(
+         'Content-Type' => 'text/csv',
+         'Content-Disposition' => 'attachment; filename="Reporte de Pedidos.txt"');
+      return Response::make(rtrim($output, "\n"), 200, $headers);
 	}	
 	//Experimental !!!
 	public function exportarBD(){
