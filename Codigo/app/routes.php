@@ -115,10 +115,12 @@ Route::get('/carrito/{id}/quitar', array('uses' => 'CarritoController@quitarLibr
 
 //Compra
 Route::get('/carrito/tarjeta', array('uses' => 'CarritoController@solicDatosTarjeta'))->before('auth.usrReg');
-//~ Route::get('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@comprar'))->before('auth.usrReg');
+
 Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@comprar'))->before('auth.usrReg');
-//~ Route::post('/carrito/tarjeta/confirmarCompra', array('uses' => 'CarritoController@altaPedido'))->before('auth.usrReg');
+//~ Route::get('/carrito/tarjeta/confirmarCompra', function(){return Redirect::to('/404'); })->before('auth.usrReg');
+
 Route::post('/carrito/tarjeta/finalizarCompra', array('uses' => 'CarritoController@altaPedido'))->before('auth.usrReg');
+//~ Route::get('/carrito/tarjeta/finalizarCompra', function(){return Redirect::to('/404');})->before('auth.usrReg');
 
 //Comprobantes
 Route::get('/pedidos/{id}/comprobante', array('uses' => 'UsuarioController@comprobanteUsuario'))->before('auth.usrReg');
