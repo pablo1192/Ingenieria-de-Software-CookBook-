@@ -686,7 +686,7 @@ class UsuarioController extends BaseController {
 		   {
 		     $fecDesde = Input::get('desde');
 			 $fecHasta = Input::get('hasta');
-		     $reporte = Usuario::whereBetween('created_at',[$fecDesde,$fecHasta])->whereNotIn('id',[1])->orderBy('created_at','ASC')->get();
+		     $reporte = Usuario::whereBetween('created_at',[$fecDesde,$fecHasta])->whereNotIn('id',[1])->orderBy('created_at','ASC')->select('nombre','apellido','created_at')->get();
 			 if(count($reporte)== 0)
 			   Session::put('sinRes','No hay resultados para las fechas ingresadas.');
 			 Session::put('repUserReg','reporte de usuarios registrados'); // Esto nunca se muestra pero sirve para que la view sepa que reporte debe mostrar(con su formato de tabla especifico).   
@@ -727,7 +727,43 @@ class UsuarioController extends BaseController {
 	  return View::make('usuario.reportes',['datosReporte'=>$reporte]);
 	}
 	
-	
+	public function exportarRepCantUs()
+	{
+	  $fecDesde = Input::get('desde');
+	  $fecHasta = Input::get('hasta');
+	  $table = Usuario::whereBetween('created_at',[$fecDesde,$fecHasta])->whereNotIn('id',[1])
+	                                                                    ->orderBy('created_at','ASC')
+																		->select('nombre','apellido','created_at')
+																		->get();
+	  $output='|Nombre y Apellido               |Fecha';
+      foreach ($table as $row) {
+         $output.=  implode(",",$row->toArray());
+      }
+      $headers = array(
+         'Content-Type' => 'text/csv',
+         'Content-Disposition' => 'attachment; filename="Reporte de Cantidad de Usuarios Registrados.txt"');
+      return Response::make(rtrim($output, "\n"), 200, $headers);
+    }
+	public function exportarRepLibrosVendidos()
+	{
+	  $fecDesde = Input::get('desde');
+	  $fecHasta = Input::get('hasta');
+	  $reporte = Pedido::whereBetween('fecha',[$fecDesde,$fecHasta])->select(array('*', DB::raw('SUM(libropedido.cantidad) as cant')))
+                                                                    ->join('libropedido', 'libropedido.pedido_id', '=', 'pedido.id')
+                                                                    ->join('libro', 'libro.id', '=', 'libropedido.libro_id')
+                                                                    ->groupBy('libropedido.libro_id')
+                                                                    ->orderBy('cant', 'DESC')
+                                                                    ->get();
+	}
+    public function exportarPedidos()
+    {
+	  $fecDesde = Input::get('desde');
+      $fecHasta = Input::get('hasta');
+      $reporte = Pedido::whereBetween('fecha',[$fecDesde,$fecHasta])->join('usuario', 'usuario.id', '=', 'pedido.usuario_id')
+                                                                    ->orderBy('fecha', 'ASC')
+                                                                    ->select('pedido.*', 'usuario_id')
+                                                                    ->get();
+	}	
 	//Experimental !!!
 	public function exportarBD(){
 		//Solucion indep del SO y "flexible" a cambios de Esquema de la BD. Recomandada para usar con MySQL.

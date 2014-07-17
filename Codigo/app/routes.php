@@ -143,6 +143,9 @@ Route::get('/admin/ayuda', array('uses' => 'UsuarioController@verAyudaAdmin'))->
 
 //Reportes
 Route::get('/admin/reportes', array('uses' => 'UsuarioController@mostrarReportes'))->before('admin_auth');
+Route::get('/admin/exportar',array('uses' => 'UsuarioController@exportarRepCantUs'))->before('admin_auth');
+
+
 //Otras funciones.
 Route::get('/admin/exportarBD', array('uses' => 'UsuarioController@exportarBD'))->before('admin_auth');
 
@@ -156,6 +159,7 @@ Route::get('/404',function(){
 Route::get('/500',function(){
 	return View::make('error500');
 });
+//
 
 
 //Rutea los que no sean admin, al catálogo.
