@@ -737,17 +737,17 @@ class UsuarioController extends BaseController {
 																		->get();
       $output= 'Usuarios registrados entre '.$fecDesde.' y '.$fecHasta."\r\n";
       $output.= "\r\n";	  
-	  $output.='"Nombre ", "Apellido", "Fecha"'."\r\n";
+	  $output.='"Nombre ", "Apellido", "Fecha de registro"'."\r\n";
       foreach ($table as $row) {
          $columnas=$row->toArray();
-         $columnas['created_at']=date('d/m/Y h:i:s', strtotime($columnas['created_at']));
+         $columnas['created_at']=date('d/m/Y', strtotime($columnas['created_at']));
          $output.=  '"'.implode('", "',$columnas)."\"\r\n";
       }
 	  $output.= "\r\n";
 	  $output.= 'Total de usuarios registrados: '.count($table);
       $headers = array(
          'Content-Type' => 'text/csv',
-         'Content-Disposition' => 'attachment; filename="Reporte de Usuarios Registrados .txt"');
+         'Content-Disposition' => 'attachment; filename="Reporte de Usuarios Registrados.txt"');
       return Response::make(rtrim($output, "\n"), 200, $headers);
 	}
 	public function exportarRepLibrosVendidos()
@@ -793,13 +793,13 @@ class UsuarioController extends BaseController {
 	  $montoTot = 0;
       foreach ($table as $row) {
          $columnas=$row->toArray();
-         $columnas['created_at']=date('d/m/Y h:i:s', strtotime($columnas['created_at']));
+         $columnas['created_at']=date('d/m/Y', strtotime($columnas['created_at']));
 		 $montoTot = $montoTot + $columnas['monto'];
          $output.=  '"'.implode('", "',$columnas)."\"\r\n";
       }
 	  $output.= "\r\n";
 	  $output.= 'Total de Pedidos realizados: '.count($table);$output.= "\r\n";
-	  $output.= 'Monto total recaudado: '.$montoTot;
+	  $output.= 'Monto total recaudado: $'.$montoTot;
       $headers = array(
          'Content-Type' => 'text/csv',
          'Content-Disposition' => 'attachment; filename="Reporte de Pedidos.txt"');

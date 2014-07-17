@@ -63,7 +63,7 @@ En esta sección usted podrá generar distintos reportes.</br></br>
 	</tr>
 @endforeach
 </table></br>
-Total de clientes registrados: {{count($datosReporte)}} {{Session::forget('repUserReg')}}
+Total de clientes registrados: {{count($datosReporte)}} {{Session::forget('repUserReg')}}</br></br>
 <form method="get" action="/admin/exportar/">
 	  <input type="hidden" name="fechaDesde" value="{{Input::get('desde')}}"/>
 	  <input type="hidden" name="fechaHasta" value="{{Input::get('hasta')}}"/>
@@ -96,7 +96,7 @@ Total de clientes registrados: {{count($datosReporte)}} {{Session::forget('repUs
 	</tr>
 @endforeach
 </table></br>
-Total de libros vendidos: {{$total}} {{Session::forget('repLibrVen')}}
+Total de libros vendidos: {{$total}} {{Session::forget('repLibrVen')}}</br></br>
 <form method="get" action="/admin/exportarLibroVendidos/">
 	  <input type="hidden" name="fechaDesde" value="{{Input::get('desde')}}"/>
 	  <input type="hidden" name="fechaHasta" value="{{Input::get('hasta')}}"/>
@@ -135,7 +135,7 @@ Total de libros vendidos: {{$total}} {{Session::forget('repLibrVen')}}
 </table></br>
 Cantidad de pedidos: {{count($datosReporte)}} {{Session::forget('repPedidos')}}</br>
 </br>
-Total recaudado: ${{$montoTotal}}
+Total recaudado: ${{$montoTotal}}</br></br>
 <form method="get" action="/admin/exportarPedidos/">
 	  <input type="hidden" name="fechaDesde" value="{{Input::get('desde')}}"/>
 	  <input type="hidden" name="fechaHasta" value="{{Input::get('hasta')}}"/>
