@@ -106,22 +106,27 @@ class HomeController extends BaseController {
 				->withInput();
 		} else {
 
-			if (Input::get('email') != "admin@gmail.com") {
+			if (Input::get('email') != "admin@gmail.com") 
+			{
 				// Si no es admin, restablece la contraseña. Se le enviaría a la casilla de email algún str_random(). Simulado: el password es "default".
-				foreach ($usuarios as $usuario) {
+				foreach ($usuarios as $usuario) 
+				{
 					if (($usuario->email == Input::get('email')) && (!$usuario->bloqueado) && (!$usuario->dadoDeBaja)) {
 						$usuario->contraseña = Hash::make("default");
 						$usuario->save();
 						return Redirect::to('/login')->with('email-encontrado', '-> Revise su casilla de correo para restablecer su contraseña.');
 					}
-					else {
-						if (($usuario->bloqueado) || ($usuario->dadoDeBaja)) {
-							return Redirect::to('/login')->with('cuenta-invalida', '-> No es posible restablecer su contraseña.');
+					else 
+					{//Agregada la 1er condicion porque si hay 1ro un usuario bloqueado el sistema te rechaza sin llegar al usuario correcto.
+					  if (($usuario->email == Input::get('email'))&&(($usuario->bloqueado) || ($usuario->dadoDeBaja))) {
+						return Redirect::to('/login')->with('cuenta-invalida', '-> No es posible restablecer su contraseña.');
 						}
 					}
 				}
 				return Redirect::to('/login')->with('email-fallido', '-> Email no encontrado.');
-			} else {
+			} 
+			else 
+			  {
 				// Si es admin, "no" restablece la contraseña. Mandaría un email de confirmación primero. Simulado: el password es "admin".
 				if (Input::get('email') == "admin@gmail.com"){
 					$admin = Usuario::where('email', '=', 'admin@gmail.com')->first();
@@ -129,7 +134,7 @@ class HomeController extends BaseController {
 					$admin->save();
 					return Redirect::to('/login')->with('email-encontrado', '-> Revise su casilla de correo para restablecer su contraseña.');
 				}
-			}
+			  }
 		}
 	}
 
